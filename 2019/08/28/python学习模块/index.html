@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="一、概念在python中，一个文件（以”.py”为后缀的文件）就叫做一个模块，每一个模块在python里都被看作是一个独立的文件，每个模块中都内置了大量的功能函数，类和变量。模块可以被项目中的其他模块、一些脚本甚至是交互式的解析器所使用，它可以被其他程序所引用，进而使用模块里的函数等功能，使用python中的标准库也是采用这种方法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python模块学习">
+<meta property="og:url" content="https://ChakaLake.github.io/2019/08/28/python学习模块/index.html">
+<meta property="og:site_name" content="他年少如歌">
+<meta property="og:description" content="一、概念在python中，一个文件（以”.py”为后缀的文件）就叫做一个模块，每一个模块在python里都被看作是一个独立的文件，每个模块中都内置了大量的功能函数，类和变量。模块可以被项目中的其他模块、一些脚本甚至是交互式的解析器所使用，它可以被其他程序所引用，进而使用模块里的函数等功能，使用python中的标准库也是采用这种方法。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-08-29T05:27:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python模块学习">
+<meta name="twitter:description" content="一、概念在python中，一个文件（以”.py”为后缀的文件）就叫做一个模块，每一个模块在python里都被看作是一个独立的文件，每个模块中都内置了大量的功能函数，类和变量。模块可以被项目中的其他模块、一些脚本甚至是交互式的解析器所使用，它可以被其他程序所引用，进而使用模块里的函数等功能，使用python中的标准库也是采用这种方法。">
+  <link rel="canonical" href="https://ChakaLake.github.io/2019/08/28/python学习模块/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>python模块学习 | 他年少如歌</title>
+  <meta name="generator" content="Hexo 3.9.0">
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">他年少如歌</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">人生如棋，我愿为卒，行动虽慢，但谁曾见我后退一步！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/08/28/python学习模块/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="他年少如歌">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">python模块学习
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-08-28 06:15:07" itemprop="dateCreated datePublished" datetime="2019-08-28T06:15:07+08:00">2019-08-28</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-08-29 13:27:14" itemprop="dateModified" datetime="2019-08-29T13:27:14+08:00">2019-08-29</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>一、概念</p><p>在python中，一个文件（以”.py”为后缀的文件）就叫做一个模块，每一个模块在python里都被看作是一个独立的文件，每个模块中都内置了大量的功能函数，类和变量。模块可以被项目中的其他模块、一些脚本甚至是交互式的解析器所使用，它可以被其他程序所引用，进而使用模块里的函数等功能，使用python中的标准库也是采用这种方法。</p><a id="more"></a>
+
+<p>二、分类</p>
+<p>1、系统内置模块：sys、os、optprase<br>2、自定义模块，自定义模块是自己写的模块，对某段逻辑或某些函数进行封装后供其他函数调用。注意：自定义模块的命名一定不能和系统内置的模块重名了，否则将不能再导入系统的内置模块了。例如：自定义了一个sys.py模块后，再想使用系统的sys模块是不能使用的<br>3、第三方的开源模块：这部分模块可以通过pip install进行安装，有开源的代码；</p>
+<p>三、使用模块方法</p>
+<p>1、直接调用模块：将整个模块引入进</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import os	#调用os模块</span><br><span class="line">os.system(ipconfig)	#调用os模块中的system函数执行ipconfig</span><br></pre></td></tr></table></figure>
+
+<p>2、从模块中调用某个函数：引入一个指定的函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from os import system	#从os模块中调用system函数</span><br><span class="line">system(&quot;ipconfig&quot;)	#利用system函数指定ipconfig</span><br></pre></td></tr></table></figure>
+
+<p>四、常用模块</p>
+<p>1、SYS模块：标准模块，与python计时器密切相关<br>（1）sys.argv：一个变量，专门用来向python解释器传递参数，类似于shell脚本编程中的位置变量。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import sys</span><br><span class="line">print &quot;脚本文件是：&quot;,sys.argv[0]	#sys.argv[0]表示是脚本的名字</span><br><span class="line">print &quot;用户输入的参数数量是：&quot;,len(sys.argv)-1</span><br><span class="line">print &quot;所有的参数是，&quot;,sys.argv</span><br><span class="line">print &quot;用户输入的第一个参数：&quot;,sys.argv[1]	# 依次打印出第二个参数、第三个参数...</span><br></pre></td></tr></table></figure>
+
+<p>（2）sys.exit()：一个方法，用来退出当前程序</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sys.exit()	#退出当前程序，并返回SystemExit异常</span><br><span class="line">sys.exit(0)	#正常退出</span><br><span class="line">sys.exit(&quot;程序退出&quot;)	#显示一段提示信息</span><br></pre></td></tr></table></figure>
+
+<p>2、OS模块：标准模块，提供了访问操作系统服务的功能。</p>
+<p>（1）os.system()：一个方法，可以在python中使用操作系统命令<br>（2）os.path.isfile()：一个方法，判断指定的对象是否为文件，返回true或false<br>（3）os.path.isdir()：一个方法，判断指定的对象是否为目录<br>（4）os.path.exists()：一个方法，判断指定的对象是否存在</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">os.system(ipconfig)</span><br><span class="line">os.system.isfile(e:\python\test.py)</span><br><span class="line">os.system.isdir(e:\python\test)</span><br><span class="line">os.system.exists(e:\puthon\test.py)</span><br></pre></td></tr></table></figure>
+
+<p>3、Optparse模块：利用该模块可以设置选项，利用选项向脚本传递所需要的参数。</p>
+<p>（1）引入模块</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">from optparser import OptionParser</span><br></pre></td></tr></table></figure>
+
+<p>（2）初始化：有两种不同的方法初始化一个parser<br>带有usage选项：这样的好处是可以模拟带有帮助的终端使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from optparse import OptionParser</span><br><span class="line">usage=&quot;myprog[-f &lt;filename&gt;][-s &lt;xyz&gt;]arg1[arg2...]&quot;</span><br><span class="line">parser=OptionParser(usage)	#为类添加了参数usage</span><br></pre></td></tr></table></figure>
+
+<p>不带usage选项：一般不设置usage参数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">parser = OptionParser()</span><br></pre></td></tr></table></figure>
+
+<p>（3）添加选项<br>add.option()：函数用来设置选项，有如下参数<br>    action：验证输入的数据类型是否和type匹配，并将符合要求的这个参数存储到dest变量中，有store、store_true等。<br>    type：指的是对应于参数，如-f、-n那个参数的数据类型，有string、int、float等。<br>    dest：同于保存临时变量，其值可以作为options的属性进行访问，存储的内容是-f、-n那个参数的内容。<br>    help：提供用户友好的帮助信息，一般可以用来解释本add_option方法的功能阐述。<br>parse_args()：用来获取定义的选项和参数，一种固定的用法。<br>    <code>(option,args)=parser.parse_args()    #返回两个参数，options对象保存了所有传递进来的参数值</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">from optparse import OptionParser</span><br><span class="line">parser=OptionParser()  </span><br><span class="line">parser.add_option(&quot;-f&quot;,&quot;--file&quot;,type=&quot;string&quot;,dest=&quot;filename&quot;)</span><br><span class="line">parser.add_option(&quot;-i&quot;,&quot;--ip&quot;,type=&quot;string&quot;,dest=&quot;address&quot;)</span><br><span class="line">(options,args)=parser.parse_args()</span><br></pre></td></tr></table></figure>
+
+<p>五、实验代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">import socket</span><br><span class="line">import sys</span><br><span class="line">import os</span><br><span class="line">from threading import Thread</span><br><span class="line">from optparser import OptionParser</span><br><span class="line">def GetBanner(ip,port):</span><br><span class="line">    socket.setdefaulttimeout(2)</span><br><span class="line">    s=socket.socket()</span><br><span class="line">    try:</span><br><span class="line">        s.connect((ip,port))</span><br><span class="line">        banner=s.recv(1024)</span><br><span class="line">        s.close()</span><br><span class="line">        return banner</span><br><span class="line">    except Exception,e:</span><br><span class="line">        print e</span><br><span class="line">def CheckVulner(ip,port):</span><br><span class="line">    banner=GetBanner(ip,port)</span><br><span class="line">    if banner:</span><br><span class="line">        if(&quot;2.3.4&quot; in banner):</span><br><span class="line">            print ip,&quot;is vulnerable&quot;</span><br><span class="line">        else:</span><br><span class="line">            print ip,&quot;is unvulnerable&quot;</span><br><span class="line">    else:</span><br><span class="line">        print ip,&quot;Not get banner&quot;</span><br><span class="line">if __name__==&quot;__main__&quot;:</span><br><span class="line">    usage=&quot;usage: %prog -f &lt;filename&gt; -i &lt;ip address&gt;&quot;</span><br><span class="line">    parser=OptionParser(usage=usage)</span><br><span class="line">    parser.add_option(&quot;-f&quot;,&quot;--file&quot;,type=&quot;string&quot;,dest=&quot;filename&quot;,help=&quot;specify the IP address file&quot;)</span><br><span class="line">    parser.add_option(&quot;-i&quot;,&quot;--ip&quot;,type=&quot;string&quot;,dest=&quot;address&quot;,help=&quot;specify the IP address&quot;)</span><br><span class="line">    (options,args)=parser.parse_args()</span><br><span class="line">    filename=options.filename</span><br><span class="line">    address=options.address</span><br><span class="line">    </span><br><span class="line">    if (filename==None and address==None):</span><br><span class="line">        print &quot;please access list file or address&quot;</span><br><span class="line">        sys.exit()</span><br><span class="line">    if filename:</span><br><span class="line">        if not os.path.exists(filename):</span><br><span class="line">            print &quot;file no up,please restart input&quot;</span><br><span class="line">            sys.exit()</span><br><span class="line">    </span><br><span class="line">        f=open(filename,&quot;r&quot;)</span><br><span class="line">        for i in f.readlines():</span><br><span class="line">            port=21</span><br><span class="line">            ip=i.strip(&quot;\n&quot;)</span><br><span class="line">            t=Thread(target=CheckVulner,args=(ip,port))</span><br><span class="line">            t.start()</span><br><span class="line">        f.close()</span><br><span class="line">    if address:</span><br><span class="line">        prefix=address.split(&quot;.&quot;)[0]+&quot;.&quot;+address.split(&quot;.&quot;)[1]+&quot;.&quot;+address.split(&quot;.&quot;)[2]+&quot;.&quot;</span><br><span class="line">        for i in range(1,255):</span><br><span class="line">            ip=prefix+str(i)</span><br><span class="line">            port=21</span><br><span class="line">            t=Thread(target=CheckVulner,args=(ip,port))</span><br><span class="line">            t.start()</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+<div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-heart"></i>感谢阅读-------------</div>
+    
+</div>
+  
+</div>
+        
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/08/29/python基础/" rel="prev" title="pytho学习1-python简介">
+                  pytho学习1-python简介 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc" data-target="post-toc-wrap">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Yang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives">
+        
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+  </nav>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yang</span>
+</div>
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.3.0</div>
+-->
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.3.0"></script><script src="/js/motion.js?v=7.3.0"></script>
+<script src="/js/schemes/muse.js?v=7.3.0"></script>
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+ <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
