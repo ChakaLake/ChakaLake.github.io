@@ -54,20 +54,20 @@
   };
 </script>
 
-  <meta name="description" content="title: SQL注入基础date: 2019-09-16 20:01:56tags:">
+  <meta name="description" content="title: web安全|SQL注入基础date: 2019-09-16 20:01:56tags:WEB安全">
 <meta property="og:type" content="article">
 <meta property="og:title" content="他年少如歌">
 <meta property="og:url" content="https://ChakaLake.github.io/2019/09/16/web安全-SQL注入基础/index.html">
 <meta property="og:site_name" content="他年少如歌">
-<meta property="og:description" content="title: SQL注入基础date: 2019-09-16 20:01:56tags:">
+<meta property="og:description" content="title: web安全|SQL注入基础date: 2019-09-16 20:01:56tags:WEB安全">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://wx4.sinaimg.cn/mw690/006rXvS1ly1g7ff787syyj31950esq4z.jpg">
 <meta property="og:image" content="https://wx1.sinaimg.cn/mw690/006rXvS1ly1g7ff77zgukj30xb0dv427.jpg">
 <meta property="og:image" content="https://wx4.sinaimg.cn/mw690/006rXvS1ly1g7ff77z7unj319d0eo0uy.jpg">
-<meta property="og:updated_time" content="2019-09-28T10:45:47.594Z">
+<meta property="og:updated_time" content="2019-09-28T11:07:45.560Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="他年少如歌">
-<meta name="twitter:description" content="title: SQL注入基础date: 2019-09-16 20:01:56tags:">
+<meta name="twitter:description" content="title: web安全|SQL注入基础date: 2019-09-16 20:01:56tags:WEB安全">
 <meta name="twitter:image" content="https://wx4.sinaimg.cn/mw690/006rXvS1ly1g7ff787syyj31950esq4z.jpg">
   <link rel="canonical" href="https://ChakaLake.github.io/2019/09/16/web安全-SQL注入基础/">
 
@@ -250,7 +250,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-09-28 18:45:47" itemprop="dateModified" datetime="2019-09-28T18:45:47+08:00">2019-09-28</time>
+                <time title="修改时间：2019-09-28 19:07:45" itemprop="dateModified" datetime="2019-09-28T19:07:45+08:00">2019-09-28</time>
               </span>
             
           
@@ -266,7 +266,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>title: SQL注入基础<br>date: 2019-09-16 20:01:56<br>tags:</p><a id="more"></a>
+        <p>title: web安全|SQL注入基础<br>date: 2019-09-16 20:01:56<br>tags:WEB安全</p><a id="more"></a>
 <p>0X00    介绍SQL注入</p>
 <p>​    SQL注入就是指WEB应用程序对用户输入数据的合法性没有判断，前端传入后端的参数是攻击者可控的，并且参数带入数据库查询，攻击者可以通过构造不同的SQL语句来实现对数据库的任意操作。<br>​    下面以PHP语句为例<br><code>$query=&quot;select * from users where id=$_get[&#39;id&#39;]&quot;;</code><br>​    由于这里的参数id可控，且带入数据库查询，所以非法用户可以任意拼接sql语句进行攻击。<br>SQL注入按照不同的分类方法可以分为很多种，如报错注入、盲注、Union注入等。</p>
 <p>0X01    SQL注入原理</p>
