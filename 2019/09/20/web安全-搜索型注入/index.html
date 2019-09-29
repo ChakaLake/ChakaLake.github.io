@@ -61,18 +61,18 @@
 <meta property="og:site_name" content="他年少如歌">
 <meta property="og:description" content="0X01    搜索型注入简介与原理1、简介一些网站为了方便用户查找网站的资源，都对用户提供了搜索的功能，因为是搜索功能，程序员在编写代码时往往都忽略了对其变量（参数）的过滤，而且这样的漏洞在在国内系统中普遍存在。其中又分为POST/GET，GET型的一般是用在网站上的搜索，而POST则在用户名的的管理，可以从form表单的method=”get”属性区分是get还是post。搜索型注入又称为文本">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://wx2.sinaimg.cn/mw690/006rXvS1ly1g7exdjud5sj30r60e1mxv.jpg">
+<meta property="og:image" content="https://wx4.sinaimg.cn/mw690/006rXvS1ly1g7exdjud5sj30r60e1mxv.jpg">
 <meta property="og:image" content="https://wx3.sinaimg.cn/mw690/006rXvS1ly1g7exdk3cboj30tg0b8gmb.jpg">
 <meta property="og:image" content="https://wx2.sinaimg.cn/mw690/006rXvS1ly1g7exdjt1tpj30od0df0t7.jpg">
 <meta property="og:image" content="https://wx3.sinaimg.cn/mw690/006rXvS1ly1g7exdjvo8mj30mf0etaaf.jpg">
 <meta property="og:image" content="https://wx1.sinaimg.cn/mw690/006rXvS1ly1g7exdju2cmj30n20a2glu.jpg">
 <meta property="og:image" content="https://wx2.sinaimg.cn/mw690/006rXvS1ly1g7exdju6kwj314g0bot9g.jpg">
 <meta property="og:image" content="https://wx2.sinaimg.cn/mw690/006rXvS1ly1g7exdjue0cj30tk0hwgmc.jpg">
-<meta property="og:updated_time" content="2019-09-28T11:16:36.709Z">
+<meta property="og:updated_time" content="2019-09-29T11:57:01.125Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="web安全|搜索型注入">
 <meta name="twitter:description" content="0X01    搜索型注入简介与原理1、简介一些网站为了方便用户查找网站的资源，都对用户提供了搜索的功能，因为是搜索功能，程序员在编写代码时往往都忽略了对其变量（参数）的过滤，而且这样的漏洞在在国内系统中普遍存在。其中又分为POST/GET，GET型的一般是用在网站上的搜索，而POST则在用户名的的管理，可以从form表单的method=”get”属性区分是get还是post。搜索型注入又称为文本">
-<meta name="twitter:image" content="https://wx2.sinaimg.cn/mw690/006rXvS1ly1g7exdjud5sj30r60e1mxv.jpg">
+<meta name="twitter:image" content="https://wx4.sinaimg.cn/mw690/006rXvS1ly1g7exdjud5sj30r60e1mxv.jpg">
   <link rel="canonical" href="https://ChakaLake.github.io/2019/09/20/web安全-搜索型注入/">
 
 
@@ -254,7 +254,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-09-28 19:16:36" itemprop="dateModified" datetime="2019-09-28T19:16:36+08:00">2019-09-28</time>
+                <time title="修改时间：2019-09-29 19:57:01" itemprop="dateModified" datetime="2019-09-29T19:57:01+08:00">2019-09-29</time>
               </span>
             
           
@@ -291,7 +291,7 @@
 <p>1、GET型注入<br>测试源码：</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$pwd=$_GET[<span class="string">'pwd'</span>];</span><br><span class="line">$conn=mysql_connect(<span class="string">"127.0.0.1"</span>,<span class="string">"root"</span>,<span class="string">"root"</span>);<span class="comment">//连接mysql数据库</span></span><br><span class="line"><span class="keyword">if</span>($conn)&#123;</span><br><span class="line">	<span class="keyword">echo</span> <span class="string">"连接数据库成功！"</span>;</span><br><span class="line">&#125;<span class="comment">//判断连接</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">"&lt;br&gt;"</span>;</span><br><span class="line">mysql_select_db(<span class="string">'test'</span>,$conn);<span class="comment">//选择数据库</span></span><br><span class="line">$sql=<span class="string">"select * from users where password like '%$pwd%' order by password"</span>;<span class="comment">//字符型搜索语句</span></span><br><span class="line">$result=mysql_query($sql);</span><br><span class="line"><span class="keyword">while</span>($row=mysql_fetch_array($result))&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"用户ID："</span>.$row[<span class="string">'id'</span>].<span class="string">'&lt;br&gt;'</span>;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"用户名："</span>.$row[<span class="string">'username'</span>].<span class="string">'&lt;br&gt;'</span>;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"用户密码："</span>.$row[<span class="string">'password'</span>].<span class="string">'&lt;br&gt;'</span>;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"用户邮箱："</span>.$row[<span class="string">'email'</span>].<span class="string">'&lt;br&gt;'</span>;</span><br><span class="line">&#125;</span><br><span class="line">mysql_close($conn);<span class="comment">//关闭数据库连接</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">"&lt;br&gt;"</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"你当前执行的sql语句为："</span>.<span class="string">"&lt;br&gt;"</span>;</span><br><span class="line"><span class="keyword">echo</span> $sql;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p>①判断字段数<br><code>%&#39; union select 1,2,3,4,......and &#39;%&#39;=&#39;</code><br><img src="https://wx2.sinaimg.cn/mw690/006rXvS1ly1g7exdjud5sj30r60e1mxv.jpg" alt><br>②判断表名<br><code>%&#39; and (select count(*) from admin)&gt;0 and &#39;%&#39;=&#39;</code><br><img src="https://wx3.sinaimg.cn/mw690/006rXvS1ly1g7exdk3cboj30tg0b8gmb.jpg" alt><br>把admin这个表逐次更换，直到他不报错为止，就说明这个表存在。如：user、users等等。</p>
+<p>①判断字段数<br><code>%&#39; union select 1,2,3,4,......and &#39;%&#39;=&#39;</code><br><img src="https://wx4.sinaimg.cn/mw690/006rXvS1ly1g7exdjud5sj30r60e1mxv.jpg" alt><br>②判断表名<br><code>%&#39; and (select count(*) from admin)&gt;0 and &#39;%&#39;=&#39;</code><br><img src="https://wx3.sinaimg.cn/mw690/006rXvS1ly1g7exdk3cboj30tg0b8gmb.jpg" alt><br>把admin这个表逐次更换，直到他不报错为止，就说明这个表存在。如：user、users等等。</p>
 <p>2、POST型注入<br>测试源码：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$name=$_POST[&apos;n&apos;];</span><br><span class="line">$pass=$_POST[&apos;p&apos;];</span><br><span class="line">$conn=mysql_connect(&apos;127.0.0.1&apos;,&apos;root&apos;,&apos;root&apos;);</span><br><span class="line">if($conn)&#123;</span><br><span class="line">	echo &quot;mysql连接成功&quot;;</span><br><span class="line">	echo &quot;&lt;hr&gt;&quot;;</span><br><span class="line">&#125;</span><br><span class="line">mysql_select_db(&apos;test&apos;,$conn);</span><br><span class="line">$sql=&quot;select * from users where username=&apos;$name&apos; and password=&apos;$pass&apos;&quot;;</span><br><span class="line">$result=mysql_query($sql);</span><br><span class="line">mysql_close($conn);</span><br><span class="line">while($row=mysql_fetch_array($result))&#123;</span><br><span class="line">	echo &quot;用户ID:&quot;.$row[&apos;id&apos;].&quot;&lt;br&gt;&quot;;</span><br><span class="line">	echo &quot;用户名:&quot;.$row[&apos;username&apos;].&quot;&lt;br&gt;&quot;;</span><br><span class="line">	echo &quot;用户密码:&quot;.$row[&apos;password&apos;].&quot;&lt;br&gt;&quot;;</span><br><span class="line">&#125;</span><br><span class="line">echo &quot;当前执行的sql：&quot;.$sql;</span><br><span class="line">?&gt;</span><br><span class="line">&lt;form action=&quot;&quot;method=&quot;POST&quot;&gt;</span><br><span class="line">	账号：&lt;input name=&quot;n&quot; type=&quot;text&quot; /&gt;&lt;br&gt;&lt;br&gt;</span><br><span class="line">	密码：&lt;input name=&quot;p&quot; type=&quot;text&quot; /&gt;&lt;br&gt;&lt;br&gt;</span><br><span class="line">	&lt;input name&quot;&quot; type=&quot;submit&quot; value=&quot;提交&quot; /&gt;</span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure>
 
@@ -396,7 +396,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -415,7 +415,9 @@
         
           
         
-        <span class="site-state-item-count">2</span>
+          
+        
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
