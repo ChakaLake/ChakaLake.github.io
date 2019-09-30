@@ -61,14 +61,14 @@
 <meta property="og:site_name" content="他年少如歌">
 <meta property="og:description" content="0X00    介绍SQL注入​    SQL注入就是指WEB应用程序对用户输入数据的合法性没有判断，前端传入后端的参数是攻击者可控的，并且参数带入数据库查询，攻击者可以通过构造不同的SQL语句来实现对数据库的任意操作。​    下面以PHP语句为例$query=&amp;quot;select * from users where id=$_get[&amp;#39;id&amp;#39;]&amp;quot;;​    由于">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://wx4.sinaimg.cn/mw690/006rXvS1ly1g7ff787syyj31950esq4z.jpg">
-<meta property="og:image" content="https://wx1.sinaimg.cn/mw690/006rXvS1ly1g7ff77zgukj30xb0dv427.jpg">
-<meta property="og:image" content="https://wx4.sinaimg.cn/mw690/006rXvS1ly1g7ff77z7unj319d0eo0uy.jpg">
-<meta property="og:updated_time" content="2019-09-29T04:26:43.439Z">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/M8DxE8Kl1kozl0v7zpQ92IwUFeSP9UX0bEX9e1ALLcI!/b/dL4AAAAAAAAA&bo=WQYUAgAAAAADF3s!&rf=viewer_4">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/ywrxJivz8NH5B3NUPrupNBZpx8QLBPs9O6*uMagU6ik!/b/dMMAAAAAAAAA&bo=rwTzAQAAAAADJ1s!&rf=viewer_4">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/F*SU76*WJdQ6czT91z8NzIxDSEcII7*WIKiECuWZkUM!/b/dLgAAAAAAAAA&bo=YQYQAgAAAAADB1c!&rf=viewer_4">
+<meta property="og:updated_time" content="2019-09-29T12:38:54.855Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="web安全|sql注入基础">
 <meta name="twitter:description" content="0X00    介绍SQL注入​    SQL注入就是指WEB应用程序对用户输入数据的合法性没有判断，前端传入后端的参数是攻击者可控的，并且参数带入数据库查询，攻击者可以通过构造不同的SQL语句来实现对数据库的任意操作。​    下面以PHP语句为例$query=&amp;quot;select * from users where id=$_get[&amp;#39;id&amp;#39;]&amp;quot;;​    由于">
-<meta name="twitter:image" content="https://wx4.sinaimg.cn/mw690/006rXvS1ly1g7ff787syyj31950esq4z.jpg">
+<meta name="twitter:image" content="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/M8DxE8Kl1kozl0v7zpQ92IwUFeSP9UX0bEX9e1ALLcI!/b/dL4AAAAAAAAA&bo=WQYUAgAAAAADF3s!&rf=viewer_4">
   <link rel="canonical" href="https://ChakaLake.github.io/2019/09/29/web安全-sql注入基础/">
 
 
@@ -239,7 +239,7 @@
                 
               
 
-              <time title="创建时间：2019-09-29 12:25:42 / 修改时间：12:26:43" itemprop="dateCreated datePublished" datetime="2019-09-29T12:25:42+08:00">2019-09-29</time>
+              <time title="创建时间：2019-09-29 12:25:42 / 修改时间：20:38:54" itemprop="dateCreated datePublished" datetime="2019-09-29T12:25:42+08:00">2019-09-29</time>
             </span>
           
             
@@ -276,7 +276,7 @@
 <p>0X01    SQL注入原理</p>
 <p>​    SQL注入漏洞产生满足条件：<br>参数用户可控：前端传给后端的参数内容是用户可以控制的。<br>参数带入数据库查询：传入的参数拼接到SQL语句，且带入数据库查询。<br>​    当传入的ID参数为1’时，数据库执行的代码如下所示：<br><code>select * from users where id=1&#39;</code><br>​    这不符合数据库语法规范，所以会报错。<br>​    当传入的ID参数为and 1=1时，执行的SQL语句如下所示<br><code>select * from users where id=1 and 1=1</code><br>​    因为1=1为真，且where语句中的id=1也为真，所以页面会返回与id=1相同的结果。<br>​    当传入的ID参数为and 1=2时，由于1=2不成立，所以返回假，页面就会返回与id=1不同的结果。<br>​    由此可以初步判断ID参数存在SQL注入漏洞，攻击者可以进一步拼接SQL语句进行攻击，致使数据库信息泄露，甚至进一步获取服务器的权限等。</p>
 <p>0X02    与MySQL相关的知识点</p>
-<p>​    在MySQL5.0版本之后，MySQL默认在数据库中存放一个information_schema的数据库，在该库中，务必牢记三个表名，分别是schemata，tables和columns。<br>​    schemata表存储该用户创建的所有数据库的库名，该表中记录数据库库名的字段名为schemata_name。<br><img src="https://wx4.sinaimg.cn/mw690/006rXvS1ly1g7ff787syyj31950esq4z.jpg" alt><br>​    tables表存储该用户创建的库名和表名，该表中记录数据库名和表名的字段名分别为table_schema和table_name。<br><img src="https://wx1.sinaimg.cn/mw690/006rXvS1ly1g7ff77zgukj30xb0dv427.jpg" alt><br>​    columns表存储该用户创建的所有数据库的库名、表名和字段名，该表中记录数据库库名、表名和字段名的字段名分别为table_schema，table_name和column_name。<br><img src="https://wx4.sinaimg.cn/mw690/006rXvS1ly1g7ff77z7unj319d0eo0uy.jpg" alt><br>​    常用的MySQL查询语句和函数如下：<br> 1、MySQL查询语句<br>​    在不知道任何条件时：<br><code>select column from database.table</code><br>​    在知道一条已知条件时：<br><code>select column from database.table where column1=&#39;value1&#39;</code><br>​    在知道两条已知条件时：<br><code>select column from database.table where column1=&#39;value1&#39;and column2=&#39;value2&#39;</code><br>2、limit的用法<br>​    limit的使用格式为limit m,n，其中m是指记录开始的地方，从0开始表示第一条记录；n是指取n条记录。<br>3、需要记住的几个函数<br>​    select database();    当前网站使用的数据库<br>​    select version();    当前MySQL版本<br>​    select user();    当前MySQL用户<br>​    select @@basedir;    查询数据库路径，用来上传webshell<br>​    select @@global.version_compile_os    查询当前操作系统<br>4、注释符<br>​    MySQL中，常见的注释符表达方式：#    –空格    /**/。<br>5、内联注释<br>​    内敛注释的形式为/*!code*/，内联注释可用于整个SQL语句中，常用来绕过WAF检测。<br><code>index.php?id=-15 /*!union*/ /*!select*/ 1,2,3</code></p>
+<p>​    在MySQL5.0版本之后，MySQL默认在数据库中存放一个information_schema的数据库，在该库中，务必牢记三个表名，分别是schemata，tables和columns。<br>​    schemata表存储该用户创建的所有数据库的库名，该表中记录数据库库名的字段名为schemata_name。<br><img src="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/M8DxE8Kl1kozl0v7zpQ92IwUFeSP9UX0bEX9e1ALLcI!/b/dL4AAAAAAAAA&bo=WQYUAgAAAAADF3s!&rf=viewer_4" alt><br>​    tables表存储该用户创建的库名和表名，该表中记录数据库名和表名的字段名分别为table_schema和table_name。<br><img src="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/ywrxJivz8NH5B3NUPrupNBZpx8QLBPs9O6*uMagU6ik!/b/dMMAAAAAAAAA&bo=rwTzAQAAAAADJ1s!&rf=viewer_4" alt><br>​    columns表存储该用户创建的所有数据库的库名、表名和字段名，该表中记录数据库库名、表名和字段名的字段名分别为table_schema，table_name和column_name。<br><img src="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/F*SU76*WJdQ6czT91z8NzIxDSEcII7*WIKiECuWZkUM!/b/dLgAAAAAAAAA&bo=YQYQAgAAAAADB1c!&rf=viewer_4" alt><br>​    常用的MySQL查询语句和函数如下：<br> 1、MySQL查询语句<br>​    在不知道任何条件时：<br><code>select column from database.table</code><br>​    在知道一条已知条件时：<br><code>select column from database.table where column1=&#39;value1&#39;</code><br>​    在知道两条已知条件时：<br><code>select column from database.table where column1=&#39;value1&#39;and column2=&#39;value2&#39;</code><br>2、limit的用法<br>​    limit的使用格式为limit m,n，其中m是指记录开始的地方，从0开始表示第一条记录；n是指取n条记录。<br>3、需要记住的几个函数<br>​    select database();    当前网站使用的数据库<br>​    select version();    当前MySQL版本<br>​    select user();    当前MySQL用户<br>​    select @@basedir;    查询数据库路径，用来上传webshell<br>​    select @@global.version_compile_os    查询当前操作系统<br>4、注释符<br>​    MySQL中，常见的注释符表达方式：#    –空格    /**/。<br>5、内联注释<br>​    内敛注释的形式为/*!code*/，内联注释可用于整个SQL语句中，常用来绕过WAF检测。<br><code>index.php?id=-15 /*!union*/ /*!select*/ 1,2,3</code></p>
 <p>0X03    常见注入分类</p>
 <p>1、按照注入点类型<br>（1）数字型注入<br>当输入的参数为整型时，存过存在注入漏洞，则可以认为是数字型注入。<br>测试步骤：<br>①加单引号，URL：<a href="http://www.text.com/text.php?id=3&#39;" target="_blank" rel="noopener">www.text.com/text.php?id=3&#39;</a><br>对应的sql：select * from table where id=3’ 这时sql语句出错，程序无法正常从数据库中查询出数据，就会抛出异常。<br>②加and 1=1，URL：<a href="http://www.text.com/text.php?id=3" target="_blank" rel="noopener">www.text.com/text.php?id=3</a> and 1=1<br>对应的sql：seelct * from table where id=3 and 1=1 语句执行正常，与原始页面无任何差异。<br>③加and 1=2，URL：<a href="http://www.text.com/text.php?id=3" target="_blank" rel="noopener">www.text.com/text.php?id=3</a> and 1=2 语句可以正常执行，但是无法查询出结果，所以返回数据与原始网页存在差异。<br>如果满足以上三点，则可以判断该URL存在数字型注入。<br>（2）字符型注入<br>当输入的参数为字符串时，成为字符型。字符型和数字型最大的一个区别在于，数字型不需要单引号来闭合，而字符串一般需要通过单引号来闭合的。<br>例如数字型语句：select * from table where id=3<br>则字符型如下：select * from table where name=’admin’<br>因此，在构造payload时通过闭合单引号可以成功执行语句<br>测试步骤：<br>①加单引号：select * from table where name=’admin’’<br>由于加单引号后变成三个单引号，则无法执行，程序会报错。<br>②加’and 1=1 此时sql语句为：select * from table where name=’admin ‘and 1=1’，也无法进行注入，还需要同各国注释符号将其绕过。<br>因此，构造语句为：select * from table where name=’admin’ and 1=1– ‘可成功执行返回结果正确。<br>③加’and 1=2 – sql语句为：select * from table where name=’admin’and 1=2– ‘则会报错。<br>如果满足以上三点，可以判断该url为字符型注入。<br>（3）搜索型注入<br>在进行数据搜索时没有过滤搜索参数，一般在链接地址中有”keyword=关键字”，有的不显示在链接地址里面，而是直接通过搜索框表单提交。<br>对应是sql为：select * from table where column like ‘%关键字%’</p>
 <p>2、按照数据提交的方式分类<br>①get注入<br>提交数据的方式时get，注入点的为止在get参数部分。<br>②post注入<br>使用post方式提交数据，注入点位置在post数据部分，常发生在表单中。<br>③cookie注入<br>http请求的时候会带上客户端的cookie，注入点存在cookie当中的某个字段中。<br>④http头部注入<br>注入点在http请求头部的某个字段中。比如在user-agent字段中。严格的讲，cookie其实应该也是算头部注入的一种形式。应为在http请求的时候，cookie是头部的一个字段。</p>
@@ -380,7 +380,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">6</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
