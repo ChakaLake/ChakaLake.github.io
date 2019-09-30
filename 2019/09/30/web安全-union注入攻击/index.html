@@ -54,14 +54,18 @@
   };
 </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="他年少如歌">
-<meta property="og:url" content="https://ChakaLake.github.io/archives/2019/index.html">
+  <meta name="description" content="0X00    union注入攻击0X01    union注入代码分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="web安全|union注入攻击">
+<meta property="og:url" content="https://ChakaLake.github.io/2019/09/30/web安全-union注入攻击/index.html">
 <meta property="og:site_name" content="他年少如歌">
+<meta property="og:description" content="0X00    union注入攻击0X01    union注入代码分析">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-09-30T03:43:07.022Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="他年少如歌">
-  <link rel="canonical" href="https://ChakaLake.github.io/archives/2019/">
+<meta name="twitter:title" content="web安全|union注入攻击">
+<meta name="twitter:description" content="0X00    union注入攻击0X01    union注入代码分析">
+  <link rel="canonical" href="https://ChakaLake.github.io/2019/09/30/web安全-union注入攻击/">
 
 
 <script id="page-configurations">
@@ -69,13 +73,13 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: false,
+    isPost: true,
     isPage: false,
-    isArchive: true
+    isArchive: false
   };
 </script>
 
-  <title>归档 | 他年少如歌</title>
+  <title>web安全|union注入攻击 | 他年少如歌</title>
   <meta name="generator" content="Hexo 3.9.0">
   
 
@@ -180,21 +184,6 @@
 
     
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
 </nav>
 </div>
     </header>
@@ -212,240 +201,111 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        
-        
-        
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/09/30/web安全-union注入攻击/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="他年少如歌">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">web安全|union注入攻击
+
           
-        
-        <span class="collection-header">嗯..! 目前共计 7 篇日志。 继续努力。</span>
-      </div>
-      
+        </h1>
 
-      
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
 
-  
-  
+              
+                
+              
 
-  
+              <time title="创建时间：2019-09-30 11:39:39 / 修改时间：11:43:07" itemprop="dateCreated datePublished" datetime="2019-09-30T11:39:39+08:00">2019-09-30</time>
+            </span>
+          
+            
+
+            
+          
+
+          
+
+        </div>
+      </header>
+
     
-    <div class="collection-year">
-      <h1 class="collection-header">2019</h1>
-    </div>
-  
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+      
+        <p>0X00    union注入攻击</p><p>0X01    union注入代码分析</p><a id="more"></a>
 
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/09/30/web安全-union注入攻击/" itemprop="url">
-            <span itemprop="name">web安全|union注入攻击</span>
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-09-30T11:39:39+08:00"
-              content="2019-09-30">
-          09-30
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-  
-  
-
-  
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/09/29/Kali-Linux-MSF基本操作/" itemprop="url">
-            <span itemprop="name">Kali Linux|MSF基本操作</span>
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-09-29T17:48:52+08:00"
-              content="2019-09-29">
-          09-29
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-  
-  
-
-  
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/09/29/web安全-sql注入基础/" itemprop="url">
-            <span itemprop="name">web安全|sql注入基础</span>
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-09-29T12:25:42+08:00"
-              content="2019-09-29">
-          09-29
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-  
-  
-
-  
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/09/20/web安全-搜索型注入/" itemprop="url">
-            <span itemprop="name">web安全|搜索型注入</span>
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-09-20T20:50:05+08:00"
-              content="2019-09-20">
-          09-20
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-  
-  
-
-  
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/09/10/系统漏洞-CVE-2019-0708复现/" itemprop="url">
-            <span itemprop="name">系统漏洞|CVE-2019-0708复现</span>
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-09-10T22:11:41+08:00"
-              content="2019-09-10">
-          09-10
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-  
-  
-
-  
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/08/29/python学习-基础/" itemprop="url">
-            <span itemprop="name">python学习|python简介</span>
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-08-29T05:15:52+08:00"
-              content="2019-08-29">
-          08-29
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-  
-  
-
-  
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/08/28/python学习-模块/" itemprop="url">
-            <span itemprop="name">python学习|模块</span>
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-08-28T06:15:07+08:00"
-              content="2019-08-28">
-          08-28
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+<p>在union注入页面中，程序获取get参数id，将id拼接到sql语句中，在数据库中查询参数id对应的内容，然后将第一条查询结果中的username和adderss输出到页面，由于是将数据输出到页面上，所以可以利用union语句查询其他数据，代码如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$con=mysqli_connect(<span class="string">"localhost"</span>,<span class="string">"root"</span>,<span class="string">"root"</span>,<span class="string">"test"</span>);</span><br><span class="line"><span class="comment">// 检测连接</span></span><br><span class="line"><span class="keyword">if</span> (mysqli_connect_errno())</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">echo</span> <span class="string">"连接失败: "</span> . mysqli_connect_error();</span><br><span class="line">&#125;</span><br><span class="line">$id = $_GET[<span class="string">'id'</span>];</span><br><span class="line">$result = mysqli_query($con,<span class="string">"select * from users where `id`="</span>.$id);</span><br><span class="line"><span class="keyword">while</span>($row = mysqli_fetch_array($result))</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">echo</span> $row[<span class="string">'username'</span>] . <span class="string">" "</span> . $row[<span class="string">'address'</span>];</span><br><span class="line">	<span class="keyword">echo</span> <span class="string">"&lt;br&gt;"</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 
 
     </div>
+
+    
+    
+    
+<div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-heart"></i>感谢阅读-------------</div>
+    
+</div>
+  
+</div>
+        
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/09/29/Kali-Linux-MSF基本操作/" rel="next" title="Kali Linux|MSF基本操作">
+                  <i class="fa fa-chevron-left"></i> Kali Linux|MSF基本操作
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
+        
+      </footer>
+    
   </div>
   
   
   
+  </article>
 
-  
-
+  </div>
 
 
           </div>
@@ -464,6 +324,11 @@
 
   <aside class="sidebar">
     <div class="sidebar-inner">
+        
+        
+        
+        
+      
 
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc" data-target="post-toc-wrap">
