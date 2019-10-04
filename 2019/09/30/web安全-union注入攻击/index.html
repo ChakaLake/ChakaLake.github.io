@@ -54,17 +54,31 @@
   };
 </script>
 
-  <meta name="description" content="0X00    union注入攻击0X01    union注入代码分析">
+  <meta name="description" content="0X00    union注入攻击union注入攻击测试地址：https://127.0.0.1/union.php?id=1访问该网址时，页面返回结果。在url后添加一个单引号，再次访问，页面返回结果与id=1的结果不同访问id =1 and 1=1时，由于and 1=1为真，所以页面应返回与id=1相同的结果。访问id=1 and 1=2时，由于and 1=2为假，所以页面应返回与id=1不同">
 <meta property="og:type" content="article">
 <meta property="og:title" content="web安全|union注入攻击">
 <meta property="og:url" content="https://ChakaLake.github.io/2019/09/30/web安全-union注入攻击/index.html">
 <meta property="og:site_name" content="他年少如歌">
-<meta property="og:description" content="0X00    union注入攻击0X01    union注入代码分析">
+<meta property="og:description" content="0X00    union注入攻击union注入攻击测试地址：https://127.0.0.1/union.php?id=1访问该网址时，页面返回结果。在url后添加一个单引号，再次访问，页面返回结果与id=1的结果不同访问id =1 and 1=1时，由于and 1=1为真，所以页面应返回与id=1相同的结果。访问id=1 and 1=2时，由于and 1=2为假，所以页面应返回与id=1不同">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-09-30T03:43:07.022Z">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/2EvaHNQiFYiF5WwJHB5IpNK0hV6bLtMcfMFjViHTmFA!/b/dFQBAAAAAAAA&bo=wwPOAAAAAAADByw!&rf=viewer_4">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/gRA0iFwtd3oBP3FgX8Q1RNxvplpcG9cwbwkz5.9DOUI!/b/dFQBAAAAAAAA&bo=sQT4AAAAAAADF38!&rf=viewer_4">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/Ku7m5FAMApGd4Rw4Qw6D6vXvkJHMhVv.B2Ad*fNgGj8!/b/dIMAAAAAAAAA&bo=pgPOAAAAAAADF1k!&rf=viewer_4">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/Ku7m5FAMApGd4Rw4Qw6D6vXvkJHMhVv.B2Ad*fNgGj8!/b/dIMAAAAAAAAA&bo=pgPOAAAAAAADF1k!&rf=viewer_4">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/hZLUcEwpXavtFcqac2MWBfEl5d*DD6YlXTyNSJQy5p0!/b/dL8AAAAAAAAA&bo=uwPBAAAAAAADF0s!&rf=viewer_4">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/ZdWlsE20qXL9LBa83GBzPXXcC6pH2SQE77kWcQgMYo0!/b/dL4AAAAAAAAA&bo=rAToAAAAAAADF3I!&rf=viewer_4">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/8PMRnoTNTF27tSll9AlM.Y1YETRDEWLbTcBzEFgnTQk!/b/dMMAAAAAAAAA&bo=nwPEAAAAAAADF2o!&rf=viewer_4">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/Mm7okoNDBSztIjoz1k85JZKVnF88*2U2JxoAdvekZXI!/b/dMQAAAAAAAAA&bo=ygPCAAAAAAADFzk!&rf=viewer_4">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/0pdPIxLI.oRvsLH391lTCqX6qEFwu9jkyH9FeMy5SUA!/b/dL8AAAAAAAAA&bo=qwPHAAAAAAADF10!&rf=viewer_4">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/MgLS5unHGgLSRU47T05Gsoh9ERxEPtXck2GmzvOpEH8!/b/dFIBAAAAAAAA&bo=qAPrAAAAAAADF3I!&rf=viewer_4">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/3Tc0XxZE.NDbfcbgzLdKMWqxkhYx*Vo7JjI.tSVHdL4!/b/dL8AAAAAAAAA&bo=BQTcAAAAAAADB*8!&rf=viewer_4">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/kq0iJrTKrUl1kfvbbwWZrKWWa4GYTmH7vMscTdXd3B4!/b/dLYAAAAAAAAA&bo=1APXAAAAAAADFzI!&rf=viewer_4">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/J98OuTCtzVb.Wh2dVb6b5uJtw4IDHkltPZBbe02cARI!/b/dLsAAAAAAAAA&bo=yQPKAAAAAAADByI!&rf=viewer_4">
+<meta property="og:updated_time" content="2019-10-03T02:12:11.775Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="web安全|union注入攻击">
-<meta name="twitter:description" content="0X00    union注入攻击0X01    union注入代码分析">
+<meta name="twitter:description" content="0X00    union注入攻击union注入攻击测试地址：https://127.0.0.1/union.php?id=1访问该网址时，页面返回结果。在url后添加一个单引号，再次访问，页面返回结果与id=1的结果不同访问id =1 and 1=1时，由于and 1=1为真，所以页面应返回与id=1相同的结果。访问id=1 and 1=2时，由于and 1=2为假，所以页面应返回与id=1不同">
+<meta name="twitter:image" content="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/2EvaHNQiFYiF5WwJHB5IpNK0hV6bLtMcfMFjViHTmFA!/b/dFQBAAAAAAAA&bo=wwPOAAAAAAADByw!&rf=viewer_4">
   <link rel="canonical" href="https://ChakaLake.github.io/2019/09/30/web安全-union注入攻击/">
 
 
@@ -235,11 +249,19 @@
                 
               
 
-              <time title="创建时间：2019-09-30 11:39:39 / 修改时间：11:43:07" itemprop="dateCreated datePublished" datetime="2019-09-30T11:39:39+08:00">2019-09-30</time>
+              <time title="创建时间：2019-09-30 11:39:39" itemprop="dateCreated datePublished" datetime="2019-09-30T11:39:39+08:00">2019-09-30</time>
             </span>
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-03 10:12:11" itemprop="dateModified" datetime="2019-10-03T10:12:11+08:00">2019-10-03</time>
+              </span>
             
           
 
@@ -254,11 +276,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>0X00    union注入攻击</p><p>0X01    union注入代码分析</p><a id="more"></a>
+        <p>0X00    union注入攻击</p><p>union注入攻击测试地址：<a href="https://127.0.0.1/union.php?id=1" target="_blank" rel="noopener">https://127.0.0.1/union.php?id=1</a><br>访问该网址时，页面返回结果。<br><img src="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/2EvaHNQiFYiF5WwJHB5IpNK0hV6bLtMcfMFjViHTmFA!/b/dFQBAAAAAAAA&bo=wwPOAAAAAAADByw!&rf=viewer_4" alt><br>在url后添加一个单引号，再次访问，页面返回结果与id=1的结果不同<br><img src="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/gRA0iFwtd3oBP3FgX8Q1RNxvplpcG9cwbwkz5.9DOUI!/b/dFQBAAAAAAAA&bo=sQT4AAAAAAADF38!&rf=viewer_4" alt><br>访问id =1 and 1=1时，由于and 1=1为真，所以页面应返回与id=1相同的结果。访问id=1 and 1=2时，由于and 1=2为假，所以页面应返回与id=1不同的结果。<br><img src="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/Ku7m5FAMApGd4Rw4Qw6D6vXvkJHMhVv.B2Ad*fNgGj8!/b/dIMAAAAAAAAA&bo=pgPOAAAAAAADF1k!&rf=viewer_4" alt></p><a id="more"></a>
 
+<p><img src="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/Ku7m5FAMApGd4Rw4Qw6D6vXvkJHMhVv.B2Ad*fNgGj8!/b/dIMAAAAAAAAA&bo=pgPOAAAAAAADF1k!&rf=viewer_4" alt><br>可以得出该网站存在sql注入。使用order by 1-99语句查询该数据表的字段数量，可以理解为order by=1-99，如访问id=1 order  by 4，页面返回与id=1相同的结果。访问id=1 order by 5，页面返回与id=1不同的结果，则字段数为4。<br><img src="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/hZLUcEwpXavtFcqac2MWBfEl5d*DD6YlXTyNSJQy5p0!/b/dL8AAAAAAAAA&bo=uwPBAAAAAAADF0s!&rf=viewer_4" alt></p>
+<p><img src="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/ZdWlsE20qXL9LBa83GBzPXXcC6pH2SQE77kWcQgMYo0!/b/dL4AAAAAAAAA&bo=rAToAAAAAAADF3I!&rf=viewer_4" alt><br>在数据库查询参数id对应的内容，然后将数据库的内容输出到页面，由于是将数据输出到页面上的，所以可以使用union注入，且通过order by查询结果，得到字段数4，所以union的注入语句<br><code>union select 1,2,3</code><br>可以看到页面成功执行，但是没有返回union select的结果，这是由于代码只返回第一条结果，所以union select获取的结果没有输出到也面。<br><img src="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/8PMRnoTNTF27tSll9AlM.Y1YETRDEWLbTcBzEFgnTQk!/b/dMMAAAAAAAAA&bo=nwPEAAAAAAADF2o!&rf=viewer_4" alt><br>可以通过设置参数id值，让服务端返回union select的结果，例如，把id的值设置为-1，这样数据库中没有id=-1的数据，所以会返回union select的结果。<br><img src="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/Mm7okoNDBSztIjoz1k85JZKVnF88*2U2JxoAdvekZXI!/b/dMQAAAAAAAAA&bo=ygPCAAAAAAADFzk!&rf=viewer_4" alt><br>返回的结果为2:4，意味着在union select1,2,3,4中，2和4的为止可以输入mysql语句。在2的为止查询当前数据库名（使用database()函数），访问id=-1 union select 1，database(),3,4，页面成功返回了数据库信息。<br><img src="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/0pdPIxLI.oRvsLH391lTCqX6qEFwu9jkyH9FeMy5SUA!/b/dL8AAAAAAAAA&bo=qwPHAAAAAAADF10!&rf=viewer_4" alt><br>得出了数据库库名后，接下来输入以下命令查询表名。<br><code>select table_name from information_schema.tables where table_schema=&#39;test&#39; limit 0,1;</code><br>尝试在2的位置粘贴语句，这里需要加上括号，页面返回了数据库的第一个表名。如果需要看第二个表名，则修改limit中的第一位数字，例如使用limit 1,1就可以获取数据库的第二个表名。<br><img src="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/MgLS5unHGgLSRU47T05Gsoh9ERxEPtXck2GmzvOpEH8!/b/dFIBAAAAAAAA&bo=qAPrAAAAAAADF3I!&rf=viewer_4" alt><br>已知库名和表名，开始查询字段名，擦汗寻语句如下所示。<br><code>select column_name from information_schema.columns where table_schema=&#39;test&#39; and table_name=&#39;users&#39; limit 0,1;</code><br>尝试在2的位置粘贴语句，括号还是不可少，获取了users表的第一个字段名，通过使用limit 1,1，获取了users表的第二个字段名。<br><img src="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/3Tc0XxZE.NDbfcbgzLdKMWqxkhYx*Vo7JjI.tSVHdL4!/b/dL8AAAAAAAAA&bo=BQTcAAAAAAADB*8!&rf=viewer_4" alt></p>
+<p><img src="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/kq0iJrTKrUl1kfvbbwWZrKWWa4GYTmH7vMscTdXd3B4!/b/dLYAAAAAAAAA&bo=1APXAAAAAAADFzI!&rf=viewer_4" alt><br>当获取了库名、表名和字段名时，就可以构造sql语句查询数据库的数据，例如查询字段username对应的数据。<br><code>select username from users limit 0,1;</code><br><img src="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/J98OuTCtzVb.Wh2dVb6b5uJtw4IDHkltPZBbe02cARI!/b/dLsAAAAAAAAA&bo=yQPKAAAAAAADByI!&rf=viewer_4" alt></p>
+<p>0X01    union注入代码分析</p>
 <p>在union注入页面中，程序获取get参数id，将id拼接到sql语句中，在数据库中查询参数id对应的内容，然后将第一条查询结果中的username和adderss输出到页面，由于是将数据输出到页面上，所以可以利用union语句查询其他数据，代码如下：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$con=mysqli_connect(<span class="string">"localhost"</span>,<span class="string">"root"</span>,<span class="string">"root"</span>,<span class="string">"test"</span>);</span><br><span class="line"><span class="comment">// 检测连接</span></span><br><span class="line"><span class="keyword">if</span> (mysqli_connect_errno())</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">echo</span> <span class="string">"连接失败: "</span> . mysqli_connect_error();</span><br><span class="line">&#125;</span><br><span class="line">$id = $_GET[<span class="string">'id'</span>];</span><br><span class="line">$result = mysqli_query($con,<span class="string">"select * from users where `id`="</span>.$id);</span><br><span class="line"><span class="keyword">while</span>($row = mysqli_fetch_array($result))</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">echo</span> $row[<span class="string">'username'</span>] . <span class="string">" "</span> . $row[<span class="string">'address'</span>];</span><br><span class="line">	<span class="keyword">echo</span> <span class="string">"&lt;br&gt;"</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$con=mysqli_connect(<span class="string">"localhost"</span>,<span class="string">"root"</span>,<span class="string">"root"</span>,<span class="string">"test"</span>);</span><br><span class="line"><span class="comment">// 检测连接</span></span><br><span class="line"><span class="keyword">if</span> (mysqli_connect_errno())</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">echo</span> <span class="string">"连接失败: "</span> . mysqli_connect_error();</span><br><span class="line">&#125;</span><br><span class="line">$id = $_GET[<span class="string">'id'</span>];</span><br><span class="line">$result = mysqli_query($con,<span class="string">"select * from users where `id`="</span>.$id);</span><br><span class="line"><span class="keyword">if</span>(! $result)&#123;</span><br><span class="line">printf(<span class="string">"Error: %s\n"</span>, mysqli_error($con));</span><br><span class="line"><span class="keyword">exit</span>();</span><br><span class="line">&#125;</span><br><span class="line">$row = mysqli_fetch_array($result);</span><br><span class="line"><span class="keyword">echo</span> $row[<span class="string">'username'</span>] . <span class="string">":"</span> . $row[<span class="string">'address'</span>];</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"&lt;br&gt;"</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 
+<p>当访问id=1 union select 1,2,3时，执行的sql语句为：<br><code>select * from users where</code>`id<code>=1 union select 1,2,3;</code><br>此时sql语句可疑分为select * from users where `id`=1和union select 1,2,3两条，利用第二条语句（union查询）就可以获取数据库中的数据。</p>
 
     </div>
 
@@ -284,8 +311,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/2019/09/29/Kali-Linux-MSF基本操作/" rel="next" title="Kali Linux|MSF基本操作">
-                  <i class="fa fa-chevron-left"></i> Kali Linux|MSF基本操作
+                <a href="/2019/09/29/Kali-Linux-MSF基本操作/" rel="next" title="Kali Linux|MSF基本操作(更新ing)">
+                  <i class="fa fa-chevron-left"></i> Kali Linux|MSF基本操作(更新ing)
                 </a>
               
             </div>
@@ -293,6 +320,10 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/10/02/应急响应-windows入侵排查思路/" rel="prev" title="应急响应|windows入侵排查思路">
+                  应急响应|windows入侵排查思路 <i class="fa fa-chevron-right"></i>
+                </a>
               
             </div>
           </div>
@@ -354,7 +385,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

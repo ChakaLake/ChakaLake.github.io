@@ -56,14 +56,14 @@
 
   <meta name="description" content="0X00    介绍Metasploit是一款开源安全漏洞检测工具，附带数百个已知的软件漏洞，并保持频繁更新。被安全社区冠以”可以黑掉整个宇宙”之名的强大渗透测试框架。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Kali Linux|MSF基本操作">
+<meta property="og:title" content="Kali Linux|MSF基本操作(更新ing)">
 <meta property="og:url" content="https://ChakaLake.github.io/2019/09/29/Kali-Linux-MSF基本操作/index.html">
 <meta property="og:site_name" content="他年少如歌">
 <meta property="og:description" content="0X00    介绍Metasploit是一款开源安全漏洞检测工具，附带数百个已知的软件漏洞，并保持频繁更新。被安全社区冠以”可以黑掉整个宇宙”之名的强大渗透测试框架。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-09-30T03:28:36.439Z">
+<meta property="og:updated_time" content="2019-09-30T14:18:00.011Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Kali Linux|MSF基本操作">
+<meta name="twitter:title" content="Kali Linux|MSF基本操作(更新ing)">
 <meta name="twitter:description" content="0X00    介绍Metasploit是一款开源安全漏洞检测工具，附带数百个已知的软件漏洞，并保持频繁更新。被安全社区冠以”可以黑掉整个宇宙”之名的强大渗透测试框架。">
   <link rel="canonical" href="https://ChakaLake.github.io/2019/09/29/Kali-Linux-MSF基本操作/">
 
@@ -79,7 +79,7 @@
   };
 </script>
 
-  <title>Kali Linux|MSF基本操作 | 他年少如歌</title>
+  <title>Kali Linux|MSF基本操作(更新ing) | 他年少如歌</title>
   <meta name="generator" content="Hexo 3.9.0">
   
 
@@ -219,7 +219,7 @@
       <meta itemprop="name" content="他年少如歌">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">Kali Linux|MSF基本操作
+        <h1 class="post-title" itemprop="name headline">Kali Linux|MSF基本操作(更新ing)
 
           
         </h1>
@@ -246,7 +246,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-09-30 11:28:36" itemprop="dateModified" datetime="2019-09-30T11:28:36+08:00">2019-09-30</time>
+                <time title="修改时间：2019-09-30 22:18:00" itemprop="dateModified" datetime="2019-09-30T22:18:00+08:00">2019-09-30</time>
               </span>
             
           
@@ -279,7 +279,10 @@
 
 <p>0X01    常用命令</p>
 <p>进入msf终端<br><code>msfconsole</code><br>基本控制命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">connect	类似nc命令</span><br><span class="line">msf &gt; connect 192.168.1.2 80</span><br><span class="line">show	列出所有模块</span><br><span class="line">msf &gt; show</span><br><span class="line">search	搜索</span><br><span class="line">msf &gt; search ms10-046</span><br><span class="line">name	过滤，不知有name筛选，还有类型type，平台platform等</span><br><span class="line">msf &gt; search name:nginx</span><br><span class="line">show options	查看参数设置（常用）</span><br><span class="line">msf5 auxiliary(scanner/mysql/mysql_login) &gt; show options</span><br><span class="line">Module options (auxiliary/scanner/mysql/mysql_login):</span><br><span class="line">Name              Current Setting  Required  Description</span><br><span class="line">----              ---------------  --------  -----------</span><br><span class="line">BLANK_PASSWORDS   false            no        Try blank passwords for all users</span><br><span class="line">BRUTEFORCE_SPEED  5                yes       How fast to bruteforce, from 0 to 5</span><br><span class="line">DB_ALL_CREDS      false            no        Try each user/password couple stored in the current database</span><br><span class="line">DB_ALL_PASS       false            no        Add all passwords in the current database to the list</span><br><span class="line">DB_ALL_USERS      false            no        Add all users in the current database to the list</span><br><span class="line">PASSWORD                           no        A specific password to authenticate with</span><br><span class="line">......省略</span><br><span class="line">运行模块run、exploit（效果一样）</span><br><span class="line">msf5 auxiliary(scanner/mysql/mysql_login) &gt; run</span><br><span class="line">msf5 auxiliary(scanner/mysql/mysql_login) &gt; exploit</span><br><span class="line">use	使用模块的命令</span><br><span class="line">msf &gt; use exploit/windows/smb/ms08_067_netapi</span><br><span class="line">msf exploit(windows/smb/ms08_067_netapi) &gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">1、connect	类似nc命令</span><br><span class="line">msf &gt; connect 192.168.1.2 80</span><br><span class="line"></span><br><span class="line">2、show	列出所有模块</span><br><span class="line">msf &gt; show</span><br><span class="line"></span><br><span class="line">3、search	搜索</span><br><span class="line">msf &gt; search ms10-046</span><br><span class="line">name	过滤，不知有name筛选，还有类型type，平台platform等</span><br><span class="line">msf &gt; search name:nginx</span><br><span class="line"></span><br><span class="line">4、show options	查看参数设置（常用）</span><br><span class="line">msf5 auxiliary(scanner/mysql/mysql_login) &gt; show options</span><br><span class="line"></span><br><span class="line">Module options (auxiliary/scanner/mysql/mysql_login):</span><br><span class="line"></span><br><span class="line">Name              Current Setting  Required  Description</span><br><span class="line">----              ---------------  --------  -----------</span><br><span class="line">BLANK_PASSWORDS   false            no        Try blank passwords for all users</span><br><span class="line">BRUTEFORCE_SPEED  5                yes       How fast to bruteforce, from 0 to 5</span><br><span class="line">DB_ALL_CREDS      false            no        Try each user/password couple stored in the current database</span><br><span class="line">DB_ALL_PASS       false            no        Add all passwords in the current database to the list</span><br><span class="line">DB_ALL_USERS      false            no        Add all users in the current database to the list</span><br><span class="line">PASSWORD                           no        A specific password to authenticate with</span><br><span class="line">......省略</span><br><span class="line"></span><br><span class="line">5、运行模块run、exploit（效果一样）</span><br><span class="line">msf5 auxiliary(scanner/mysql/mysql_login) &gt; run</span><br><span class="line">msf5 auxiliary(scanner/mysql/mysql_login) &gt; exploit</span><br><span class="line"></span><br><span class="line">6、use	使用模块的命令</span><br><span class="line">msf &gt; use exploit/windows/smb/ms08_067_netapi</span><br><span class="line">msf exploit(windows/smb/ms08_067_netapi) &gt;</span><br><span class="line"></span><br><span class="line">#数据库方面的操作（service postgresql start）</span><br><span class="line">#连接postgresql</span><br><span class="line">servuce postgresql start</span><br><span class="line"></span><br><span class="line">1、db_status	是否连接数据库</span><br><span class="line">msf &gt; db_status</span><br><span class="line">2、db_disconnect	断开数据库连接（通常不用）</span><br><span class="line">3、db_connect	连接其他数据库</span><br><span class="line">4、db_rebuild_cache	开启数据库缓存任务（后面如果用到数据库的东西，可以更快调用）</span><br><span class="line">5、db_nmap	其实和nmap命令一致，不过会把扫描结果存入数据库</span><br><span class="line">6、db_export	导出数据库，-f参数，保存格式，后面接路径（db_export -f xml /root/xxx/a.xml）</span><br><span class="line">7、db_import	导入数据库（db_import /root/xxx/a.xml）</span><br></pre></td></tr></table></figure>
+
+<p>0X02    hosts查看主机记录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1、查看书记记录</span><br><span class="line">msf &gt; hosts</span><br><span class="line">2、查看某个ip的记录详情</span><br><span class="line">msf &gt; hosts 10.0.0.1</span><br><span class="line">3、查看ip	-u</span><br><span class="line">msf &gt; hosts -u 10.0.0.</span><br></pre></td></tr></table></figure>
 
 
     </div>
@@ -380,7 +383,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
