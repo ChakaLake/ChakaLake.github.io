@@ -56,7 +56,7 @@
 
   <meta name="description" content="0X01    搜索型注入简介与原理1、简介一些网站为了方便用户查找网站的资源，都对用户提供了搜索的功能，因为是搜索功能，程序员在编写代码时往往都忽略了对其变量（参数）的过滤，而且这样的漏洞在在国内系统中普遍存在。其中又分为POST/GET，GET型的一般是用在网站上的搜索，而POST则在用户名的的管理，可以从form表单的method=”get”属性区分是get还是post。搜索型注入又称为文本">
 <meta property="og:type" content="article">
-<meta property="og:title" content="web安全|搜索型注入">
+<meta property="og:title" content="渗透测试(二)|搜索型注入">
 <meta property="og:url" content="https://ChakaLake.github.io/2019/09/20/web安全-搜索型注入/index.html">
 <meta property="og:site_name" content="他年少如歌">
 <meta property="og:description" content="0X01    搜索型注入简介与原理1、简介一些网站为了方便用户查找网站的资源，都对用户提供了搜索的功能，因为是搜索功能，程序员在编写代码时往往都忽略了对其变量（参数）的过滤，而且这样的漏洞在在国内系统中普遍存在。其中又分为POST/GET，GET型的一般是用在网站上的搜索，而POST则在用户名的的管理，可以从form表单的method=”get”属性区分是get还是post。搜索型注入又称为文本">
@@ -68,9 +68,9 @@
 <meta property="og:image" content="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/fz3EH1YEyXPx*EfS0KkPQXbzhyd3WGVVRWFAnHAS.xE!/b/dMUAAAAAAAAA&bo=PgNqAQAAAAADF2Q!&rf=viewer_4">
 <meta property="og:image" content="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/NJaBMXAfAm99CZnDnYaEr4kiuv3XFcfzRr1VmHt3eg0!/b/dLgAAAAAAAAA&bo=sAWkAQAAAAADFyI!&rf=viewer_4">
 <meta property="og:image" content="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/9SVbfByVeJxm2roW2feL*DYENPFNDjlaVpo4N2bnARU!/b/dL8AAAAAAAAA&bo=KASEAgAAAAADF5g!&rf=viewer_4">
-<meta property="og:updated_time" content="2019-09-30T01:08:34.211Z">
+<meta property="og:updated_time" content="2019-10-05T05:30:32.692Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="web安全|搜索型注入">
+<meta name="twitter:title" content="渗透测试(二)|搜索型注入">
 <meta name="twitter:description" content="0X01    搜索型注入简介与原理1、简介一些网站为了方便用户查找网站的资源，都对用户提供了搜索的功能，因为是搜索功能，程序员在编写代码时往往都忽略了对其变量（参数）的过滤，而且这样的漏洞在在国内系统中普遍存在。其中又分为POST/GET，GET型的一般是用在网站上的搜索，而POST则在用户名的的管理，可以从form表单的method=”get”属性区分是get还是post。搜索型注入又称为文本">
 <meta name="twitter:image" content="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/d.81UAXAhRqHtlYBowzBoW4JYwGv0904wqIbptHSiec!/b/dL4AAAAAAAAA&bo=0gP5AQAAAAADFxs!&rf=viewer_4">
   <link rel="canonical" href="https://ChakaLake.github.io/2019/09/20/web安全-搜索型注入/">
@@ -87,7 +87,7 @@
   };
 </script>
 
-  <title>web安全|搜索型注入 | 他年少如歌</title>
+  <title>渗透测试(二)|搜索型注入 | 他年少如歌</title>
   <meta name="generator" content="Hexo 3.9.0">
   
 
@@ -227,7 +227,7 @@
       <meta itemprop="name" content="他年少如歌">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">web安全|搜索型注入
+        <h1 class="post-title" itemprop="name headline">渗透测试(二)|搜索型注入
 
           
         </h1>
@@ -254,7 +254,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-09-30 09:08:34" itemprop="dateModified" datetime="2019-09-30T09:08:34+08:00">2019-09-30</time>
+                <time title="修改时间：2019-10-05 13:30:32" itemprop="dateModified" datetime="2019-10-05T13:30:32+08:00">2019-10-05</time>
               </span>
             
           
