@@ -202,6 +202,111 @@
   
   
   <div class="post-block home">
+    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/10/05/渗透测试(四)-Boolean注入攻击/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="他年少如歌">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+            
+            <a href="/2019/10/05/渗透测试(四)-Boolean注入攻击/" class="post-title-link" itemprop="url">渗透测试(四)|Boolean注入攻击</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-10-05 19:01:55" itemprop="dateCreated datePublished" datetime="2019-10-05T19:01:55+08:00">2019-10-05</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-08 13:17:44" itemprop="dateModified" datetime="2019-10-08T13:17:44+08:00">2019-10-08</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/WEB安全/" itemprop="url" rel="index"><span itemprop="name">WEB安全</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>0X00    Boolean注入攻击</p><p>​    Boolean注入攻击的测试地址：<a href="http://127.0.0.1/Boolean.php?id=1。" target="_blank" rel="noopener">http://127.0.0.1/Boolean.php?id=1。</a><br>访问该网址时，页面返回yes。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/100501.png" alt><br>​    在url后添加一个单引号，再次访问，发现返回结果由yes变成no。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/100502.png" alt><br>​    访问id=1’ and 1=1%23，id=1’ and 1=2%23，发现返回的结果分别是yes和no，更改id的值，发现返回的任然是yes或者no，由此可判断，页面只返回yes或no，而没有返回数据库中的数据，所以此处不可使用union注入。此处可疑尝试利用boolean注入，boolean注入是指构造sql判断语句，通过查看页面的返回结果来推测哪些sql判断条件是成立的，以此获取数据库中的数据，我们先判断数据库名的长度，语句如下所示。<br><code>&#39;and length(database())&gt;=1--+</code><br>​    有单引号，所以需要注释符来注释。1的位置上可以是任意数字，如’and length(database())&gt;=4–+和’and length(database())&gt;=5–+，我们可疑构造这样的语句，然后观察页面的返回结果。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/100503.png" alt></p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/10/05/渗透测试(四)-Boolean注入攻击/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+<div>
+  
+</div>
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+        <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block home">
     <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/10/02/应急响应-windows入侵排查思路/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -307,7 +412,7 @@
   
   
   <div class="post-block home">
-    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/09/30/web安全-union注入攻击/">
+    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/09/30/渗透测试(三)-union注入攻击/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yang">
@@ -321,7 +426,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
             
-            <a href="/2019/09/30/web安全-union注入攻击/" class="post-title-link" itemprop="url">web安全|union注入攻击</a>
+            <a href="/2019/09/30/渗透测试(三)-union注入攻击/" class="post-title-link" itemprop="url">渗透测试(三)|union注入攻击</a>
           
         </h1>
 
@@ -347,9 +452,22 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-10-03 10:12:11" itemprop="dateModified" datetime="2019-10-03T10:12:11+08:00">2019-10-03</time>
+                <time title="修改时间：2019-10-08 06:29:27" itemprop="dateModified" datetime="2019-10-08T06:29:27+08:00">2019-10-08</time>
               </span>
             
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/WEB安全/" itemprop="url" rel="index"><span itemprop="name">WEB安全</span></a></span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -363,11 +481,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>0X00    union注入攻击</p><p>union注入攻击测试地址：<a href="https://127.0.0.1/union.php?id=1" target="_blank" rel="noopener">https://127.0.0.1/union.php?id=1</a><br>访问该网址时，页面返回结果。<br><img src="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/2EvaHNQiFYiF5WwJHB5IpNK0hV6bLtMcfMFjViHTmFA!/b/dFQBAAAAAAAA&bo=wwPOAAAAAAADByw!&rf=viewer_4" alt><br>在url后添加一个单引号，再次访问，页面返回结果与id=1的结果不同<br><img src="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/gRA0iFwtd3oBP3FgX8Q1RNxvplpcG9cwbwkz5.9DOUI!/b/dFQBAAAAAAAA&bo=sQT4AAAAAAADF38!&rf=viewer_4" alt><br>访问id =1 and 1=1时，由于and 1=1为真，所以页面应返回与id=1相同的结果。访问id=1 and 1=2时，由于and 1=2为假，所以页面应返回与id=1不同的结果。<br><img src="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/Ku7m5FAMApGd4Rw4Qw6D6vXvkJHMhVv.B2Ad*fNgGj8!/b/dIMAAAAAAAAA&bo=pgPOAAAAAAADF1k!&rf=viewer_4" alt></p>
+          <p>0X00    union注入攻击</p><p>​    union注入攻击测试地址：<a href="https://127.0.0.1/union.php?id=1" target="_blank" rel="noopener">https://127.0.0.1/union.php?id=1</a><br>访问该网址时，页面返回结果。<br><img src="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/2EvaHNQiFYiF5WwJHB5IpNK0hV6bLtMcfMFjViHTmFA!/b/dFQBAAAAAAAA&bo=wwPOAAAAAAADByw!&rf=viewer_4" alt><br>​    在url后添加一个单引号，再次访问，页面返回结果与id=1的结果不同<br><img src="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/gRA0iFwtd3oBP3FgX8Q1RNxvplpcG9cwbwkz5.9DOUI!/b/dFQBAAAAAAAA&bo=sQT4AAAAAAADF38!&rf=viewer_4" alt><br>​    访问id =1 and 1=1时，由于and 1=1为真，所以页面应返回与id=1相同的结果。访问id=1 and 1=2时，由于and 1=2为假，所以页面应返回与id=1不同的结果。<br><img src="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/Ku7m5FAMApGd4Rw4Qw6D6vXvkJHMhVv.B2Ad*fNgGj8!/b/dIMAAAAAAAAA&bo=pgPOAAAAAAADF1k!&rf=viewer_4" alt></p>
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/2019/09/30/web安全-union注入攻击/#more" rel="contents">
+              <a class="btn" href="/2019/09/30/渗透测试(三)-union注入攻击/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -609,7 +727,7 @@
   
   
   <div class="post-block home">
-    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/09/20/web安全-搜索型注入/">
+    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/09/20/渗透测试(二)-搜索型注入/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yang">
@@ -623,7 +741,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
             
-            <a href="/2019/09/20/web安全-搜索型注入/" class="post-title-link" itemprop="url">渗透测试(二)|搜索型注入</a>
+            <a href="/2019/09/20/渗透测试(二)-搜索型注入/" class="post-title-link" itemprop="url">渗透测试(二)|搜索型注入</a>
           
         </h1>
 
@@ -649,7 +767,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-10-05 15:01:29" itemprop="dateModified" datetime="2019-10-05T15:01:29+08:00">2019-10-05</time>
+                <time title="修改时间：2019-10-05 17:06:00" itemprop="dateModified" datetime="2019-10-05T17:06:00+08:00">2019-10-05</time>
               </span>
             
           
@@ -682,7 +800,7 @@
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/2019/09/20/web安全-搜索型注入/#more" rel="contents">
+              <a class="btn" href="/2019/09/20/渗透测试(二)-搜索型注入/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1070,7 +1188,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
