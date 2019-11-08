@@ -69,7 +69,8 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/100506.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/100507.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/100508.png">
-<meta property="og:updated_time" content="2019-10-08T05:17:44.396Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/100510.png">
+<meta property="og:updated_time" content="2019-10-09T22:05:37.966Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="渗透测试(四)|Boolean注入攻击">
 <meta name="twitter:description" content="0X00    Boolean注入攻击​    Boolean注入攻击的测试地址：http://127.0.0.1/Boolean.php?id=1。访问该网址时，页面返回yes。​    在url后添加一个单引号，再次访问，发现返回结果由yes变成no。​    访问id=1’ and 1=1%23，id=1’ and 1=2%23，发现返回的结果分别是yes和no，更改id的值，发现返回的任然">
@@ -255,7 +256,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-10-08 13:17:44" itemprop="dateModified" datetime="2019-10-08T13:17:44+08:00">2019-10-08</time>
+                <time title="修改时间：2019-10-10 06:05:37" itemprop="dateModified" datetime="2019-10-10T06:05:37+08:00">2019-10-10</time>
               </span>
             
           
@@ -288,8 +289,7 @@
 
 <p><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/100504.png" alt><br>    然后可以发现当数值为4时，返回的结果是yes；当数值为5时，返回的结果时no。整个语句的意思时，数据库库名的长度大于等于4，结果为yes；大于等于5，结果为no，由此判断出数据库库名的长度为4。</p>
 <p>​    接着，使用逐字判断的方式获取数据库库名。数据库库名的范围一般在a<del>z、0</del>9之内，可能还有一些特殊字符，这里的字母不区分大小写。逐字判断的sql语句为：<br><code>and substr(database(),1,1)=&#39;t&#39;--+</code><br>​    substr是截取的意思，其意思是截取database()的值，从第一个字符开始，每次返回一个。<br>​    substr的用法跟limit的有区别，需要注意。limit是从0开始排序，而这里从1开始排序。可以使用Burp的爆破功能爆破其中的t值，发现当值是t时，页面返回yes，其他值均返回no，因此判断数据库库名的第一位为t。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/100505.png" alt></p>
-<p><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/100506.png" alt><br>    其实还可以使用ASCII码的字符进行查询，t的ASCII码是116，而在mysql中，ASCII的转换函数为ord，则逐字判断的sql语句应该为。<br>`and ord(substr(database(),1,1)=116–+)<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/100507.png" alt><br>    从union注入中我们已经直到，数据库名是test，因此判断第二位字母是否是e，可以使用以下语句。<br><code>and substr(database(),2,1)=&#39;e&#39;--+</code><br>返回的结果是yes<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/100508.png" alt><br>    查询表名、字段名的语句 也应该粘贴在database()的位置，从union注入中已经知道数据库test的第一个表名是users，第一个字母应该是u，判断语句如下所示。<br><code>and substr((select table_name from information_schema.tables where table_schema=&#39;test&#39; limit 0,1),1,1)=&#39;u&#39;--+</code><br>以此类推，就可以查询出所有的表名与字段名。<br><img src alt></p>
-<p>0X01    Boolean注入代码分析</p>
+<p><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/100506.png" alt><br>    其实还可以使用ASCII码的字符进行查询，t的ASCII码是116，而在mysql中，ASCII的转换函数为ord，则逐字判断的sql语句应该为。<br>`and ord(substr(database(),1,1)=116–+)<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/100507.png" alt><br>    从union注入中我们已经直到，数据库名是test，因此判断第二位字母是否是e，可以使用以下语句。<br><code>and substr(database(),2,1)=&#39;e&#39;--+</code><br>返回的结果是yes<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/100508.png" alt><br>    查询表名、字段名的语句 也应该粘贴在database()的位置，从union注入中已经知道数据库test的第一个表名是users，第一个字母应该是u，判断语句如下所示。<br><code>and substr((select table_name from information_schema.tables where table_schema=&#39;test&#39; limit 0,1),1,1)=&#39;u&#39;--+</code><br>以此类推，就可以查询出所有的表名与字段名。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/100510.png" alt></p>
 <p>0X01    Boolean注入代码分析</p>
 <p>​    在Boolean注入页面中程序先获取get参数id，通过preg_match判断其中是否存在union/sleep/benchmark等危险字符。然后将参数id拼接到sql语句，从数据库中查询，如果有结果，则返回yes，负责返回no。当访问该页面时，代码根据数据库查询结果返回yes或no，而不返回数据库中的任何数据，所以页面上只会显示yes或no，代码如下所示。</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$con=mysqli_connect(<span class="string">"localhost"</span>,<span class="string">"root"</span>,<span class="string">"root"</span>,<span class="string">"test"</span>);</span><br><span class="line"><span class="keyword">if</span> (mysqli_connect_errno())</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">echo</span> <span class="string">"连接失败: "</span> . mysqli_connect_error();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$id = $_GET[<span class="string">'id'</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (preg_match(<span class="string">"/union|sleep|benchmark/i"</span>, $id)) &#123;</span><br><span class="line">	<span class="keyword">exit</span>(<span class="string">"no"</span>);</span><br><span class="line">&#125;</span><br><span class="line">$result = mysqli_query($con,<span class="string">"select * from users where `id`='"</span>.$id.<span class="string">"'"</span>);</span><br><span class="line"><span class="keyword">if</span>(! $result)&#123;</span><br><span class="line">printf(<span class="string">"Error: %s\n"</span>, mysqli_error($con));</span><br><span class="line"><span class="keyword">exit</span>();</span><br><span class="line">&#125;</span><br><span class="line">$row = mysqli_fetch_array($result);</span><br><span class="line"><span class="keyword">if</span> ($row) &#123;</span><br><span class="line">	<span class="keyword">exit</span>(<span class="string">"yes"</span>);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">	<span class="keyword">exit</span>(<span class="string">"no"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
@@ -394,7 +394,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -417,7 +417,9 @@
         
           
         
-        <span class="site-state-item-count">4</span>
+          
+        
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
