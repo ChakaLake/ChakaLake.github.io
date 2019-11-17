@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="0X00    宽字节注入攻击​    宽字节注入攻击的测试地址：http://127.0.0.1/kzj.php?id=1​    访问id=1’，程序并没有报错，反而多了一个转义符（反斜杠）。​    从返回的结果可以看出，参数id=1在数据库中查询时被单引号包围的。当传入id=1’时，传入的单引号又被转义符（反斜线）转义，导致参数id无法逃逸单引号的包围，所以在一般情况下，此处是不窜在sql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="渗透测试(九)|宽字节注入">
+<meta property="og:url" content="https://ChakaLake.github.io/2019/11/16/渗透测试(九)-宽字节注入/index.html">
+<meta property="og:site_name" content="他年少如歌">
+<meta property="og:description" content="0X00    宽字节注入攻击​    宽字节注入攻击的测试地址：http://127.0.0.1/kzj.php?id=1​    访问id=1’，程序并没有报错，反而多了一个转义符（反斜杠）。​    从返回的结果可以看出，参数id=1在数据库中查询时被单引号包围的。当传入id=1’时，传入的单引号又被转义符（反斜线）转义，导致参数id无法逃逸单引号的包围，所以在一般情况下，此处是不窜在sql">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111601.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111602.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111603.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111604.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111605.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111606.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111607.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111608.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111609.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111610.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111611.png">
+<meta property="og:updated_time" content="2019-11-16T11:51:31.518Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="渗透测试(九)|宽字节注入">
+<meta name="twitter:description" content="0X00    宽字节注入攻击​    宽字节注入攻击的测试地址：http://127.0.0.1/kzj.php?id=1​    访问id=1’，程序并没有报错，反而多了一个转义符（反斜杠）。​    从返回的结果可以看出，参数id=1在数据库中查询时被单引号包围的。当传入id=1’时，传入的单引号又被转义符（反斜线）转义，导致参数id无法逃逸单引号的包围，所以在一般情况下，此处是不窜在sql">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111601.png">
+  <link rel="canonical" href="https://ChakaLake.github.io/2019/11/16/渗透测试(九)-宽字节注入/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>渗透测试(九)|宽字节注入 | 他年少如歌</title>
+  <meta name="generator" content="Hexo 3.9.0">
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">他年少如歌</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">人生如棋，我愿为卒，行动虽慢，但谁曾见我后退一步！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/11/16/渗透测试(九)-宽字节注入/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="他年少如歌">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">渗透测试(九)|宽字节注入
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-11-16 10:51:30 / 修改时间：19:51:31" itemprop="dateCreated datePublished" datetime="2019-11-16T10:51:30+08:00">2019-11-16</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/WEB安全/" itemprop="url" rel="index"><span itemprop="name">WEB安全</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>0X00    宽字节注入攻击</p><p>​    宽字节注入攻击的测试地址：<a href="http://127.0.0.1/kzj.php?id=1" target="_blank" rel="noopener">http://127.0.0.1/kzj.php?id=1</a><br>​    访问id=1’，程序并没有报错，反而多了一个转义符（反斜杠）。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111601.png" alt><br>​    从返回的结果可以看出，参数id=1在数据库中查询时被单引号包围的。当传入id=1’时，传入的单引号又被转义符（反斜线）转义，导致参数id无法逃逸单引号的包围，所以在一般情况下，此处是不窜在sql注入漏洞的。不过有一个特列，就是当数据库的编码为GBK时，可以使用宽字节注入，宽字节的格式时在地址后现价一个%df，再加单引号，因为反斜杠的编码为%5c，而在GBK编码中，%df%5c是繁体字“連”，所以这时，单引号成功逃逸，报错mysql数据库的错误。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111602.png" alt><br>​    由于输入的参数id=1’，导致sql语句多了一个单引号，所以需要使用注释符来注释程序自身的单引号。访问id=1%df’%23，可以看到sql语句已经符合语法规范。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111603.png" alt><br>​    使用and 1=1和and1=2进一步判断注入，访问id=1%df’and 1=1%23和id=1%df’and 1=2%23<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111604.png" alt><br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111605.png" alt><br>​    当and 1=1程序返回正常时，and 1=2程序返回错误，所以判断该参数ID存在sql注入漏洞，接着使用order by查询数据库表的字段数量，最后得知字段数为4。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111606.png" alt><br>​    因为页面直接显示了数据库中的内容，所以可以使用union查询。与union注入一样，此时的union语句时union select ,1,2,3,4，为了让页面返回union查询的结果，需要把ID的值改为负数。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111607.png" alt><br>​    然后尝试在页面2的位置查询当前数据库的库名（database()）.<br>id=-1%df’union select 1,user(),3,4%23<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111608.png" alt><br>​    查询数据库的库名。<br>select table_name from information_schema.tables where table_schema=’test’ limit 0,1<br>​    但是此时，由于单引号被转义，会自动多出反斜杠，导致sql语句出错，所以此需要利用另一种方法：嵌套查询。就是在一个查询语句中，再添加一个查询语句。<br>select table_name from information_schema.tables where table_schema=(select database())limit 0,1<br>​    可以看到，原本的table_schema=’test’变成了table_schema=(select database())，因为select database()的结果就是’test’，这就是嵌套查询。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111609.png" alt><br>​    从返回结果可以看到，数据库的第一个表明是person，如果想查询后面的表名，还需要修改limit后的数字。或使用group_concat()函数，查询所有表名。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111610.png" alt><br>​    使用以下语句查询users表中的字段。<br>select column_name from information_schema.columns where table_schema=(select database())and table_name=(select table_name from information_schema.tables where table_schema=(select database())limit 1,1)limit 0,1<br>​    这里使用了三层嵌套，，第一层是table_schema，代表库名的嵌套，第二层和第三层是table_name的嵌套。语句中有两个limit，前一个limit是控制表名的顺序，后一个则控制字段名的顺序。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111611.png" alt></p><a id="more"></a>
+
+<p>0X01    宽字节注入代码分析</p>
+<p>​    在宽字节注入页面中，程序获取参数ID，并对参数ID使用addslashes()转义，然后拼接到sql语句中，进行查询</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$conn = mysql_connect(<span class="string">'localhost'</span>, <span class="string">'root'</span>, <span class="string">'root'</span>) <span class="keyword">or</span> <span class="keyword">die</span>(<span class="string">'bad!'</span>);</span><br><span class="line">mysql_select_db(<span class="string">'test'</span>, $conn) <span class="keyword">OR</span> emMsg(<span class="string">"数据库连接失败"</span>);</span><br><span class="line">mysql_query(<span class="string">"SET NAMES 'gbk'"</span>,$conn);</span><br><span class="line">$id = addslashes($_GET[<span class="string">'id'</span>]);</span><br><span class="line">$sql=<span class="string">"SELECT * FROM users WHERE id='$id' LIMIT 0,1"</span>;</span><br><span class="line">$result = mysql_query($sql, $conn) <span class="keyword">or</span> <span class="keyword">die</span>(mysql_error()); </span><br><span class="line">$row = mysql_fetch_array($result);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>($row)</span><br><span class="line">	&#123;</span><br><span class="line">  	<span class="keyword">echo</span> $row[<span class="string">'username'</span>] . $row[<span class="string">'address'</span>];</span><br><span class="line">  	&#125;</span><br><span class="line">	<span class="keyword">else</span> </span><br><span class="line">	&#123;</span><br><span class="line">	print_r(mysql_error());</span><br><span class="line">	&#125;      </span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">&lt;/font&gt; </span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="string">"&lt;br&gt;The Query String is : "</span>.$sql .<span class="string">"&lt;br&gt;"</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>​    </p>
+<p>​    当访问id=1’时，执行的sql语句为<br>select * from users where id=’1&#39;‘<br>​    可以看到单引号被转义符“\”转义，所以在一般情况下，是无法注入的，但由于在数据库查询前执行了set names ‘GBK’，将编码设置为宽字节GBK，所以此处存在宽字节注入漏洞。<br>​    在PHP中，通过iconv()进行编码转换时，也可能存在宽字节注入漏洞。</p>
+
+    </div>
+
+    
+    
+    
+<div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-heart"></i>感谢阅读-------------</div>
+    
+</div>
+  
+</div>
+        
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/11/14/渗透测试(八)-二次注入攻击/" rel="next" title="渗透测试(八)|二次注入攻击">
+                  <i class="fa fa-chevron-left"></i> 渗透测试(八)|二次注入攻击
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/11/17/渗透测试(十)-cookie注入攻击/" rel="prev" title="渗透测试(十)|cookie注入攻击">
+                  渗透测试(十)|cookie注入攻击 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc" data-target="post-toc-wrap">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Yang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+  </nav>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yang</span>
+</div>
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.3.0</div>
+-->
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.3.0"></script><script src="/js/motion.js?v=7.3.0"></script>
+<script src="/js/schemes/muse.js?v=7.3.0"></script>
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+ <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
