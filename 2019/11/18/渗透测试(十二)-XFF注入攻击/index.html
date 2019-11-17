@@ -54,20 +54,24 @@
   };
 </script>
 
-  <meta name="description" content="upload-labs是一个帮你总结所有类型的上传漏洞靶场。项目地址：https://github.com/c0ny1/upload-labs。">
+  <meta name="description" content="​    XFF注入攻击的测试地址：https://127.0.0.1/xff.php​    通过Burp Suit抓取数据包内容，可以看到HTTP请求头中有一个头部参数X-Forwarded-for。X-Forwarded-for简称XFF头，它代表客户端的真实IP，然后通过X-Forwarded-for的值可以伪造客户端IP，将X-Forwarded-for设置为127.0.0.1，然后访问">
 <meta property="og:type" content="article">
-<meta property="og:title" content="靶机练习|upload-labs 1-20关">
-<meta property="og:url" content="https://ChakaLake.github.io/2019/10/17/靶机练习-upload-labs 1-20关/index.html">
+<meta property="og:title" content="渗透测试(十二)|XFF注入攻击">
+<meta property="og:url" content="https://ChakaLake.github.io/2019/11/18/渗透测试(十二)-XFF注入攻击/index.html">
 <meta property="og:site_name" content="他年少如歌">
-<meta property="og:description" content="upload-labs是一个帮你总结所有类型的上传漏洞靶场。项目地址：https://github.com/c0ny1/upload-labs。">
+<meta property="og:description" content="​    XFF注入攻击的测试地址：https://127.0.0.1/xff.php​    通过Burp Suit抓取数据包内容，可以看到HTTP请求头中有一个头部参数X-Forwarded-for。X-Forwarded-for简称XFF头，它代表客户端的真实IP，然后通过X-Forwarded-for的值可以伪造客户端IP，将X-Forwarded-for设置为127.0.0.1，然后访问">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/20191017.png">
-<meta property="og:updated_time" content="2019-11-07T03:07:08.493Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111801.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111802.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111803.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111804.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111805.png">
+<meta property="og:updated_time" content="2019-11-17T23:36:00.054Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="靶机练习|upload-labs 1-20关">
-<meta name="twitter:description" content="upload-labs是一个帮你总结所有类型的上传漏洞靶场。项目地址：https://github.com/c0ny1/upload-labs。">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/20191017.png">
-  <link rel="canonical" href="https://ChakaLake.github.io/2019/10/17/靶机练习-upload-labs 1-20关/">
+<meta name="twitter:title" content="渗透测试(十二)|XFF注入攻击">
+<meta name="twitter:description" content="​    XFF注入攻击的测试地址：https://127.0.0.1/xff.php​    通过Burp Suit抓取数据包内容，可以看到HTTP请求头中有一个头部参数X-Forwarded-for。X-Forwarded-for简称XFF头，它代表客户端的真实IP，然后通过X-Forwarded-for的值可以伪造客户端IP，将X-Forwarded-for设置为127.0.0.1，然后访问">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111801.png">
+  <link rel="canonical" href="https://ChakaLake.github.io/2019/11/18/渗透测试(十二)-XFF注入攻击/">
 
 
 <script id="page-configurations">
@@ -81,7 +85,7 @@
   };
 </script>
 
-  <title>靶机练习|upload-labs 1-20关 | 他年少如歌</title>
+  <title>渗透测试(十二)|XFF注入攻击 | 他年少如歌</title>
   <meta name="generator" content="Hexo 3.9.0">
   
 
@@ -209,7 +213,7 @@
   
   
   <div class="post-block post">
-    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/10/17/靶机练习-upload-labs 1-20关/">
+    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/11/18/渗透测试(十二)-XFF注入攻击/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yang">
@@ -221,7 +225,7 @@
       <meta itemprop="name" content="他年少如歌">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">靶机练习|upload-labs 1-20关
+        <h1 class="post-title" itemprop="name headline">渗透测试(十二)|XFF注入攻击
 
           
         </h1>
@@ -237,19 +241,11 @@
                 
               
 
-              <time title="创建时间：2019-10-17 08:55:51" itemprop="dateCreated datePublished" datetime="2019-10-17T08:55:51+08:00">2019-10-17</time>
+              <time title="创建时间：2019-11-18 06:05:39 / 修改时间：07:36:00" itemprop="dateCreated datePublished" datetime="2019-11-18T06:05:39+08:00">2019-11-18</time>
             </span>
           
             
 
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-07 11:07:08" itemprop="dateModified" datetime="2019-11-07T11:07:08+08:00">2019-11-07</time>
-              </span>
             
           
             <span class="post-meta-item">
@@ -258,7 +254,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/靶机练习/" itemprop="url" rel="index"><span itemprop="name">靶机练习</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/WEB安全/" itemprop="url" rel="index"><span itemprop="name">WEB安全</span></a></span>
 
                 
                 
@@ -277,48 +273,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>upload-labs是一个帮你总结所有类型的上传漏洞靶场。<br>项目地址：<a href="https://github.com/c0ny1/upload-labs。" target="_blank" rel="noopener">https://github.com/c0ny1/upload-labs。</a></p><a id="more"></a>
-<p><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/20191017.png" alt></p>
-<p>pass-01    JS验证</p>
-<p>直接查看网站源文件、使用抓包工具查看客户端是否向服务器提交了数据包，如果没有则是js验证、随便上传一个文件，看返回结果。<br>1、删除代码中onsubmit事件中关于文件上传时验证上传文件的相关代码。<br>2、更改文件上传js代码中允许上传的文件扩展名。<br>3、使用BP或者fiddle等代理工具抓包提交，本地文件先更改为jpg，上传时拦截，再把文件扩展名更改为.php即可。</p>
-<p>pass-02    MIME验证</p>
-<p>方法：使用BP抓包修改：Content-Type：image/jpeg。</p>
-<p>pass-03    黑名单绕过</p>
-<p>通过上传.php3、.phtml、.phps、.php5、.pht等类似的格式来绕过<br>注意：要使上述格式正常解析，需要满足以下条件的任意一种。<br>1、Apache的httpd.conf中有如下配置代码：<br><code>AddType application/x-httpd-php .php5 .php3.pht.phps.phtml</code><br>2、上传.htaccess伪静态文件，内容如下：<br><code>&lt;FilesMatch &quot;phpinfo.php5&quot;&gt;</code><br><code>SetHandler application/x-httpd-php</code><br><code>&lt;/FilesMatch&gt;</code></p>
-<p>pass-04    .htaccess</p>
-<p>虽然禁止上传很多的后缀文件，但是：没有过滤.htaccess等类似的文件，直接用pass-03上面的方法即可。<br>1、先上传一个.htaccess文件，内容如下<br><code>SetHandler application/x-httpd-php</code><br>此伪静态规则的意思就是：所有文件都会解析为php<br>2、再上传一个php木马文件，并改包，直接改为filename=”a.php999”，这就直接绕过。当然也可以上传一个图马文件，都一样。</p>
-<p>pass-05    大小写</p>
-<p>黑名单，加上了禁止上传.htaccess文件，但是，没有将后缀进行大小统一，于是可以通过大小写绕过。直接改为filename=”a.PhP”。<br>注意：在linux没有特殊配置的情况下，这种情况只有windows可以，因为windows会忽略大小写。</p>
-<p>pass-06    空格</p>
-<p>win下xx.jpg[空格]或xx.jpg.这两类文件时不允许存在的，若这样命名，windows会默认去除空格或点。此处会删除末尾的点，但是没有去掉末尾的空格，因此上传一个.php[空格]文件即可。<br>只需要修改：filename=”a.php “</p>
-<p>pass-07    点绕过</p>
-<p>黑名单，但是没有对后缀名进行去”.”的处理，利用windows的特性，会自动去掉后缀命中最后的”.”，可在后缀名中加”.”到过。<br>只需要修改：finame=”a.php.”</p>
-<p>pass-08    ::$DATA绕过</p>
-<p>NTFS文件系统包括对备用数据流的支持，主要包括提供与Macintosh文件系统中的文件的兼容性。备用数据亏允许文件包含多个数据流。每个文件至少有一个数据流。在windows中，此默认数据流为：$DATA。<br>黑名单，但是没有对后缀名进行去”::$DATA”处理，利用windows的特性，可在后缀名中加”::$DATA”绕过。只需要修改为：filename=”a.php::$DATA”</p>
-<p>pass-09    . .绕过</p>
-<p>windows会忽略文件末尾的.和空格。直接修改为：finame=”a.php. .”。</p>
-<p>pass-10    双写绕过</p>
-<p>将敏感后缀替换为空，双写.pphphp绕过。直接修改为：filename=”a.pphphp”。</p>
-<p>pass-11    00截断GET</p>
-<p>此关需要满足一下两个条件<br>1、PHP版本&lt;5.3.4<br>2、php.ini中magic_quotes_gpc=off<br>上传路径%00截断绕过，上传的文件名写成a.jpg，save_path改成../upload/a.php%00，最后保存下来的文件就是a.php。</p>
-<p>pass-12    00截断POST</p>
-<p>和上一题唯一不同就是save_path从GET变成了POST，此时不能直接使用%00截断，原因是%00截断在GET中呗URL解码之后是空字符。但是POST中%00不会被URL解码，所以只能通过Burpsuite修改hex值为00进行截断，也就是在POST情况下，需要先对%00进行一个URL编码（选中%00，然后按ctrl+shift+u截取）。</p>
-<p>pass-13    图片马绕过</p>
-<p>通过读文件的前2个字节判断文件类型，因此直接上传图片马即可。<br>添加GIF图片的文件头GIF89a，可以直接绕过GIF图片检查。<br>windows做做图片马方法，直接用cmd命令：copy 1.jpg /b + 2.php /a webshell.jpg<br>然后结合文件包含漏洞进行利用：<br><a href="http://127.0.0.1/upload-labs/include.php?file=../upload/a.jpg" target="_blank" rel="noopener">http://127.0.0.1/upload-labs/include.php?file=../upload/a.jpg</a></p>
-<p>pass-14    getimagesize()突破</p>
-<p>使用getimagesize()检查是否为图片文件，同pass-13</p>
-<p>pass-15    exif_imagetype()突破</p>
-<p>使用exif_imagetype()检查是否为图片文件，同pass-13</p>
-<p>pass-16    图片二次渲染绕过</p>
-<p>判断了后缀名、content-type、以及利用imagecreatefromgif判断是否为gif图片，最后再做了一次二次渲染，由于jpg和png很麻烦，gif只需要找到渲染前后没有变化 的位置，然后将phpdiamagnetic写进去就可以了。具体绕过方法可以参考先知的文章，写的很详细：<a href="https://xz.aliyun.com/t/2657。" target="_blank" rel="noopener">https://xz.aliyun.com/t/2657。</a></p>
-<p>pass-17    条件竞争绕过</p>
-<p>先将文件上传到服务器，然后通过rename修改名称，再通过unlink删除文件，因此可以通过条件竞争的方式在unlink之前，访问webshell。<br>1、在Burpsuite中不断发送上传webshell的数据包。<br>2、打开“<a href="http://127.0.0.1/upload-labs/upload/a.php”，不断在浏览器中刷新。" target="_blank" rel="noopener">http://127.0.0.1/upload-labs/upload/a.php”，不断在浏览器中刷新。</a></p>
-<p>pass-18    条件竞争绕过</p>
-<p>对文件名后缀名做了白名单判断，然后会一步一步检查文件大小，文件是否存在等等，将文件上传后，对文件重新命名，同样存在条件竞争的漏洞。可以不断利用burp发送上传图片马的数据包，因为move在rename之前，move操作进行了一次文件保存，然后rename进行了一次更改文件名，可以通过条件竞争来上传图片马。</p>
-<p>pass-19    文件名/.与00截断绕过</p>
-<p>1、本关考察CVE-2015-2348 move_uploaded_file()00截断，上传webshell，同时自定义保存名称，直接保存为php是不行的。<br>通过查看源代码：发现move_uploaded_file()函数中的image_path是由post参数save_name控制的，因此可以在save_name利用00截断绕过，将save_name修改为a.php%00<br>注意：post接受的时候，%00需要URL编码。<br>2、move_uploaded_file会忽略掉文件末尾的/.。直接将save_name修改为a.php/.即可绕过。</p>
-<p>pass-20    数组+/.绕过</p>
-<p>对PHP不熟，暂时不能理解</p>
+        <p>​    XFF注入攻击的测试地址：<a href="https://127.0.0.1/xff.php" target="_blank" rel="noopener">https://127.0.0.1/xff.php</a><br>​    通过Burp Suit抓取数据包内容，可以看到HTTP请求头中有一个头部参数<br>X-Forwarded-for。X-Forwarded-for简称XFF头，它代表客户端的真实IP，然后通过X-Forwarded-for的值可以伪造客户端IP，将X-Forwarded-for设置为127.0.0.1，然后访问该URL，页面返回正常。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111801.png" alt><br>​    将X-Forwarded-for设置为127.0.0.1’，再次访问该url，页面返回mysql的错误信息。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111802.png" alt><br>​    将X-Forwarded-for分贝设置为127.0.0.1’and 1=1#和127.0.0.1’and 1=2#，再次访问该url。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111803.png" alt></p><a id="more"></a>
+<p><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111804.png" alt><br>    通过页面的 返回结果，可以判断该地址存在sql注入漏洞，接着可以使用order by判断表中的字段数量，最终测试出数据库中存在4个字段，尝试使用union查询注入方法，语法是X-Forwarded-for:1’union select 1,2,3,4,5#<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111805.png" alt><br>    接着使用union注入方法完成此次注入。</p>
+<p>0X01    XFF注入代码分析</p>
+<p>​    PHP中getenv()函数用于获取一个环境变量的值，类似于$_SERVER或$_ENV，返回环境变量对应的值，如果环境变量不存在则返回FALSE。<br>​    使用以下代码即可获取客户端的IP地址，程序先判断是否存在HTTP头部参数HTTP_CLIENT_IP，如果存在，则赋给$ip，如果不存在，则判断是否存在HTTP头部参数HTTP_X_FORWARDED_FOR，如果存在，则赋给$ip，如果不存在，则将HTTP头部的参数REMOTE_ADDR赋给$ip。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">  $con=mysqli_connect(<span class="string">"localhost"</span>,<span class="string">"root"</span>,<span class="string">"root"</span>,<span class="string">"test"</span>);</span><br><span class="line">  <span class="keyword">if</span> (mysqli_connect_errno())</span><br><span class="line">  &#123;</span><br><span class="line">  	<span class="keyword">echo</span> <span class="string">"连接失败: "</span> . mysqli_connect_error();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(getenv(<span class="string">'HTTP_CLIENT_IP'</span>)) &#123;</span><br><span class="line">    $ip = getenv(<span class="string">'HTTP_CLIENT_IP'</span>);</span><br><span class="line">  &#125; <span class="keyword">elseif</span>(getenv(<span class="string">'HTTP_X_FORWARDED_FOR'</span>)) &#123;</span><br><span class="line">    $ip = getenv(<span class="string">'HTTP_X_FORWARDED_FOR'</span>);</span><br><span class="line">  &#125; <span class="keyword">elseif</span>(getenv(<span class="string">'REMOTE_ADDR'</span>)) &#123;</span><br><span class="line">    $ip = getenv(<span class="string">'REMOTE_ADDR'</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    $ip = $HTTP_SERVER_VARS[<span class="string">'REMOTE_ADDR'</span>];</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  $result = mysqli_query($con,<span class="string">"select * from users where `ip`='$ip'"</span>);</span><br><span class="line">  <span class="keyword">if</span> (!$result) &#123;</span><br><span class="line">    printf(<span class="string">"Error: %s\n"</span>, mysqli_error($con));</span><br><span class="line">    <span class="keyword">exit</span>();</span><br><span class="line">  &#125;</span><br><span class="line">  $row = mysqli_fetch_array($result);</span><br><span class="line">  <span class="keyword">echo</span> $row[<span class="string">'username'</span>] . <span class="string">" : "</span> . $row[<span class="string">'password'</span>];</span><br><span class="line">  <span class="keyword">echo</span> <span class="string">"&lt;br&gt;"</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>​    接下来，将$ip拼接到select语句，然后将查询结果输出到界面上。<br>​    由于HTTP头部参数时可以伪造的，所以可以添加一个头部参数CLIENT_IP或X_FORWARDED_FOR。当设置X_FORWARDED_FOR=1’union select 1,2,3,4%23时，执行的sql语句为：<br>select * from usere where ip=’1’union select 1,2,3,4#’<br>​    此时sql语句可以分为select * from usere where id=1和union select 1,2,3,4,5两条，利用第二条语句（union查询）就可以获取数据库中的数据。</p>
 
     </div>
 
@@ -344,8 +305,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/2019/10/15/渗透测试工具(一)-Nmap/" rel="next" title="渗透测试工具(一)|Nmap">
-                  <i class="fa fa-chevron-left"></i> 渗透测试工具(一)|Nmap
+                <a href="/2019/11/17/渗透测试(十一)-base64注入攻击/" rel="next" title="渗透测试(十一)|base64注入攻击">
+                  <i class="fa fa-chevron-left"></i> 渗透测试(十一)|base64注入攻击
                 </a>
               
             </div>
@@ -353,10 +314,6 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-              
-                <a href="/2019/10/18/靶机练习-web-for-pentester-1-SQL注入/" rel="prev" title="靶机练习|web for pentester-1.SQL注入">
-                  靶机练习|web for pentester-1.SQL注入 <i class="fa fa-chevron-right"></i>
-                </a>
               
             </div>
           </div>
