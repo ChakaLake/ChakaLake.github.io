@@ -54,25 +54,22 @@
   };
 </script>
 
-  <meta name="description" content="0X00背景介绍2019年5月14日，微软发布了一个RDP（远程桌面服务）远程代码执行漏洞的补丁更新，对应CVE编号：CVE-2019-0708，相关信息链接https://portal.msrc.microsoft.com/en-US/security-guidance/advisory/CVE-2019-0708影响系统：windows2003、windows2008、windows2008">
+  <meta name="description" content="0X00    时间注入攻击​    时间注入攻击的测试地址：http://127.0.0.1/time.php?id=1。​    访问该网址时，页面返回yes，在网址的后面加上一个单引号，再次访问，页面返回no。这个结果与Boolean’注入非常相似，时间注入与Boolean注入的不同之处在于，时间注入时利用sleep()或benchmark()等函数让mysql的执行时间边长。时间盲注多与i">
 <meta property="og:type" content="article">
-<meta property="og:title" content="系统漏洞|CVE-2019-0708复现">
-<meta property="og:url" content="https://ChakaLake.github.io/2019/09/10/系统漏洞-CVE-2019-0708复现/index.html">
+<meta property="og:title" content="SQL注入(六)|时间注入攻击">
+<meta property="og:url" content="https://ChakaLake.github.io/2019/10/10/SQL注入(六)-时间注入攻击/index.html">
 <meta property="og:site_name" content="他年少如歌">
-<meta property="og:description" content="0X00背景介绍2019年5月14日，微软发布了一个RDP（远程桌面服务）远程代码执行漏洞的补丁更新，对应CVE编号：CVE-2019-0708，相关信息链接https://portal.msrc.microsoft.com/en-US/security-guidance/advisory/CVE-2019-0708影响系统：windows2003、windows2008、windows2008">
+<meta property="og:description" content="0X00    时间注入攻击​    时间注入攻击的测试地址：http://127.0.0.1/time.php?id=1。​    访问该网址时，页面返回yes，在网址的后面加上一个单引号，再次访问，页面返回no。这个结果与Boolean’注入非常相似，时间注入与Boolean注入的不同之处在于，时间注入时利用sleep()或benchmark()等函数让mysql的执行时间边长。时间盲注多与i">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/MIBREYbL8qQEEnFgn*Tj1INVmbplO6tCAXrs1qns3og!/b/dL8AAAAAAAAA&bo=IgLsAQAAAAADJ88!&rf=viewer_4">
-<meta property="og:image" content="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/dp3XnG6e8XbRP5yS9czASqSbxkREeMxOmxrR2Qg170c!/b/dLYAAAAAAAAA&bo=IwI8AQAAAAADFy4!&rf=viewer_4">
-<meta property="og:image" content="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/PIDXPzh1reM1jv*6rRzbDwdwBPdbxJkQPpqeAuwsZxE!/b/dLgAAAAAAAAA&bo=TAWsAAAAAAADB8c!&rf=viewer_4">
-<meta property="og:image" content="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/H2pqxY0aXKTqfIeL5kDuscb7wq9tpSGADHOdWo39VJw!/b/dLYAAAAAAAAA&bo=HwIlAAAAAAADFwo!&rf=viewer_4">
-<meta property="og:image" content="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/tP7mONKr9OoGKHkd*3lduHXy8R5yiu5RwGH1QCR3pxg!/b/dL8AAAAAAAAA&bo=IwSMAgAAAAADN7s!&rf=viewer_4">
-<meta property="og:image" content="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/B*BqOwlE9WsW8.Y5EmLk76j8CXDJrbJ1XfSnz1D4.yM!/b/dDUBAAAAAAAA&bo=kwTGAgAAAAADF2E!&rf=viewer_4">
-<meta property="og:updated_time" content="2019-09-29T12:05:53.338Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/101001.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/101002.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/101003.png">
+<meta property="og:updated_time" content="2019-11-18T11:38:22.244Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="系统漏洞|CVE-2019-0708复现">
-<meta name="twitter:description" content="0X00背景介绍2019年5月14日，微软发布了一个RDP（远程桌面服务）远程代码执行漏洞的补丁更新，对应CVE编号：CVE-2019-0708，相关信息链接https://portal.msrc.microsoft.com/en-US/security-guidance/advisory/CVE-2019-0708影响系统：windows2003、windows2008、windows2008">
-<meta name="twitter:image" content="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/MIBREYbL8qQEEnFgn*Tj1INVmbplO6tCAXrs1qns3og!/b/dL8AAAAAAAAA&bo=IgLsAQAAAAADJ88!&rf=viewer_4">
-  <link rel="canonical" href="https://ChakaLake.github.io/2019/09/10/系统漏洞-CVE-2019-0708复现/">
+<meta name="twitter:title" content="SQL注入(六)|时间注入攻击">
+<meta name="twitter:description" content="0X00    时间注入攻击​    时间注入攻击的测试地址：http://127.0.0.1/time.php?id=1。​    访问该网址时，页面返回yes，在网址的后面加上一个单引号，再次访问，页面返回no。这个结果与Boolean’注入非常相似，时间注入与Boolean注入的不同之处在于，时间注入时利用sleep()或benchmark()等函数让mysql的执行时间边长。时间盲注多与i">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/101001.png">
+  <link rel="canonical" href="https://ChakaLake.github.io/2019/10/10/SQL注入(六)-时间注入攻击/">
 
 
 <script id="page-configurations">
@@ -86,7 +83,7 @@
   };
 </script>
 
-  <title>系统漏洞|CVE-2019-0708复现 | 他年少如歌</title>
+  <title>SQL注入(六)|时间注入攻击 | 他年少如歌</title>
   <meta name="generator" content="Hexo 3.9.0">
   
 
@@ -214,7 +211,7 @@
   
   
   <div class="post-block post">
-    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/09/10/系统漏洞-CVE-2019-0708复现/">
+    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/10/10/SQL注入(六)-时间注入攻击/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yang">
@@ -226,7 +223,7 @@
       <meta itemprop="name" content="他年少如歌">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">系统漏洞|CVE-2019-0708复现
+        <h1 class="post-title" itemprop="name headline">SQL注入(六)|时间注入攻击
 
           
         </h1>
@@ -242,7 +239,7 @@
                 
               
 
-              <time title="创建时间：2019-09-10 22:11:41" itemprop="dateCreated datePublished" datetime="2019-09-10T22:11:41+08:00">2019-09-10</time>
+              <time title="创建时间：2019-10-10 04:46:33" itemprop="dateCreated datePublished" datetime="2019-10-10T04:46:33+08:00">2019-10-10</time>
             </span>
           
             
@@ -253,7 +250,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-09-29 20:05:53" itemprop="dateModified" datetime="2019-09-29T20:05:53+08:00">2019-09-29</time>
+                <time title="修改时间：2019-11-18 19:38:22" itemprop="dateModified" datetime="2019-11-18T19:38:22+08:00">2019-11-18</time>
               </span>
             
           
@@ -282,18 +279,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>0X00背景介绍</p><p>2019年5月14日，微软发布了一个RDP（远程桌面服务）远程代码执行漏洞的补丁更新，对应CVE编号：CVE-2019-0708，相关信息链接<br><a href="https://portal.msrc.microsoft.com/en-US/security-guidance/advisory/CVE-2019-0708" target="_blank" rel="noopener">https://portal.msrc.microsoft.com/en-US/security-guidance/advisory/CVE-2019-0708</a><br>影响系统：windows2003、windows2008、windows2008 R2、windows xp 、win7</p><a id="more"></a>
+        <p>0X00    时间注入攻击</p><p>​    时间注入攻击的测试地址：<a href="http://127.0.0.1/time.php?id=1。" target="_blank" rel="noopener">http://127.0.0.1/time.php?id=1。</a><br>​    访问该网址时，页面返回yes，在网址的后面加上一个单引号，再次访问，页面返回no。这个结果与Boolean’注入非常相似，时间注入与Boolean注入的不同之处在于，时间注入时利用sleep()或benchmark()等函数让mysql的执行时间边长。时间盲注多与if(expre1,expre2,expre3)结合使用，此if语句的含义时：如果expre1是ture，则if()的返回值是expre2；否则返回值是expre3。所以此判断数据库库名长度的语句应为：<br><code>if(length(database())&gt;1,sleep(5),1 )</code><br>​    上面这行语句的意思是，如果数据库的库名长度大于1，则mysql查询休眠5秒，否则查询1。<br>​    而查询1的结果，大约只有几十毫秒，根据Burp中的页面响应时间，可以判断条件是否正确。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/101001.png" alt><br>​    可以看出，页面的响应时间是6016毫秒，也就是6.016秒，表名页面成功执行了sleep(5)，所以长度是大于1的，我们将判断数据库库名长度语句中的值改为10。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/101002.png" alt><br>​    可以看出，执行的时间是1.018秒，表名页面没有执行sleep(5)，而是执行了select 1，所以数据库的库名长度大于10是错误的。通过多次测试，就可以得到数据库库名的长度。得出数据库库名长度后，我们开始查询数据库库名的第一位字母。查询的语句跟Boolean盲注的类似，使用substr函数，这时的语句应修改为：<br><code>if (substr(database(),1,1)=&#39;t&#39;,sleep(5),1)</code><br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/101003.png" alt><br>​    可以看出，程序延迟了5秒才返回，说明数据库库名的第一位数字是s，以此类推即可得出完整的数据库的库名、表名、字段名和具体数字。</p><a id="more"></a>
 
-<p>0X01环境介绍</p>
-<p>攻击机：kali    IP:192.168.0.4<br>靶机：win7 sp1 7060    IP:192.168.0.5<br>POC：<a href="https://github.com/backlion/demo/raw/master/CVE-2019-0708_RDP%20_MSF.zip" target="_blank" rel="noopener">https://github.com/backlion/demo/raw/master/CVE-2019-0708_RDP%20_MSF.zip</a></p>
-<p>0X02开始复现</p>
-<p>1、为了顺利复现成功，需要将被攻击的远程桌面设为允许，防火墙也需要关掉。<br>2、替换文件<br>cve_2019_0708_bluekeep_rce.rb –&gt; /usr/share/metasploit-framework/modules/exploit/windows/rdp/<br>cve_2019_0708_bluekeep.rb –&gt; /usr/share/metasploit-framework/modules/auxiliary/scanner/rdp/<br>rdp.rb –&gt; /usr/share/metasploit-framework/lib/msf/core/exploit/rdp.rb<br>rdp_scanner.rb –&gt; usr/share/metasploit-framework/modules/auxiliary/scanner/rdp/rdp_scanner.rb<br>3、MSF下<br>msfconsole<br><img src="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/MIBREYbL8qQEEnFgn*Tj1INVmbplO6tCAXrs1qns3og!/b/dL8AAAAAAAAA&bo=IgLsAQAAAAADJ88!&rf=viewer_4" alt><br>reload_all<br><img src="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/dp3XnG6e8XbRP5yS9czASqSbxkREeMxOmxrR2Qg170c!/b/dLYAAAAAAAAA&bo=IwI8AQAAAAADFy4!&rf=viewer_4" alt><br>search cve_2019_0708<br><img src="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/PIDXPzh1reM1jv*6rRzbDwdwBPdbxJkQPpqeAuwsZxE!/b/dLgAAAAAAAAA&bo=TAWsAAAAAAADB8c!&rf=viewer_4" alt>use exploit/windows/rdp/cve_2019_0708_bluekeep_rce<br><img src="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/H2pqxY0aXKTqfIeL5kDuscb7wq9tpSGADHOdWo39VJw!/b/dLYAAAAAAAAA&bo=HwIlAAAAAAADFwo!&rf=viewer_4" alt><br>shell<br><img src="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/tP7mONKr9OoGKHkd*3lduHXy8R5yiu5RwGH1QCR3pxg!/b/dL8AAAAAAAAA&bo=IwSMAgAAAAADN7s!&rf=viewer_4" alt></p>
-<p>0X03异常处理</p>
-<p>第一次执行reload_all 时，结果返回一大堆错误信息<br><img src="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/B*BqOwlE9WsW8.Y5EmLk76j8CXDJrbJ1XfSnz1D4.yM!/b/dDUBAAAAAAAA&bo=kwTGAgAAAAADF2E!&rf=viewer_4" alt><br>网上教程并没有对MSF的环境信息进行描述<br>大致分析思路：其实msf v4 –&gt; v5发生了很大的变化，由于cve-2019-0708的脚本比较新，只能兼容新版本的msf（也就是v5）<br>msf升级很简单，只需下面两条命令即可</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@kk:~/scan# apt-get update</span><br><span class="line">命中:1 http://mirrors.neusoft.edu.cn/kali kali-rolling InRelease</span><br><span class="line">正在读取软件包列表... 完成   </span><br><span class="line">root@kk:~/scan# apt-get install metasploit-framework</span><br></pre></td></tr></table></figure>
+<p>0X01    时间注入代码分析</p>
+<p>​    在时间注入页面中，程序获取get参数id，通过preg_match判断参数id中是否存在union危险字符，然后将参数id拼接到sql语句中。从数据库中查询sql语句，如果有结果，则返回yes，否则返回no。当访问该页面时，代码根据数据库查询结果返回yes或no，而不返回数据库中的任何数据，所以页面上只会显示yes或no，和Boolen注入不同的是，此处没有过滤sleep等字符。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$con=mysqli_connect(<span class="string">"localhost"</span>,<span class="string">"root"</span>,<span class="string">"root"</span>,<span class="string">"test"</span>);</span><br><span class="line"><span class="keyword">if</span>(mysqli_connect_error())&#123;</span><br><span class="line">	<span class="keyword">echo</span> <span class="string">"连接失败："</span>.mysqli_connect_error();</span><br><span class="line">&#125;</span><br><span class="line">$id=$_GET[<span class="string">'id'</span>];</span><br><span class="line"><span class="keyword">if</span>(preg_match(<span class="string">"/union/i"</span>, $id))&#123;</span><br><span class="line">	<span class="keyword">exit</span>(<span class="string">"&lt;html&gt;&lt;body&gt;no&lt;/body&gt;&lt;/html&gt;"</span>);</span><br><span class="line">&#125;</span><br><span class="line">$result=mysqli_query($con,<span class="string">"select * from users where `id`='"</span>.$id.<span class="string">"'"</span>);</span><br><span class="line">$row=mysqli_fetch_array($result);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>($row)&#123;</span><br><span class="line">	<span class="keyword">exit</span>(<span class="string">"&lt;html&gt;&lt;body&gt;yes&lt;/body&gt;&lt;/html&gt;"</span>);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">	<span class="keyword">exit</span>(<span class="string">"&lt;html&gt;&lt;body&gt;no&lt;/body&gt;&lt;/html&gt;"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p>0X04漏洞修复</p>
-<p>1、及时打对应系统的安全补丁。<br>2、关闭3389端口或添加防火墙安全策略限制对3389端口的访问。<br>3、打不了补丁的可以开启远程桌面（网络级身份验证（NLA）），可以临时防止漏洞攻击。</p>
+<p>​    此处仍然可以用Boolean盲注或其他注入方法，下面用时间注入演示。当访问id=1’ and if(ord(substring(user(),1,1))=114,sleep(5),1)%23时，执行的sql语句为：<br><code>select * from users where id=&#39;1&#39; and if(ord(substring(user(),1,1))=114,sleep(5),1)%23</code><br>​    由于user()为root，root第一个字符r的ASCII值是114，所以sql语句中if条件成立，执行sleep(5)，页面会延迟5秒，通过这种延迟即可判断sql语句的执行结果。</p>
 
     </div>
 
@@ -319,8 +311,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/2019/08/29/python学习-基础/" rel="next" title="python学习|python简介">
-                  <i class="fa fa-chevron-left"></i> python学习|python简介
+                <a href="/2019/10/08/SQL注入(五)-报错注入攻击/" rel="next" title="SQL注入(五)|报错注入攻击">
+                  <i class="fa fa-chevron-left"></i> SQL注入(五)|报错注入攻击
                 </a>
               
             </div>
@@ -329,8 +321,8 @@
 
             <div class="post-nav-prev post-nav-item">
               
-                <a href="/2019/09/20/SQL注入(二)-搜索型注入/" rel="prev" title="SQL注入(二)|搜索型注入">
-                  SQL注入(二)|搜索型注入 <i class="fa fa-chevron-right"></i>
+                <a href="/2019/10/13/渗透测试-信息收集/" rel="prev" title="渗透测试|信息收集">
+                  渗透测试|信息收集 <i class="fa fa-chevron-right"></i>
                 </a>
               
             </div>
