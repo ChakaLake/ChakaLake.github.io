@@ -54,22 +54,22 @@
   };
 </script>
 
-  <meta name="description" content="0X00    时间注入攻击​    时间注入攻击的测试地址：http://127.0.0.1/time.php?id=1。​    访问该网址时，页面返回yes，在网址的后面加上一个单引号，再次访问，页面返回no。这个结果与Boolean’注入非常相似，时间注入与Boolean注入的不同之处在于，时间注入时利用sleep()或benchmark()等函数让mysql的执行时间边长。时间盲注多与i">
+  <meta name="description" content="0X01    反射性XSS攻击​    测试页面：http://127.0.0.1/xss1.php​    页面实现的功能时在“输入”表单中输入内容，单机“提交”按钮后，将输入的内容放到“输出”表单中，例如当输入“11”，单击“提交”按钮时，“11”将被输出到“输出”表单中。​    当访问http://127.0.0.1/xss1.php?xss_input_value=&amp;quot;&amp;gt;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="渗透测试(六)|时间注入攻击">
-<meta property="og:url" content="https://ChakaLake.github.io/2019/10/10/渗透测试(六)-时间注入攻击/index.html">
+<meta property="og:title" content="XSS(二)|反射性XSS攻击">
+<meta property="og:url" content="https://ChakaLake.github.io/2019/11/19/XSS(二)-反射性XSS攻击/index.html">
 <meta property="og:site_name" content="他年少如歌">
-<meta property="og:description" content="0X00    时间注入攻击​    时间注入攻击的测试地址：http://127.0.0.1/time.php?id=1。​    访问该网址时，页面返回yes，在网址的后面加上一个单引号，再次访问，页面返回no。这个结果与Boolean’注入非常相似，时间注入与Boolean注入的不同之处在于，时间注入时利用sleep()或benchmark()等函数让mysql的执行时间边长。时间盲注多与i">
+<meta property="og:description" content="0X01    反射性XSS攻击​    测试页面：http://127.0.0.1/xss1.php​    页面实现的功能时在“输入”表单中输入内容，单机“提交”按钮后，将输入的内容放到“输出”表单中，例如当输入“11”，单击“提交”按钮时，“11”将被输出到“输出”表单中。​    当访问http://127.0.0.1/xss1.php?xss_input_value=&amp;quot;&amp;gt;">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/101001.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/101002.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/101003.png">
-<meta property="og:updated_time" content="2019-11-06T23:20:41.908Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111902.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111903.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/1111904.png">
+<meta property="og:updated_time" content="2019-11-19T11:04:36.987Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="渗透测试(六)|时间注入攻击">
-<meta name="twitter:description" content="0X00    时间注入攻击​    时间注入攻击的测试地址：http://127.0.0.1/time.php?id=1。​    访问该网址时，页面返回yes，在网址的后面加上一个单引号，再次访问，页面返回no。这个结果与Boolean’注入非常相似，时间注入与Boolean注入的不同之处在于，时间注入时利用sleep()或benchmark()等函数让mysql的执行时间边长。时间盲注多与i">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/101001.png">
-  <link rel="canonical" href="https://ChakaLake.github.io/2019/10/10/渗透测试(六)-时间注入攻击/">
+<meta name="twitter:title" content="XSS(二)|反射性XSS攻击">
+<meta name="twitter:description" content="0X01    反射性XSS攻击​    测试页面：http://127.0.0.1/xss1.php​    页面实现的功能时在“输入”表单中输入内容，单机“提交”按钮后，将输入的内容放到“输出”表单中，例如当输入“11”，单击“提交”按钮时，“11”将被输出到“输出”表单中。​    当访问http://127.0.0.1/xss1.php?xss_input_value=&amp;quot;&amp;gt;">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111902.png">
+  <link rel="canonical" href="https://ChakaLake.github.io/2019/11/19/XSS(二)-反射性XSS攻击/">
 
 
 <script id="page-configurations">
@@ -83,7 +83,7 @@
   };
 </script>
 
-  <title>渗透测试(六)|时间注入攻击 | 他年少如歌</title>
+  <title>XSS(二)|反射性XSS攻击 | 他年少如歌</title>
   <meta name="generator" content="Hexo 3.9.0">
   
 
@@ -211,7 +211,7 @@
   
   
   <div class="post-block post">
-    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/10/10/渗透测试(六)-时间注入攻击/">
+    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/11/19/XSS(二)-反射性XSS攻击/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yang">
@@ -223,7 +223,7 @@
       <meta itemprop="name" content="他年少如歌">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">渗透测试(六)|时间注入攻击
+        <h1 class="post-title" itemprop="name headline">XSS(二)|反射性XSS攻击
 
           
         </h1>
@@ -239,33 +239,12 @@
                 
               
 
-              <time title="创建时间：2019-10-10 04:46:33" itemprop="dateCreated datePublished" datetime="2019-10-10T04:46:33+08:00">2019-10-10</time>
+              <time title="创建时间：2019-11-19 14:10:00 / 修改时间：19:04:36" itemprop="dateCreated datePublished" datetime="2019-11-19T14:10:00+08:00">2019-11-19</time>
             </span>
           
             
 
             
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-07 07:20:41" itemprop="dateModified" datetime="2019-11-07T07:20:41+08:00">2019-11-07</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/WEB安全/" itemprop="url" rel="index"><span itemprop="name">WEB安全</span></a></span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -279,13 +258,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>0X00    时间注入攻击</p><p>​    时间注入攻击的测试地址：<a href="http://127.0.0.1/time.php?id=1。" target="_blank" rel="noopener">http://127.0.0.1/time.php?id=1。</a><br>​    访问该网址时，页面返回yes，在网址的后面加上一个单引号，再次访问，页面返回no。这个结果与Boolean’注入非常相似，时间注入与Boolean注入的不同之处在于，时间注入时利用sleep()或benchmark()等函数让mysql的执行时间边长。时间盲注多与if(expre1,expre2,expre3)结合使用，此if语句的含义时：如果expre1是ture，则if()的返回值是expre2；否则返回值是expre3。所以此判断数据库库名长度的语句应为：<br><code>if(length(database())&gt;1,sleep(5),1 )</code><br>​    上面这行语句的意思是，如果数据库的库名长度大于1，则mysql查询休眠5秒，否则查询1。<br>​    而查询1的结果，大约只有几十毫秒，根据Burp中的页面响应时间，可以判断条件是否正确。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/101001.png" alt><br>​    可以看出，页面的响应时间是6016毫秒，也就是6.016秒，表名页面成功执行了sleep(5)，所以长度是大于1的，我们将判断数据库库名长度语句中的值改为10。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/101002.png" alt><br>​    可以看出，执行的时间是1.018秒，表名页面没有执行sleep(5)，而是执行了select 1，所以数据库的库名长度大于10是错误的。通过多次测试，就可以得到数据库库名的长度。得出数据库库名长度后，我们开始查询数据库库名的第一位字母。查询的语句跟Boolean盲注的类似，使用substr函数，这时的语句应修改为：<br><code>if (substr(database(),1,1)=&#39;t&#39;,sleep(5),1)</code><br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/101003.png" alt><br>​    可以看出，程序延迟了5秒才返回，说明数据库库名的第一位数字是s，以此类推即可得出完整的数据库的库名、表名、字段名和具体数字。</p><a id="more"></a>
+        <p>0X01    反射性XSS攻击</p><p>​    测试页面：<a href="http://127.0.0.1/xss1.php" target="_blank" rel="noopener">http://127.0.0.1/xss1.php</a><br>​    页面实现的功能时在“输入”表单中输入内容，单机“提交”按钮后，将输入的内容放到“输出”表单中，例如当输入“11”，单击“提交”按钮时，“11”将被输出到“输出”表单中。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111902.png" alt><br>​    当访问<code>http://127.0.0.1/xss1.php?xss_input_value=&quot;&gt;&lt;img src=1 onerror=alert(/xss/)/&gt;</code>时，输出页面的html代码就变为<code>&lt;input type=&quot;text value=&quot;&quot;&gt;&lt;img src=1 onerror=alert(/xss/) /&gt;&quot;&gt;</code>，可以看到，输入的双引号闭合了value属性的双引号，输入的&gt;闭合了input标签的&lt;，导致输入的<code>&lt;img src=1 onerror=alert(/xss/) /&gt;</code>变成了html标签。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111903.png" alt><br>​    在浏览器渲染时，执行了<code>&lt;img src=1 onerror=alert(/xss/) /&gt;</code>，js函数alert()导致浏览器弹框，显示/xss/。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/1111904.png" alt></p><a id="more"></a>
 
-<p>0X01    时间注入代码分析</p>
-<p>​    在时间注入页面中，程序获取get参数id，通过preg_match判断参数id中是否存在union危险字符，然后将参数id拼接到sql语句中。从数据库中查询sql语句，如果有结果，则返回yes，否则返回no。当访问该页面时，代码根据数据库查询结果返回yes或no，而不返回数据库中的任何数据，所以页面上只会显示yes或no，和Boolen注入不同的是，此处没有过滤sleep等字符。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$con=mysqli_connect(<span class="string">"localhost"</span>,<span class="string">"root"</span>,<span class="string">"root"</span>,<span class="string">"test"</span>);</span><br><span class="line"><span class="keyword">if</span>(mysqli_connect_error())&#123;</span><br><span class="line">	<span class="keyword">echo</span> <span class="string">"连接失败："</span>.mysqli_connect_error();</span><br><span class="line">&#125;</span><br><span class="line">$id=$_GET[<span class="string">'id'</span>];</span><br><span class="line"><span class="keyword">if</span>(preg_match(<span class="string">"/union/i"</span>, $id))&#123;</span><br><span class="line">	<span class="keyword">exit</span>(<span class="string">"&lt;html&gt;&lt;body&gt;no&lt;/body&gt;&lt;/html&gt;"</span>);</span><br><span class="line">&#125;</span><br><span class="line">$result=mysqli_query($con,<span class="string">"select * from users where `id`='"</span>.$id.<span class="string">"'"</span>);</span><br><span class="line">$row=mysqli_fetch_array($result);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>($row)&#123;</span><br><span class="line">	<span class="keyword">exit</span>(<span class="string">"&lt;html&gt;&lt;body&gt;yes&lt;/body&gt;&lt;/html&gt;"</span>);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">	<span class="keyword">exit</span>(<span class="string">"&lt;html&gt;&lt;body&gt;no&lt;/body&gt;&lt;/html&gt;"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>0X02    反射性XSS代码分析</p>
+<p>​    在反射性XSS PHP代码中，通过GET获取参数xss_input_value的值，然后通过echo输出一个input标签，并将xss_input_value的值放入input标签的value中。当访问<code>xss_input_value=&quot;&gt;&lt;img src=1 onerror=alert(/xss/) /&gt;</code>时，输出到页面的html代码变为<code>&lt;input type=&quot;text&quot; value=&quot;&quot;&lt;img src=1 onerror=alert(/xss/) /&gt;&quot;&gt;</code>，此段html代码有两个标签，<input>标签<img><br>标签，而<img>标签的作用就是让浏览器弹框显示/xss/。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta http-equiv=&quot;Content-Type&quot;content=&quot;text/html;charset=utf-8&quot; /&gt;</span><br><span class="line">	&lt;title&gt;XSS利用输出的环境构造代码&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;center&gt;</span><br><span class="line">	&lt;h6&gt;把我们输入的字符串输出到input里的value属性&lt;/h6&gt;</span><br><span class="line">	&lt;form action=&quot;&quot; method=&quot;get&quot;&gt;</span><br><span class="line">		&lt;h6&gt;请输入你想显现的字符串&lt;/h6&gt;</span><br><span class="line">		&lt;input type=&quot;text&quot; name=&quot;xss_input_value&quot; value=&quot;输入&quot;&gt;&lt;br /&gt;</span><br><span class="line">		&lt;input type=&quot;submit&quot;&gt;</span><br><span class="line">	&lt;/form&gt;</span><br><span class="line">	&lt;hr&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line">		if(isset($_GET[&apos;xss_input_value&apos;]))&#123;</span><br><span class="line">			echo &apos;&lt;input type=&quot;text&quot; value=&quot;&apos;.$_GET[&apos;xss_input_value&apos;].&apos;&quot;&gt;&apos;;</span><br><span class="line">		&#125;else&#123;</span><br><span class="line">			echo &apos;&lt;input type=&quot;text&quot;&gt; value=&quot;输出&quot;&apos;;</span><br><span class="line">		&#125;</span><br><span class="line">	?&gt;</span><br><span class="line">	&lt;/center&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
 
-<p>​    此处仍然可以用Boolean盲注或其他注入方法，下面用时间注入演示。当访问id=1’ and if(ord(substring(user(),1,1))=114,sleep(5),1)%23时，执行的sql语句为：<br><code>select * from users where id=&#39;1&#39; and if(ord(substring(user(),1,1))=114,sleep(5),1)%23</code><br>​    由于user()为root，root第一个字符r的ASCII值是114，所以sql语句中if条件成立，执行sleep(5)，页面会延迟5秒，通过这种延迟即可判断sql语句的执行结果。</p>
 
     </div>
 
@@ -311,8 +289,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/2019/10/08/渗透测试(五)-报错注入攻击/" rel="next" title="渗透测试(五)|报错注入攻击">
-                  <i class="fa fa-chevron-left"></i> 渗透测试(五)|报错注入攻击
+                <a href="/2019/11/19/XSS(一)-XSS基础/" rel="next" title="XSS(一)|XSS基础">
+                  <i class="fa fa-chevron-left"></i> XSS(一)|XSS基础
                 </a>
               
             </div>
@@ -321,8 +299,8 @@
 
             <div class="post-nav-prev post-nav-item">
               
-                <a href="/2019/10/13/渗透测试-信息收集/" rel="prev" title="渗透测试|信息收集">
-                  渗透测试|信息收集 <i class="fa fa-chevron-right"></i>
+                <a href="/2019/11/20/XSS(三)-存储性XSS攻击/" rel="prev" title="XSS(三)|存储性XSS攻击">
+                  XSS(三)|存储性XSS攻击 <i class="fa fa-chevron-right"></i>
                 </a>
               
             </div>
@@ -385,7 +363,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">28</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

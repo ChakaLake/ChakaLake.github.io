@@ -54,21 +54,22 @@
   };
 </script>
 
-  <meta name="description" content="​    0X00    堆叠查询注入攻击​    堆叠查询注入攻击的测试地址：http://127.0.0.1/dd.php?id=1​    堆叠查询可以执行多条语句，多语句之间以分号隔开。堆叠查询注入就是利用这个特点，在第二个SQL语句总后遭自己要执行的语句。首先访问id=1，页面返回mysql错误，再访问id=1%23，页面返回正常结果。这里使用Boolean注入，时间注入，也可以使用另外">
+  <meta name="description" content="0X01    存储型XSS攻击    存储型XSS页面实现的功能是：获取用户输入的留言信息、标题和内容，然后将标题和内容插入到数据库中，并将数据库的留言信息输出到页面上。    当输入标题为&amp;lt;img src=X onerror=alert(/xss/) /&amp;gt;，然后将标题输出到页面时，页面执行了&amp;lt;img src=X onerror=alert(/xss/) /&amp;gt;，导致弹出窗">
 <meta property="og:type" content="article">
-<meta property="og:title" content="渗透测试(七)|堆叠查询攻击">
-<meta property="og:url" content="https://ChakaLake.github.io/2019/11/11/渗透测试(七)-堆叠查询攻击/index.html">
+<meta property="og:title" content="XSS(三)|存储性XSS攻击">
+<meta property="og:url" content="https://ChakaLake.github.io/2019/11/20/XSS(三)-存储性XSS攻击/index.html">
 <meta property="og:site_name" content="他年少如歌">
-<meta property="og:description" content="​    0X00    堆叠查询注入攻击​    堆叠查询注入攻击的测试地址：http://127.0.0.1/dd.php?id=1​    堆叠查询可以执行多条语句，多语句之间以分号隔开。堆叠查询注入就是利用这个特点，在第二个SQL语句总后遭自己要执行的语句。首先访问id=1，页面返回mysql错误，再访问id=1%23，页面返回正常结果。这里使用Boolean注入，时间注入，也可以使用另外">
+<meta property="og:description" content="0X01    存储型XSS攻击    存储型XSS页面实现的功能是：获取用户输入的留言信息、标题和内容，然后将标题和内容插入到数据库中，并将数据库的留言信息输出到页面上。    当输入标题为&amp;lt;img src=X onerror=alert(/xss/) /&amp;gt;，然后将标题输出到页面时，页面执行了&amp;lt;img src=X onerror=alert(/xss/) /&amp;gt;，导致弹出窗">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111101.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111102.png">
-<meta property="og:updated_time" content="2019-11-11T04:15:28.391Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/112001.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111202.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111203.png">
+<meta property="og:updated_time" content="2019-11-20T04:34:20.503Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="渗透测试(七)|堆叠查询攻击">
-<meta name="twitter:description" content="​    0X00    堆叠查询注入攻击​    堆叠查询注入攻击的测试地址：http://127.0.0.1/dd.php?id=1​    堆叠查询可以执行多条语句，多语句之间以分号隔开。堆叠查询注入就是利用这个特点，在第二个SQL语句总后遭自己要执行的语句。首先访问id=1，页面返回mysql错误，再访问id=1%23，页面返回正常结果。这里使用Boolean注入，时间注入，也可以使用另外">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111101.png">
-  <link rel="canonical" href="https://ChakaLake.github.io/2019/11/11/渗透测试(七)-堆叠查询攻击/">
+<meta name="twitter:title" content="XSS(三)|存储性XSS攻击">
+<meta name="twitter:description" content="0X01    存储型XSS攻击    存储型XSS页面实现的功能是：获取用户输入的留言信息、标题和内容，然后将标题和内容插入到数据库中，并将数据库的留言信息输出到页面上。    当输入标题为&amp;lt;img src=X onerror=alert(/xss/) /&amp;gt;，然后将标题输出到页面时，页面执行了&amp;lt;img src=X onerror=alert(/xss/) /&amp;gt;，导致弹出窗">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/112001.png">
+  <link rel="canonical" href="https://ChakaLake.github.io/2019/11/20/XSS(三)-存储性XSS攻击/">
 
 
 <script id="page-configurations">
@@ -82,7 +83,7 @@
   };
 </script>
 
-  <title>渗透测试(七)|堆叠查询攻击 | 他年少如歌</title>
+  <title>XSS(三)|存储性XSS攻击 | 他年少如歌</title>
   <meta name="generator" content="Hexo 3.9.0">
   
 
@@ -210,7 +211,7 @@
   
   
   <div class="post-block post">
-    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/11/11/渗透测试(七)-堆叠查询攻击/">
+    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/11/20/XSS(三)-存储性XSS攻击/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yang">
@@ -222,7 +223,7 @@
       <meta itemprop="name" content="他年少如歌">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">渗透测试(七)|堆叠查询攻击
+        <h1 class="post-title" itemprop="name headline">XSS(三)|存储性XSS攻击
 
           
         </h1>
@@ -238,25 +239,12 @@
                 
               
 
-              <time title="创建时间：2019-11-11 06:17:10 / 修改时间：12:15:28" itemprop="dateCreated datePublished" datetime="2019-11-11T06:17:10+08:00">2019-11-11</time>
+              <time title="创建时间：2019-11-20 09:07:56 / 修改时间：12:34:20" itemprop="dateCreated datePublished" datetime="2019-11-20T09:07:56+08:00">2019-11-20</time>
             </span>
           
             
 
             
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/WEB安全/" itemprop="url" rel="index"><span itemprop="name">WEB安全</span></a></span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -270,12 +258,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>​    0X00    堆叠查询注入攻击</p><p>​    堆叠查询注入攻击的测试地址：<a href="http://127.0.0.1/dd.php?id=1" target="_blank" rel="noopener">http://127.0.0.1/dd.php?id=1</a><br>​    堆叠查询可以执行多条语句，多语句之间以分号隔开。堆叠查询注入就是利用这个特点，在第二个SQL语句总后遭自己要执行的语句。首先访问id=1，页面返回mysql错误，再访问id=1%23，页面返回正常结果。这里使用Boolean注入，时间注入，也可以使用另外一种注入方式–堆叠注入。<br>​    堆叠注入的语句为：<br><code>;select if (substr(user(),1,1)=&#39;r&#39;,sleep(3),1) %23</code><br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111101.png" alt><br>​    后面获取数据库的操作与时间注入的一样，通过构造不同的 时间注入语句，可以得到完整的数据库的库名、表名、字段名和具体数据。执行以下语句，就可以获取数据库的表名。<br><code>&#39;;select if(substr((select table_name from information_schema.tables where table_schema=database()limit 0,1),1,1)=&#39;e&#39;,sleep(5),1) %23</code><br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111102.png" alt></p><a id="more"></a>
+        <p>0X01    存储型XSS攻击    </p><p>存储型XSS页面实现的功能是：获取用户输入的留言信息、标题和内容，然后将标题和内容插入到数据库中，并将数据库的留言信息输出到页面上。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/112001.png" alt><br>    当输入标题为<code>&lt;img src=X onerror=alert(/xss/) /&gt;</code>，然后将标题输出到页面时，页面执行了<code>&lt;img src=X onerror=alert(/xss/) /&gt;</code>，导致弹出窗口。此时，这里的XSS是持久性的，也就是说，任何人访问该URL时都会弹出一个显示”/xss/“d的框。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111202.png" alt></p><a id="more"></a>
 
-<p>0X01    堆叠查询注入代码分析</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    $conn = <span class="keyword">new</span> PDO(<span class="string">"mysql:host=localhost;dbname=security"</span>, <span class="string">"root"</span>, <span class="string">"root"</span>);</span><br><span class="line">    $conn-&gt;setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);</span><br><span class="line">    $stmt = $conn-&gt;query(<span class="string">"SELECT * FROM users where `id` = '"</span> . $_GET[<span class="string">'id'</span>] . <span class="string">"'"</span>);</span><br><span class="line"></span><br><span class="line">    $result = $stmt-&gt;setFetchMode(PDO::FETCH_ASSOC);</span><br><span class="line">    <span class="keyword">foreach</span>($stmt-&gt;fetchAll() <span class="keyword">as</span> $k=&gt;$v) &#123;</span><br><span class="line">        <span class="keyword">foreach</span> ($v <span class="keyword">as</span> $key =&gt; $value) &#123;</span><br><span class="line">            <span class="keyword">echo</span> $value;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    $dsn = <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span>(PDOException $e)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"error"</span>;</span><br><span class="line">&#125;</span><br><span class="line">$conn = <span class="keyword">null</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>0X02    存储型XSS代码分析</p>
+<p>​    在存储型XSS的PHP代码中，获取POST参数title和参数content，然后将参数插入数据库表XSS中，接下来通过select查询将表XSS中的数据查询出来，并显示到页面上。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html;charset=utf-8&quot; /&gt;</span><br><span class="line">	&lt;title&gt;留言板&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;center&gt;</span><br><span class="line">	&lt;h6&gt;输入留言内容&lt;/h6&gt;</span><br><span class="line">	&lt;form action=&quot;&quot; method=&quot;post&quot;&gt;</span><br><span class="line">		标题：&lt;input type=&quot;text&quot; name=&quot;title&quot;&gt;&lt;br /&gt;</span><br><span class="line">		内容：&lt;textarea name=&quot;content&quot;&gt;&lt;/textarea&gt;&lt;br /&gt;</span><br><span class="line">		&lt;input type=&quot;submit&quot;&gt;</span><br><span class="line">	&lt;/form&gt;</span><br><span class="line">	&lt;hr&gt;</span><br><span class="line">	&lt;?php</span><br><span class="line"></span><br><span class="line">		$con=mysqli_connect(&quot;localhost&quot;,&quot;root&quot;,&quot;123456&quot;,&quot;test&quot;);</span><br><span class="line">		if (mysqli_connect_errno())</span><br><span class="line">		&#123;</span><br><span class="line">			echo &quot;连接失败: &quot; . mysqli_connect_error();</span><br><span class="line">		&#125;</span><br><span class="line">		if (isset($_POST[&apos;title&apos;])) &#123;</span><br><span class="line">			$result1 = mysqli_query($con,&quot;insert into xss(`title`, `content`) VALUES (&apos;&quot;.$_POST[&apos;title&apos;].&quot;&apos;,&apos;&quot;.$_POST[&apos;content&apos;].&quot;&apos;)&quot;);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		$result2 = mysqli_query($con,&quot;select * from xss&quot;);</span><br><span class="line"></span><br><span class="line">		echo &quot;&lt;table border=&apos;1&apos;&gt;&lt;tr&gt;&lt;td&gt;标题&lt;/td&gt;&lt;td&gt;内容&lt;/td&gt;&lt;/tr&gt;&quot;;</span><br><span class="line">		while($row = mysqli_fetch_array($result2))</span><br><span class="line">		&#123;</span><br><span class="line">			echo &quot;&lt;tr&gt;&lt;td&gt;&quot;.$row[&apos;title&apos;] . &quot;&lt;/td&gt;&lt;td&gt;&quot; . $row[&apos;content&apos;].&quot;&lt;/td&gt;&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">		echo &quot;&lt;/table&gt;&quot;;</span><br><span class="line">	?&gt;</span><br><span class="line">	&lt;/center&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
 
-<p>​    使用PDO执行sql语句时，可以执行多条语句，不过这样通常不能直接得到注入结果，因为PDO指挥返回第一条sql语句执行的结果，所以在第二条语句中可以用update更新数据或者使用时间盲注获取数据。访问dd.php?id=1’;select if(ord(substring(user(),1,1))=114,sleep(3),1);%23时，执行的sql语句为：<br><code>select * from users where id=1;select if(ord(substring(user(),1,1))=114,sleep(3),1);#</code><br>​    此时sql语句分为了两句，第一条select * from users where id=’1’是代码自己的select语句，而select if(ord(substring(user(),1,1))=114,sleep(3),1);#则是我们构造的时间盲注的语句。</p>
+<p>​    当用户在标题出写入<code>&lt;img src=X onerror=alert(/xss/) /&gt;</code>时，数据库中的结果如下所示。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111203.png" alt><br>​    当将title输出到页面时，页面执行了<code>&lt;img src=X onerror=alert(/xss/) /&gt;</code>，导致弹窗。</p>
 
     </div>
 
@@ -301,8 +290,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/2019/10/18/靶机练习-web-for-pentester-1-SQL注入/" rel="next" title="靶机练习|web for pentester-1.SQL注入">
-                  <i class="fa fa-chevron-left"></i> 靶机练习|web for pentester-1.SQL注入
+                <a href="/2019/11/19/XSS(二)-反射性XSS攻击/" rel="next" title="XSS(二)|反射性XSS攻击">
+                  <i class="fa fa-chevron-left"></i> XSS(二)|反射性XSS攻击
                 </a>
               
             </div>
@@ -311,8 +300,8 @@
 
             <div class="post-nav-prev post-nav-item">
               
-                <a href="/2019/11/14/渗透测试(八)-二次注入攻击/" rel="prev" title="渗透测试(八)|二次注入攻击">
-                  渗透测试(八)|二次注入攻击 <i class="fa fa-chevron-right"></i>
+                <a href="/2019/11/20/XSS(四)-DOM性XSS攻击/" rel="prev" title="XSS(四)|DOM性XSS攻击">
+                  XSS(四)|DOM性XSS攻击 <i class="fa fa-chevron-right"></i>
                 </a>
               
             </div>
@@ -375,7 +364,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">28</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
