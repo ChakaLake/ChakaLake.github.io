@@ -61,7 +61,7 @@
 <meta property="og:site_name" content="他年少如歌">
 <meta property="og:description" content="0X01    XSS常用语句及编码绕过XSS常用的测试语句有：&amp;lt;script&amp;gt;alert(1)&amp;lt;/script&amp;gt;&amp;lt;img src=x onerror=alert(1)&amp;gt;&amp;lt;svg onload=alert(1)&amp;gt;&amp;lt;a href=javascript:alert(1)&amp;gt;onclick=alert(1)//onmouseover=alert(">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-11-27T22:30:00.734Z">
+<meta property="og:updated_time" content="2019-11-28T23:05:37.060Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="XSS(五)|XSS绕过及修复建议">
 <meta name="twitter:description" content="0X01    XSS常用语句及编码绕过XSS常用的测试语句有：&amp;lt;script&amp;gt;alert(1)&amp;lt;/script&amp;gt;&amp;lt;img src=x onerror=alert(1)&amp;gt;&amp;lt;svg onload=alert(1)&amp;gt;&amp;lt;a href=javascript:alert(1)&amp;gt;onclick=alert(1)//onmouseover=alert(">
@@ -246,7 +246,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-28 06:30:00" itemprop="dateModified" datetime="2019-11-28T06:30:00+08:00">2019-11-28</time>
+                <time title="修改时间：2019-11-29 07:05:37" itemprop="dateModified" datetime="2019-11-29T07:05:37+08:00">2019-11-29</time>
               </span>
             
           
@@ -274,7 +274,7 @@
 <p>HTML实体编码<br>命名实体：以&开头，以分号结尾的，例如<的编码是<code>$lt;</code>。<br>字符编码：十进制、十六进制ASCII码或unioncode字符编码，样式为&#数值;，例如<可以编码为<code>&amp;#060;</code>和<code>&amp;#x3c;</code>。</p>
 <p>产生自己的事件<br>如果不能依靠属性进行跨站，那么还可以利用事件处理函数<br><code>&lt;input type=&quot;buttoon&quot; value=&quot;clickme&quot; onclick=&quot;alert(&#39;xss&#39;)&quot; /&gt;</code><br>事件技能让JS脚本运行，自然也可以执行跨站，另外像onerror、onMouseover等都可利用的是事件处理函数。</p>
 <p>0X02    XSS漏洞修复建议</p>
-<p>因为XSS漏洞设计输入和输出两部分，所以其修复也分为两种。<br>①过滤输入的数据，包括' " < > on 等非法字符。<br>②对输出到页面的数据进行响应的编码转换，包括HTML实体编码、JavaScript编码等。</p>
+<p>因为XSS漏洞设计输入和输出两部分，所以其修复也分为两种。<br>①过滤输入的数据，包括' " < > on 等非法字符。<br>②对输出到页面的数据进行相应的编码转换，包括HTML实体编码、JavaScript编码等。<br>除此之外，还可以将服务端的cookie设置为http-only。</p>
 </script></p>
     </div>
 
@@ -374,7 +374,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-count">30</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

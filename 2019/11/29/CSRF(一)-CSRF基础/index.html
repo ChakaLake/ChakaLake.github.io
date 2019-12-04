@@ -54,20 +54,18 @@
   };
 </script>
 
-  <meta name="description" content="upload-labs是一个帮你总结所有类型的上传漏洞靶场。项目地址：https://github.com/c0ny1/upload-labs。">
+  <meta name="description" content="0X01    介绍CSRF漏洞​    CSRF（Cross-site request forgery，跨站请求伪造）也被成为One Click Attack或者Session Riding，通常缩写为CSTF或者XSRF，是一种对网站的恶意利用，尽管听起来像XSS，但是它与XSS非常不通，XSS利用站点内的信任用户，而CSRF则通过伪装成受信任用户请求受信任的网站。与XSS攻击相比，CSRF攻">
 <meta property="og:type" content="article">
-<meta property="og:title" content="靶机练习|upload-labs 1-20关">
-<meta property="og:url" content="https://ChakaLake.github.io/2019/10/17/靶机练习-upload-labs 1-20关/index.html">
+<meta property="og:title" content="CSRF(一)|CSRF基础">
+<meta property="og:url" content="https://ChakaLake.github.io/2019/11/29/CSRF(一)-CSRF基础/index.html">
 <meta property="og:site_name" content="他年少如歌">
-<meta property="og:description" content="upload-labs是一个帮你总结所有类型的上传漏洞靶场。项目地址：https://github.com/c0ny1/upload-labs。">
+<meta property="og:description" content="0X01    介绍CSRF漏洞​    CSRF（Cross-site request forgery，跨站请求伪造）也被成为One Click Attack或者Session Riding，通常缩写为CSTF或者XSRF，是一种对网站的恶意利用，尽管听起来像XSS，但是它与XSS非常不通，XSS利用站点内的信任用户，而CSRF则通过伪装成受信任用户请求受信任的网站。与XSS攻击相比，CSRF攻">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/20191017.png">
-<meta property="og:updated_time" content="2019-11-07T03:07:08.493Z">
+<meta property="og:updated_time" content="2019-12-03T21:57:57.941Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="靶机练习|upload-labs 1-20关">
-<meta name="twitter:description" content="upload-labs是一个帮你总结所有类型的上传漏洞靶场。项目地址：https://github.com/c0ny1/upload-labs。">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/20191017.png">
-  <link rel="canonical" href="https://ChakaLake.github.io/2019/10/17/靶机练习-upload-labs 1-20关/">
+<meta name="twitter:title" content="CSRF(一)|CSRF基础">
+<meta name="twitter:description" content="0X01    介绍CSRF漏洞​    CSRF（Cross-site request forgery，跨站请求伪造）也被成为One Click Attack或者Session Riding，通常缩写为CSTF或者XSRF，是一种对网站的恶意利用，尽管听起来像XSS，但是它与XSS非常不通，XSS利用站点内的信任用户，而CSRF则通过伪装成受信任用户请求受信任的网站。与XSS攻击相比，CSRF攻">
+  <link rel="canonical" href="https://ChakaLake.github.io/2019/11/29/CSRF(一)-CSRF基础/">
 
 
 <script id="page-configurations">
@@ -81,7 +79,7 @@
   };
 </script>
 
-  <title>靶机练习|upload-labs 1-20关 | 他年少如歌</title>
+  <title>CSRF(一)|CSRF基础 | 他年少如歌</title>
   <meta name="generator" content="Hexo 3.9.0">
   
 
@@ -209,7 +207,7 @@
   
   
   <div class="post-block post">
-    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/10/17/靶机练习-upload-labs 1-20关/">
+    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/11/29/CSRF(一)-CSRF基础/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yang">
@@ -221,7 +219,7 @@
       <meta itemprop="name" content="他年少如歌">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">靶机练习|upload-labs 1-20关
+        <h1 class="post-title" itemprop="name headline">CSRF(一)|CSRF基础
 
           
         </h1>
@@ -237,7 +235,7 @@
                 
               
 
-              <time title="创建时间：2019-10-17 08:55:51" itemprop="dateCreated datePublished" datetime="2019-10-17T08:55:51+08:00">2019-10-17</time>
+              <time title="创建时间：2019-11-29 07:06:45" itemprop="dateCreated datePublished" datetime="2019-11-29T07:06:45+08:00">2019-11-29</time>
             </span>
           
             
@@ -248,22 +246,9 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-07 11:07:08" itemprop="dateModified" datetime="2019-11-07T11:07:08+08:00">2019-11-07</time>
+                <time title="修改时间：2019-12-04 05:57:57" itemprop="dateModified" datetime="2019-12-04T05:57:57+08:00">2019-12-04</time>
               </span>
             
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/靶机练习/" itemprop="url" rel="index"><span itemprop="name">靶机练习</span></a></span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -277,48 +262,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>upload-labs是一个帮你总结所有类型的上传漏洞靶场。<br>项目地址：<a href="https://github.com/c0ny1/upload-labs。" target="_blank" rel="noopener">https://github.com/c0ny1/upload-labs。</a></p><a id="more"></a>
-<p><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/20191017.png" alt></p>
-<p>pass-01    JS验证</p>
-<p>直接查看网站源文件、使用抓包工具查看客户端是否向服务器提交了数据包，如果没有则是js验证、随便上传一个文件，看返回结果。<br>1、删除代码中onsubmit事件中关于文件上传时验证上传文件的相关代码。<br>2、更改文件上传js代码中允许上传的文件扩展名。<br>3、使用BP或者fiddle等代理工具抓包提交，本地文件先更改为jpg，上传时拦截，再把文件扩展名更改为.php即可。</p>
-<p>pass-02    MIME验证</p>
-<p>方法：使用BP抓包修改：Content-Type：image/jpeg。</p>
-<p>pass-03    黑名单绕过</p>
-<p>通过上传.php3、.phtml、.phps、.php5、.pht等类似的格式来绕过<br>注意：要使上述格式正常解析，需要满足以下条件的任意一种。<br>1、Apache的httpd.conf中有如下配置代码：<br><code>AddType application/x-httpd-php .php5 .php3.pht.phps.phtml</code><br>2、上传.htaccess伪静态文件，内容如下：<br><code>&lt;FilesMatch &quot;phpinfo.php5&quot;&gt;</code><br><code>SetHandler application/x-httpd-php</code><br><code>&lt;/FilesMatch&gt;</code></p>
-<p>pass-04    .htaccess</p>
-<p>虽然禁止上传很多的后缀文件，但是：没有过滤.htaccess等类似的文件，直接用pass-03上面的方法即可。<br>1、先上传一个.htaccess文件，内容如下<br><code>SetHandler application/x-httpd-php</code><br>此伪静态规则的意思就是：所有文件都会解析为php<br>2、再上传一个php木马文件，并改包，直接改为filename=”a.php999”，这就直接绕过。当然也可以上传一个图马文件，都一样。</p>
-<p>pass-05    大小写</p>
-<p>黑名单，加上了禁止上传.htaccess文件，但是，没有将后缀进行大小统一，于是可以通过大小写绕过。直接改为filename=”a.PhP”。<br>注意：在linux没有特殊配置的情况下，这种情况只有windows可以，因为windows会忽略大小写。</p>
-<p>pass-06    空格</p>
-<p>win下xx.jpg[空格]或xx.jpg.这两类文件时不允许存在的，若这样命名，windows会默认去除空格或点。此处会删除末尾的点，但是没有去掉末尾的空格，因此上传一个.php[空格]文件即可。<br>只需要修改：filename=”a.php “</p>
-<p>pass-07    点绕过</p>
-<p>黑名单，但是没有对后缀名进行去”.”的处理，利用windows的特性，会自动去掉后缀命中最后的”.”，可在后缀名中加”.”到过。<br>只需要修改：finame=”a.php.”</p>
-<p>pass-08    ::$DATA绕过</p>
-<p>NTFS文件系统包括对备用数据流的支持，主要包括提供与Macintosh文件系统中的文件的兼容性。备用数据亏允许文件包含多个数据流。每个文件至少有一个数据流。在windows中，此默认数据流为：$DATA。<br>黑名单，但是没有对后缀名进行去”::$DATA”处理，利用windows的特性，可在后缀名中加”::$DATA”绕过。只需要修改为：filename=”a.php::$DATA”</p>
-<p>pass-09    . .绕过</p>
-<p>windows会忽略文件末尾的.和空格。直接修改为：finame=”a.php. .”。</p>
-<p>pass-10    双写绕过</p>
-<p>将敏感后缀替换为空，双写.pphphp绕过。直接修改为：filename=”a.pphphp”。</p>
-<p>pass-11    00截断GET</p>
-<p>此关需要满足一下两个条件<br>1、PHP版本&lt;5.3.4<br>2、php.ini中magic_quotes_gpc=off<br>上传路径%00截断绕过，上传的文件名写成a.jpg，save_path改成../upload/a.php%00，最后保存下来的文件就是a.php。</p>
-<p>pass-12    00截断POST</p>
-<p>和上一题唯一不同就是save_path从GET变成了POST，此时不能直接使用%00截断，原因是%00截断在GET中呗URL解码之后是空字符。但是POST中%00不会被URL解码，所以只能通过Burpsuite修改hex值为00进行截断，也就是在POST情况下，需要先对%00进行一个URL编码（选中%00，然后按ctrl+shift+u截取）。</p>
-<p>pass-13    图片马绕过</p>
-<p>通过读文件的前2个字节判断文件类型，因此直接上传图片马即可。<br>添加GIF图片的文件头GIF89a，可以直接绕过GIF图片检查。<br>windows做做图片马方法，直接用cmd命令：copy 1.jpg /b + 2.php /a webshell.jpg<br>然后结合文件包含漏洞进行利用：<br><a href="http://127.0.0.1/upload-labs/include.php?file=../upload/a.jpg" target="_blank" rel="noopener">http://127.0.0.1/upload-labs/include.php?file=../upload/a.jpg</a></p>
-<p>pass-14    getimagesize()突破</p>
-<p>使用getimagesize()检查是否为图片文件，同pass-13</p>
-<p>pass-15    exif_imagetype()突破</p>
-<p>使用exif_imagetype()检查是否为图片文件，同pass-13</p>
-<p>pass-16    图片二次渲染绕过</p>
-<p>判断了后缀名、content-type、以及利用imagecreatefromgif判断是否为gif图片，最后再做了一次二次渲染，由于jpg和png很麻烦，gif只需要找到渲染前后没有变化 的位置，然后将phpdiamagnetic写进去就可以了。具体绕过方法可以参考先知的文章，写的很详细：<a href="https://xz.aliyun.com/t/2657。" target="_blank" rel="noopener">https://xz.aliyun.com/t/2657。</a></p>
-<p>pass-17    条件竞争绕过</p>
-<p>先将文件上传到服务器，然后通过rename修改名称，再通过unlink删除文件，因此可以通过条件竞争的方式在unlink之前，访问webshell。<br>1、在Burpsuite中不断发送上传webshell的数据包。<br>2、打开“<a href="http://127.0.0.1/upload-labs/upload/a.php”，不断在浏览器中刷新。" target="_blank" rel="noopener">http://127.0.0.1/upload-labs/upload/a.php”，不断在浏览器中刷新。</a></p>
-<p>pass-18    条件竞争绕过</p>
-<p>对文件名后缀名做了白名单判断，然后会一步一步检查文件大小，文件是否存在等等，将文件上传后，对文件重新命名，同样存在条件竞争的漏洞。可以不断利用burp发送上传图片马的数据包，因为move在rename之前，move操作进行了一次文件保存，然后rename进行了一次更改文件名，可以通过条件竞争来上传图片马。</p>
-<p>pass-19    文件名/.与00截断绕过</p>
-<p>1、本关考察CVE-2015-2348 move_uploaded_file()00截断，上传webshell，同时自定义保存名称，直接保存为php是不行的。<br>通过查看源代码：发现move_uploaded_file()函数中的image_path是由post参数save_name控制的，因此可以在save_name利用00截断绕过，将save_name修改为a.php%00<br>注意：post接受的时候，%00需要URL编码。<br>2、move_uploaded_file会忽略掉文件末尾的/.。直接将save_name修改为a.php/.即可绕过。</p>
-<p>pass-20    数组+/.绕过</p>
-<p>对PHP不熟，暂时不能理解</p>
+        <p>0X01    介绍CSRF漏洞</p><p>​    CSRF（Cross-site request forgery，跨站请求伪造）也被成为One Click Attack或者Session Riding，通常缩写为CSTF或者XSRF，是一种对网站的恶意利用，尽管听起来像XSS，但是它与XSS非常不通，XSS利用站点内的信任用户，而CSRF则通过伪装成受信任用户请求受信任的网站。与XSS攻击相比，CSRF攻击往往不大流行（因此对其进行防范的资源也相当稀少）也难以防范，所以被认为比XSS更危险性。</p><a id="more"></a>
+
+<p>0X02    CSRF漏洞原理</p>
+<p>1<br>    从上图可以看出，要完成一次CSRF攻击，受害者必须一次完成两个步骤。<br>★登录受信任网站A，并在本地生成cookie<br>★在不登出A的情况下，访问危险网站B<br>    CSRF攻击时源于web的隐式身份验证机制，web身份验证机制虽然可以保证一个请求时来自于某个用户的浏览器，但却无法保证请求是用户批准发送的。<br>    其实可以这样理解CSRF，攻击者利用目标用户的身份，以目标用户的名义执行某些非法操作。CSRF能够做的事情包括：以目标用户的名义发送邮件、发消息，盗取目标用户的账户，甚至购买商品、虚拟货币转账，这回泄露个人信息并威胁到目标用户的财产安全。<br>    举个列子，你想给某位用户转账100元，那么单击“转账”按钮后，发出的HTTP请求会与<a href="http://www.xxbank.com/pay.php?user=xx&amp;money=100类似，而攻击者构造链接（http://www.xxbank/pay.php?user=hack&amp;money=100），当目标用户访问了该URL后，就会自动向hack转账100元，而且这只涉及目标用户的操作，攻击者并没有获取目标用户的cookie或其他信息。" target="_blank" rel="noopener">http://www.xxbank.com/pay.php?user=xx&amp;money=100类似，而攻击者构造链接（http://www.xxbank/pay.php?user=hack&amp;money=100），当目标用户访问了该URL后，就会自动向hack转账100元，而且这只涉及目标用户的操作，攻击者并没有获取目标用户的cookie或其他信息。</a></p>
+<p>0X03    CSRF漏洞修复建议</p>
+<p>1、验证请求的referer值，如果referer是以自己的网站开头的域名，则说明该请求来自网站自己，是合法的。如果referer是其他网站域名或空白，就有可能是CSRF攻击，那么服务器应拒绝该请求，但是此方法存在被绕过的可能。<br>2、CSRF之所以能够成功，是因为攻击者可以伪造用户的请求，由此可知，抵御CSRF攻击的关键在于：在请求中放入攻击者不能伪造的信息。例如可以在HTTP请求中以参数的形式加入一个随机产生的token，并在服务器段验证token，如果请求中没有token或者token的内容不正确，则认为该请求可能是CSRF攻击从而拒绝该请求。</p>
 
     </div>
 
@@ -344,8 +293,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/2019/10/15/渗透测试工具(一)-Nmap/" rel="next" title="渗透测试工具(一)|Nmap">
-                  <i class="fa fa-chevron-left"></i> 渗透测试工具(一)|Nmap
+                <a href="/2019/11/27/靶机练习-XSS之旅/" rel="next" title="靶机练习|XSS之旅">
+                  <i class="fa fa-chevron-left"></i> 靶机练习|XSS之旅
                 </a>
               
             </div>
@@ -354,8 +303,8 @@
 
             <div class="post-nav-prev post-nav-item">
               
-                <a href="/2019/10/18/靶机练习-web-for-pentester-1-SQL注入/" rel="prev" title="靶机练习|web for pentester-1.SQL注入">
-                  靶机练习|web for pentester-1.SQL注入 <i class="fa fa-chevron-right"></i>
+                <a href="/2019/11/30/CSRF(二)-CSRF攻击及代码分析/" rel="prev" title="CSRF(二)|CSRF攻击及代码分析">
+                  CSRF(二)|CSRF攻击及代码分析 <i class="fa fa-chevron-right"></i>
                 </a>
               
             </div>

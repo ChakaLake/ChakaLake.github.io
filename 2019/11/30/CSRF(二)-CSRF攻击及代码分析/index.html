@@ -54,24 +54,15 @@
   };
 </script>
 
-  <meta name="description" content="0X00    报错注入攻击​    报错注入攻击的测试地址：http://127.0.0.1/error.php?username=1。​    首先访问http://127.0.0.1/error.php?username=1&amp;#39;，因为参数username的值是1&amp;#39;，在数据库中执行sql时，会因为多了一个单引号而报错。​    通过页面返回结果可以看出，程序直接将错误信息输出到了">
-<meta property="og:type" content="article">
-<meta property="og:title" content="SQL注入(五)|报错注入攻击">
-<meta property="og:url" content="https://ChakaLake.github.io/2019/10/08/SQL注入(五)-报错注入攻击/index.html">
+  <meta property="og:type" content="article">
+<meta property="og:title" content="CSRF(二)|CSRF攻击及代码分析">
+<meta property="og:url" content="https://ChakaLake.github.io/2019/11/30/CSRF(二)-CSRF攻击及代码分析/index.html">
 <meta property="og:site_name" content="他年少如歌">
-<meta property="og:description" content="0X00    报错注入攻击​    报错注入攻击的测试地址：http://127.0.0.1/error.php?username=1。​    首先访问http://127.0.0.1/error.php?username=1&amp;#39;，因为参数username的值是1&amp;#39;，在数据库中执行sql时，会因为多了一个单引号而报错。​    通过页面返回结果可以看出，程序直接将错误信息输出到了">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/100801.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/100802.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/100803.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/100804.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/100805.png">
-<meta property="og:updated_time" content="2019-11-18T11:38:13.586Z">
+<meta property="og:updated_time" content="2019-11-30T03:05:23.470Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SQL注入(五)|报错注入攻击">
-<meta name="twitter:description" content="0X00    报错注入攻击​    报错注入攻击的测试地址：http://127.0.0.1/error.php?username=1。​    首先访问http://127.0.0.1/error.php?username=1&amp;#39;，因为参数username的值是1&amp;#39;，在数据库中执行sql时，会因为多了一个单引号而报错。​    通过页面返回结果可以看出，程序直接将错误信息输出到了">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/100801.png">
-  <link rel="canonical" href="https://ChakaLake.github.io/2019/10/08/SQL注入(五)-报错注入攻击/">
+<meta name="twitter:title" content="CSRF(二)|CSRF攻击及代码分析">
+  <link rel="canonical" href="https://ChakaLake.github.io/2019/11/30/CSRF(二)-CSRF攻击及代码分析/">
 
 
 <script id="page-configurations">
@@ -85,7 +76,7 @@
   };
 </script>
 
-  <title>SQL注入(五)|报错注入攻击 | 他年少如歌</title>
+  <title>CSRF(二)|CSRF攻击及代码分析 | 他年少如歌</title>
   <meta name="generator" content="Hexo 3.9.0">
   
 
@@ -213,7 +204,7 @@
   
   
   <div class="post-block post">
-    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/10/08/SQL注入(五)-报错注入攻击/">
+    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/11/30/CSRF(二)-CSRF攻击及代码分析/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yang">
@@ -225,7 +216,7 @@
       <meta itemprop="name" content="他年少如歌">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">SQL注入(五)|报错注入攻击
+        <h1 class="post-title" itemprop="name headline">CSRF(二)|CSRF攻击及代码分析
 
           
         </h1>
@@ -241,32 +232,7 @@
                 
               
 
-              <time title="创建时间：2019-10-08 19:33:29" itemprop="dateCreated datePublished" datetime="2019-10-08T19:33:29+08:00">2019-10-08</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-18 19:38:13" itemprop="dateModified" datetime="2019-11-18T19:38:13+08:00">2019-11-18</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/WEB安全/" itemprop="url" rel="index"><span itemprop="name">WEB安全</span></a></span>
-
-                
-                
-              
+              <time title="创建时间：2019-11-30 11:05:23" itemprop="dateCreated datePublished" datetime="2019-11-30T11:05:23+08:00">2019-11-30</time>
             </span>
           
 
@@ -281,14 +247,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>0X00    报错注入攻击</p><p>​    报错注入攻击的测试地址：<a href="http://127.0.0.1/error.php?username=1。" target="_blank" rel="noopener">http://127.0.0.1/error.php?username=1。</a><br>​    首先访问<a href="http://127.0.0.1/error.php?username=1&#39;，因为参数username的值是1&#39;，在数据库中执行sql时，会因为多了一个单引号而报错。" target="_blank" rel="noopener">http://127.0.0.1/error.php?username=1&#39;，因为参数username的值是1&#39;，在数据库中执行sql时，会因为多了一个单引号而报错。</a><br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/100801.png" alt><br>​    通过页面返回结果可以看出，程序直接将错误信息输出到了页面上，所以此处可以利用报错注入获取数据。报错注入有多种格式，此处利用函数updatexml()演示sql语句获取user()的值。<br><code>&#39;and updatexml(1,cocat(0x7e,(select user()),0x7e),1)--+&#39;</code><br>​    其中0x7e是ASCII编码，解码结果为~。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/100802.png" alt><br>​    然后尝试获取当前数据库的库名。<br><code>&#39;and updatexml(1.concat(0x7e,(select database()),0x7e),1)--+&#39;</code><br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/100803.png" alt><br>​    接着可以利用select语句继续获取数据库中的库名、表名和字段名，查询语句与union注入的相同。因为报错注入只显示一条结果，所以需要使用limit语句。构造的语句如下所示。<br><code>&#39;and updatexml(1,concat(0x7e,(select schema_name from information_schema.schemata limit 0,1),0x7e),1)--+</code><br>​    可以获取数据库的库名。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/100804.png" alt><br>​    构造查询表名的语句，可以获取数据库test的表名。<br><code>’and updatexml(1,concat(0x7e,(select table_name from information_schema.tables where table_schema=&#39;test&#39; limit 0,1),0x7e),1)</code><br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/100805.png" alt></p><a id="more"></a>
-
-<p>0X01    报错注入代码分析</p>
-<p>​    在报错注入页面中，程序获取get参数username后，将username拼接到sql语句中，然后到数据库查询。如果执行成功，就输出ok；如果出错，则通过echo mysqli_error($con)将错误信息输出到页面（mysqli_error返回上一个mysql函数的错误）。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$con=mysqli_connect(<span class="string">"localhost"</span>,<span class="string">"root"</span>,<span class="string">"root"</span>,<span class="string">"test"</span>);</span><br><span class="line"><span class="comment">// 检测连接</span></span><br><span class="line"><span class="keyword">if</span> (mysqli_connect_errno())</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">echo</span> <span class="string">"连接失败: "</span> . mysqli_connect_error();</span><br><span class="line">&#125;</span><br><span class="line">$id = $_GET[<span class="string">'id'</span>];</span><br><span class="line">$result = mysqli_query($con,<span class="string">"select * from users where `id`="</span>.$id);</span><br><span class="line"><span class="keyword">if</span>(! $result)&#123;</span><br><span class="line">printf(<span class="string">"Error: %s\n"</span>, mysqli_error($con));</span><br><span class="line"><span class="keyword">exit</span>();</span><br><span class="line">&#125;</span><br><span class="line">$row = mysqli_fetch_array($result);</span><br><span class="line"><span class="keyword">echo</span> $row[<span class="string">'username'</span>] . <span class="string">":"</span> . $row[<span class="string">'address'</span>];</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"&lt;br&gt;"</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>​    输入username=1’时，sql语句为select * from users where username=’1’’。执行时，会因为多了一个单引号而报错。利用这种错误回显，我么可以通过floor()、updatexml()等函数将要查询的内容输出到页面上。</p>
-
+        
     </div>
 
     
@@ -313,8 +272,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/2019/10/05/SQL注入(四)-Boolean注入攻击/" rel="next" title="SQL注入(四)|Boolean注入攻击">
-                  <i class="fa fa-chevron-left"></i> SQL注入(四)|Boolean注入攻击
+                <a href="/2019/11/29/CSRF(一)-CSRF基础/" rel="next" title="CSRF(一)|CSRF基础">
+                  <i class="fa fa-chevron-left"></i> CSRF(一)|CSRF基础
                 </a>
               
             </div>
@@ -322,10 +281,6 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-              
-                <a href="/2019/10/10/SQL注入(六)-时间注入攻击/" rel="prev" title="SQL注入(六)|时间注入攻击">
-                  SQL注入(六)|时间注入攻击 <i class="fa fa-chevron-right"></i>
-                </a>
               
             </div>
           </div>
