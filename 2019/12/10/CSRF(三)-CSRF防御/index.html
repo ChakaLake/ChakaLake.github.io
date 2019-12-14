@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="目前防御CSRF攻击主要有四种策略：1、验证HTTP Referer字段；2、在请求地址中添加token并验证；3、在HTTP头中自定义属性并验证；4、Chrome浏览器端启用SameSite cookie；">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSRF(三)|CSRF防御">
+<meta property="og:url" content="https://ChakaLake.github.io/2019/12/10/CSRF(三)-CSRF防御/index.html">
+<meta property="og:site_name" content="他年少如歌">
+<meta property="og:description" content="目前防御CSRF攻击主要有四种策略：1、验证HTTP Referer字段；2、在请求地址中添加token并验证；3、在HTTP头中自定义属性并验证；4、Chrome浏览器端启用SameSite cookie；">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-12-14T22:54:34.223Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CSRF(三)|CSRF防御">
+<meta name="twitter:description" content="目前防御CSRF攻击主要有四种策略：1、验证HTTP Referer字段；2、在请求地址中添加token并验证；3、在HTTP头中自定义属性并验证；4、Chrome浏览器端启用SameSite cookie；">
+  <link rel="canonical" href="https://ChakaLake.github.io/2019/12/10/CSRF(三)-CSRF防御/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>CSRF(三)|CSRF防御 | 他年少如歌</title>
+  <meta name="generator" content="Hexo 3.9.0">
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">他年少如歌</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">人生如棋，我愿为卒，行动虽慢，但谁曾见我后退一步！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/12/10/CSRF(三)-CSRF防御/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="他年少如歌">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">CSRF(三)|CSRF防御
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-12-10 06:25:44" itemprop="dateCreated datePublished" datetime="2019-12-10T06:25:44+08:00">2019-12-10</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-15 06:54:34" itemprop="dateModified" datetime="2019-12-15T06:54:34+08:00">2019-12-15</time>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>目前防御CSRF攻击主要有四种策略：<br>1、验证HTTP Referer字段；<br>2、在请求地址中添加token并验证；<br>3、在HTTP头中自定义属性并验证；<br>4、Chrome浏览器端启用SameSite cookie；</p><a id="more"></a>
+<p>0X01    验证HTTP Referer字段</p>
+<p>​        下图是由百度跳转到QQ邮箱页面的Referer查看示意<br>1<br>​        可以看出Referer为：<a href="https://www.baidu.com" target="_blank" rel="noopener">https://www.baidu.com</a><br>​        根据HTTP协议，在HTTP有种有一个字段Referer，它记录了该HTTP请求的来源地址。在通常情况下，访问一个安全首先页面的请求来自于同一个网站，比如访问<a href="http://bank.example/withdraw?account=bob&amp;amount=100&amp;for=Mallory，用户必须先登录bank.example，然后通过点击页面上的按钮来触发转账事件。这时，该转账请求的Referer值就会是转账按钮所在页面的URL，通常是以bank.example域名开头的地址。而如果黑客要对银行网站实施CSRF攻击，他只能在他自己的网站构造请求，当用户通过黑客的网站发送请求到银行时，该请求的Referer是指向黑客自己的网站。因此，要防御CSRF攻击，银行网站只需要对每一个转账请求验证其Referer值，如果是以bank.example开头的域名，则说明该请求是来自银行网站自己的请求，是合法的。如果Referer是其他网站的话，则有可能是黑客的CSRF攻击，拒绝该请求。" target="_blank" rel="noopener">http://bank.example/withdraw?account=bob&amp;amount=100&amp;for=Mallory，用户必须先登录bank.example，然后通过点击页面上的按钮来触发转账事件。这时，该转账请求的Referer值就会是转账按钮所在页面的URL，通常是以bank.example域名开头的地址。而如果黑客要对银行网站实施CSRF攻击，他只能在他自己的网站构造请求，当用户通过黑客的网站发送请求到银行时，该请求的Referer是指向黑客自己的网站。因此，要防御CSRF攻击，银行网站只需要对每一个转账请求验证其Referer值，如果是以bank.example开头的域名，则说明该请求是来自银行网站自己的请求，是合法的。如果Referer是其他网站的话，则有可能是黑客的CSRF攻击，拒绝该请求。</a><br>​        这种方法显而易见的好处就是简单易行，网站的普通开发人员不需要操心CSRF的漏洞，只需要在最后给所有安全敏感的请求统一增加一个拦截器来检查Referer的值就可以。特别是对于当前现有的系统，不需要改变当前系统的任何已有代码和逻辑，没有风险，非常便捷。<br>​        然而，这种方法并非万无一失。Referer的值是由浏览器提供的，虽然HTTP协议上由明确的要求，但是每个浏览器对于Referer的具体实现可能由差别，并不能保障浏览器自身没有安全漏洞。使用验证Referer值的方法，就是把安全性都依赖于第三方（即浏览器）来保障，从理论上来讲，这样并不安全。事实上，对于某些浏览器，比如IE6或FF2，目前已经有一些方法可以篡改Referer值。比如bank.example网站支持IE6浏览器，黑客完全可以把用户浏览器的Referer值设为以bank.example域名开头的地址，这样就可以通过验证，从而进行CSRF攻击。<br>​        即便是使用最新的浏览器，黑客无法篡改Referer值，这种方法仍然有问题。因为Referer值会记录下用户的访问来源，有些用户认为这样会侵犯到他们自己的隐私权，特别是有些组织担心Referer值会把组织内网中的某些信息泄漏到外网中。因此，用户自己可以设置浏览器使其在发送请求时不再提供Referer。当他们正常访问银行网站时，网站会因为请求没有Referer值而认为是CSRF攻击，拒绝合法用户的访问。<br>​        另外，如果Referer的判断逻辑写的不严密的话，也容易被攻破，例如</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> referer=request.headers.referer;</span><br><span class="line"><span class="keyword">if</span>(referer.index0f(<span class="string">'www.bank.example'</span>)&gt;-<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="comment">//pass</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​        如果黑客的网站是<a href="http://www.bank.example.hack.com，则referer检查无效。" target="_blank" rel="noopener">www.bank.example.hack.com，则referer检查无效。</a></p>
+<p>0X02    在请求地址中添加token并验证</p>
+<p>​        CSRF攻击之所以能够成功，是因为黑客可以完全伪造用户的请求，该请求中所有的用户验证信息都是存在于cookie中，因此黑客可以在不知道这些验证信息的情况下直接利用用户的cookie来通过安全验证。要抵御CSRF，关键在于在请求中放入黑客所不能伪造的信息，并且该信息不存在于cookie中。可以在HTTP请求中以参数的形式加入一个随机产生的token，并在服务器端建立一个拦截器来验证这个token，如果请求中没有token或者token内容不正确，则认为可能是CSRF攻击而拒绝该请求。<br>​        这种方法要比检查Referer要安全一些，token可以在用户登录后产生并放于session之中，然后再每次请求时把token从session中拿出，与请求中的token进行对比，但这种方法的难点在于如何把token以参数的形式加入请求。对于GET请求，token将附在请求地址之后，这样URL就变成<br><a href="http://url?csrftoken=tokenvalue" target="_blank" rel="noopener">http://url?csrftoken=tokenvalue</a><br>而对于POST请求来说，要在form的最后加上<br><input type="hidden" name="csrftoken" value="tokenvalue"><br>该方法有一个缺点是难以保证token本身的安全。特别是再论坛之类支持用户自己发表内容的网站。由于系统也会再这个地址后面加上token，黑客可以再自己的网站上得到这个token，并马上就可以发动CSRF攻击。为了避免这一点，系统可以在添加token的时候增加一个判断，如果这个链接是    链接到自己本站的，就在后面添加token，如果是通向外网则不加，不过，即使这个csrftoken不以参数的形式附加在请求之中，黑客的网站也同样可以通过Referer来得到这个token值发动CSRF攻击。这也是一些用户喜欢手动关闭浏览器Referer功能的原因。    </p>
+<p>0X03    在HTTP投中自定义属性并验证</p>
+<p>​        这种方法也是使用token并进行验证，和上一种方法不同的是，这里并不是把token以参数的形式置于HTTP请求之中，而是把他放到HTTP头中自定义的属性里。通过XMLHttpRequset这个类，可以一次性给所有该类请求加上csrftoken这个HTTP头属性，并把token值放入其中。这样解决了上种方法在请求中加入token的不变，同时，通过XMLHttpRequest请求的地址不会被记录到浏览器的地址栏，也不用担心token会透过Referer泄露到其他网站中去。<br>​        然而这种方法的局限性非常大。XMLHttpRequest请求通常用于Ajax方法中对于页面局部的异常刷新，并非所有的请求都适合用这个类来发起，而且通过该类请求得到的页面不能被浏览器所记录下，从而进行前进，后退，刷新，收藏等操作，给用户带来不便。另外，对于没有进行CSRF防护的遗留系统来说，要采用这种方法来进行防护，要把所有的请求都改为XMLHttpRequest请求，这样几乎要重写整个网站，这代价无疑是不能接受的。</p>
+<p>0X04    Chrome浏览器启用Samesite cookie</p>
+<p>下面介绍如何启用Samesite cookie的设置<br>原本的cookie的header设置时这样：<br><code>Set-Cookie:session_id=esadfas325</code><br>需要在维护增加SameSite就好：<br><code>Set-Cookie:session_id=esadfas32e5;SameSite</code><br>SameSite有两种模式，Lax跟Strict模式，默认启用Strict模式，可以自己指定模式。<br><code>Set-Cookie:session_id=esadfas32e5;SameSite=Strict</code><br><code>Set-Cookie:foo=bar;SameSite=Lax</code><br>        Strict模式规定，cookie只允许相同的site使用，不应该在任何的cross site request被加上去。即a标签，from表单和XMLHttpRequest提交的内容，只要是提交到不同的site去，就不会带上cookie。但也存在不变，例如朋友发送过来我已经登录过的一个页面链接，我点开后，该页面仍然需要重新登录。<br>        有两种处理方法，第一种是与Amazon一样，准备两组不同的cookie，第一组用于维持登录状态不设定SameSite，第二组针对的是一些敏感操作会用到（例如购买、支付，设定账户等）严格设定SameSite。<br>        基于这个思路，就产生了SameSite的另一种模式：Lax模式。<br>        Lax模式打开了一些限制，例如：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"prerender"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">from</span> <span class="attr">method</span>=<span class="string">"GET"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>​        这些都会带上cookie。但是POST方法的form，或是只要POST、PUT、DELETE这些方法，就不会带上cookie。<br>​        但一定要注意将重要的请求方式改成POST，否则GET仍然会被攻击。<br>PS：该方式目前仅Chrome支持。</p>
+<p>0X5    其他策略</p>
+<p>1、尽量使用POST，限制GET<br>        GET接口太容易被拿来做CSRF攻击，只要构造一个img标签，而img标签又是不能过滤的数据。接口最好限制为POST使用，GET则无效，降低攻击风险。当然POST并不是万无一失，攻击者只要构造一个form就可以，但需要在第三方页面做，这样就增加了暴漏的可能性。<br>2、浏览器cookie策略<br>        IE6、7、8、Safari会默认拦截第三方本地cookie（Third-party Cookie）的发送。但是Firefox2、3、Opera、Chorme、Android等不会拦截，所以通过浏览器Cookie策略来防御CSRF攻击不靠谱，只能说是降低了风险。<br>PS：Cookie分为两种，Session Cookie（在浏览器关闭后，就会失效，保存到内存里），Third-party Cookie（即只有到了Exprie时间后才会失效的Cookie，何种cookie会保存到本地）。另外如果网站返回HTTP头包含P3P Header，那么将允许浏览器发送第三方Cookie。<br>3、加验证码<br>        验证码，强制用户必须与应用进行交互，才能完成最终请求。在通常情况下，验证码能很好遏制CSRF攻击。但是出于用户体验考虑，网站不能给所有的操作都加上验证码。因此验证码只能作为一种辅助手段，不能作为主要解决方案。<br>4、Anti CSRF Token            </p>
+
+    </div>
+
+    
+    
+    
+<div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-heart"></i>感谢阅读-------------</div>
+    
+</div>
+  
+</div>
+        
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/11/30/CSRF(二)-CSRF攻击及代码分析/" rel="next" title="CSRF(二)|CSRF攻击及代码分析">
+                  <i class="fa fa-chevron-left"></i> CSRF(二)|CSRF攻击及代码分析
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc" data-target="post-toc-wrap">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Yang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+  </nav>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yang</span>
+</div>
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.3.0</div>
+-->
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.3.0"></script><script src="/js/motion.js?v=7.3.0"></script>
+<script src="/js/schemes/muse.js?v=7.3.0"></script>
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+ <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

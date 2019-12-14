@@ -202,6 +202,111 @@
   
   
   <div class="post-block home">
+    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/10/10/SQL注入(六)-时间注入攻击/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="他年少如歌">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+            
+            <a href="/2019/10/10/SQL注入(六)-时间注入攻击/" class="post-title-link" itemprop="url">SQL注入(六)|时间注入攻击</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-10-10 04:46:33" itemprop="dateCreated datePublished" datetime="2019-10-10T04:46:33+08:00">2019-10-10</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-11-18 19:38:22" itemprop="dateModified" datetime="2019-11-18T19:38:22+08:00">2019-11-18</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/WEB安全/" itemprop="url" rel="index"><span itemprop="name">WEB安全</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>0X00    时间注入攻击</p><p>​    时间注入攻击的测试地址：<a href="http://127.0.0.1/time.php?id=1。" target="_blank" rel="noopener">http://127.0.0.1/time.php?id=1。</a><br>​    访问该网址时，页面返回yes，在网址的后面加上一个单引号，再次访问，页面返回no。这个结果与Boolean’注入非常相似，时间注入与Boolean注入的不同之处在于，时间注入时利用sleep()或benchmark()等函数让mysql的执行时间边长。时间盲注多与if(expre1,expre2,expre3)结合使用，此if语句的含义时：如果expre1是ture，则if()的返回值是expre2；否则返回值是expre3。所以此判断数据库库名长度的语句应为：<br><code>if(length(database())&gt;1,sleep(5),1 )</code><br>​    上面这行语句的意思是，如果数据库的库名长度大于1，则mysql查询休眠5秒，否则查询1。<br>​    而查询1的结果，大约只有几十毫秒，根据Burp中的页面响应时间，可以判断条件是否正确。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/101001.png" alt><br>​    可以看出，页面的响应时间是6016毫秒，也就是6.016秒，表名页面成功执行了sleep(5)，所以长度是大于1的，我们将判断数据库库名长度语句中的值改为10。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/101002.png" alt><br>​    可以看出，执行的时间是1.018秒，表名页面没有执行sleep(5)，而是执行了select 1，所以数据库的库名长度大于10是错误的。通过多次测试，就可以得到数据库库名的长度。得出数据库库名长度后，我们开始查询数据库库名的第一位字母。查询的语句跟Boolean盲注的类似，使用substr函数，这时的语句应修改为：<br><code>if (substr(database(),1,1)=&#39;t&#39;,sleep(5),1)</code><br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/101003.png" alt><br>​    可以看出，程序延迟了5秒才返回，说明数据库库名的第一位数字是s，以此类推即可得出完整的数据库的库名、表名、字段名和具体数字。</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/10/10/SQL注入(六)-时间注入攻击/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+<div>
+  
+</div>
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+        <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block home">
     <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/10/08/SQL注入(五)-报错注入攻击/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1142,116 +1247,11 @@
   </article>
 
     
-        <article itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block home">
-    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/08/28/python学习-模块/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="他年少如歌">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-            
-            <a href="/2019/08/28/python学习-模块/" class="post-title-link" itemprop="url">python学习|模块</a>
-          
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2019-08-28 06:15:07" itemprop="dateCreated datePublished" datetime="2019-08-28T06:15:07+08:00">2019-08-28</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-09-28 19:18:44" itemprop="dateModified" datetime="2019-09-28T19:18:44+08:00">2019-09-28</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>一、概念</p><p>在python中，一个文件（以”.py”为后缀的文件）就叫做一个模块，每一个模块在python里都被看作是一个独立的文件，每个模块中都内置了大量的功能函数，类和变量。模块可以被项目中的其他模块、一些脚本甚至是交互式的解析器所使用，它可以被其他程序所引用，进而使用模块里的函数等功能，使用python中的标准库也是采用这种方法。</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/08/28/python学习-模块/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-<div>
-  
-</div>
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
   </div>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1296,7 +1296,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
