@@ -61,10 +61,12 @@
 <meta property="og:site_name" content="他年少如歌">
 <meta property="og:description" content="目前防御CSRF攻击主要有四种策略：1、验证HTTP Referer字段；2、在请求地址中添加token并验证；3、在HTTP头中自定义属性并验证；4、Chrome浏览器端启用SameSite cookie；">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-12-14T22:54:34.223Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/121001.gif">
+<meta property="og:updated_time" content="2019-12-14T22:58:21.944Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CSRF(三)|CSRF防御">
 <meta name="twitter:description" content="目前防御CSRF攻击主要有四种策略：1、验证HTTP Referer字段；2、在请求地址中添加token并验证；3、在HTTP头中自定义属性并验证；4、Chrome浏览器端启用SameSite cookie；">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/121001.gif">
   <link rel="canonical" href="https://ChakaLake.github.io/2019/12/10/CSRF(三)-CSRF防御/">
 
 
@@ -246,7 +248,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-12-15 06:54:34" itemprop="dateModified" datetime="2019-12-15T06:54:34+08:00">2019-12-15</time>
+                <time title="修改时间：2019-12-15 06:58:21" itemprop="dateModified" datetime="2019-12-15T06:58:21+08:00">2019-12-15</time>
               </span>
             
           
@@ -264,7 +266,7 @@
       
         <p>目前防御CSRF攻击主要有四种策略：<br>1、验证HTTP Referer字段；<br>2、在请求地址中添加token并验证；<br>3、在HTTP头中自定义属性并验证；<br>4、Chrome浏览器端启用SameSite cookie；</p><a id="more"></a>
 <p>0X01    验证HTTP Referer字段</p>
-<p>​        下图是由百度跳转到QQ邮箱页面的Referer查看示意<br>1<br>​        可以看出Referer为：<a href="https://www.baidu.com" target="_blank" rel="noopener">https://www.baidu.com</a><br>​        根据HTTP协议，在HTTP有种有一个字段Referer，它记录了该HTTP请求的来源地址。在通常情况下，访问一个安全首先页面的请求来自于同一个网站，比如访问<a href="http://bank.example/withdraw?account=bob&amp;amount=100&amp;for=Mallory，用户必须先登录bank.example，然后通过点击页面上的按钮来触发转账事件。这时，该转账请求的Referer值就会是转账按钮所在页面的URL，通常是以bank.example域名开头的地址。而如果黑客要对银行网站实施CSRF攻击，他只能在他自己的网站构造请求，当用户通过黑客的网站发送请求到银行时，该请求的Referer是指向黑客自己的网站。因此，要防御CSRF攻击，银行网站只需要对每一个转账请求验证其Referer值，如果是以bank.example开头的域名，则说明该请求是来自银行网站自己的请求，是合法的。如果Referer是其他网站的话，则有可能是黑客的CSRF攻击，拒绝该请求。" target="_blank" rel="noopener">http://bank.example/withdraw?account=bob&amp;amount=100&amp;for=Mallory，用户必须先登录bank.example，然后通过点击页面上的按钮来触发转账事件。这时，该转账请求的Referer值就会是转账按钮所在页面的URL，通常是以bank.example域名开头的地址。而如果黑客要对银行网站实施CSRF攻击，他只能在他自己的网站构造请求，当用户通过黑客的网站发送请求到银行时，该请求的Referer是指向黑客自己的网站。因此，要防御CSRF攻击，银行网站只需要对每一个转账请求验证其Referer值，如果是以bank.example开头的域名，则说明该请求是来自银行网站自己的请求，是合法的。如果Referer是其他网站的话，则有可能是黑客的CSRF攻击，拒绝该请求。</a><br>​        这种方法显而易见的好处就是简单易行，网站的普通开发人员不需要操心CSRF的漏洞，只需要在最后给所有安全敏感的请求统一增加一个拦截器来检查Referer的值就可以。特别是对于当前现有的系统，不需要改变当前系统的任何已有代码和逻辑，没有风险，非常便捷。<br>​        然而，这种方法并非万无一失。Referer的值是由浏览器提供的，虽然HTTP协议上由明确的要求，但是每个浏览器对于Referer的具体实现可能由差别，并不能保障浏览器自身没有安全漏洞。使用验证Referer值的方法，就是把安全性都依赖于第三方（即浏览器）来保障，从理论上来讲，这样并不安全。事实上，对于某些浏览器，比如IE6或FF2，目前已经有一些方法可以篡改Referer值。比如bank.example网站支持IE6浏览器，黑客完全可以把用户浏览器的Referer值设为以bank.example域名开头的地址，这样就可以通过验证，从而进行CSRF攻击。<br>​        即便是使用最新的浏览器，黑客无法篡改Referer值，这种方法仍然有问题。因为Referer值会记录下用户的访问来源，有些用户认为这样会侵犯到他们自己的隐私权，特别是有些组织担心Referer值会把组织内网中的某些信息泄漏到外网中。因此，用户自己可以设置浏览器使其在发送请求时不再提供Referer。当他们正常访问银行网站时，网站会因为请求没有Referer值而认为是CSRF攻击，拒绝合法用户的访问。<br>​        另外，如果Referer的判断逻辑写的不严密的话，也容易被攻破，例如</p>
+<p>​        下图是由百度跳转到QQ邮箱页面的Referer查看示意<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/121001.gif" alt><br>​        可以看出Referer为：<a href="https://www.baidu.com" target="_blank" rel="noopener">https://www.baidu.com</a><br>​        根据HTTP协议，在HTTP有种有一个字段Referer，它记录了该HTTP请求的来源地址。在通常情况下，访问一个安全首先页面的请求来自于同一个网站，比如访问<a href="http://bank.example/withdraw?account=bob&amp;amount=100&amp;for=Mallory，用户必须先登录bank.example，然后通过点击页面上的按钮来触发转账事件。这时，该转账请求的Referer值就会是转账按钮所在页面的URL，通常是以bank.example域名开头的地址。而如果黑客要对银行网站实施CSRF攻击，他只能在他自己的网站构造请求，当用户通过黑客的网站发送请求到银行时，该请求的Referer是指向黑客自己的网站。因此，要防御CSRF攻击，银行网站只需要对每一个转账请求验证其Referer值，如果是以bank.example开头的域名，则说明该请求是来自银行网站自己的请求，是合法的。如果Referer是其他网站的话，则有可能是黑客的CSRF攻击，拒绝该请求。" target="_blank" rel="noopener">http://bank.example/withdraw?account=bob&amp;amount=100&amp;for=Mallory，用户必须先登录bank.example，然后通过点击页面上的按钮来触发转账事件。这时，该转账请求的Referer值就会是转账按钮所在页面的URL，通常是以bank.example域名开头的地址。而如果黑客要对银行网站实施CSRF攻击，他只能在他自己的网站构造请求，当用户通过黑客的网站发送请求到银行时，该请求的Referer是指向黑客自己的网站。因此，要防御CSRF攻击，银行网站只需要对每一个转账请求验证其Referer值，如果是以bank.example开头的域名，则说明该请求是来自银行网站自己的请求，是合法的。如果Referer是其他网站的话，则有可能是黑客的CSRF攻击，拒绝该请求。</a><br>​        这种方法显而易见的好处就是简单易行，网站的普通开发人员不需要操心CSRF的漏洞，只需要在最后给所有安全敏感的请求统一增加一个拦截器来检查Referer的值就可以。特别是对于当前现有的系统，不需要改变当前系统的任何已有代码和逻辑，没有风险，非常便捷。<br>​        然而，这种方法并非万无一失。Referer的值是由浏览器提供的，虽然HTTP协议上由明确的要求，但是每个浏览器对于Referer的具体实现可能由差别，并不能保障浏览器自身没有安全漏洞。使用验证Referer值的方法，就是把安全性都依赖于第三方（即浏览器）来保障，从理论上来讲，这样并不安全。事实上，对于某些浏览器，比如IE6或FF2，目前已经有一些方法可以篡改Referer值。比如bank.example网站支持IE6浏览器，黑客完全可以把用户浏览器的Referer值设为以bank.example域名开头的地址，这样就可以通过验证，从而进行CSRF攻击。<br>​        即便是使用最新的浏览器，黑客无法篡改Referer值，这种方法仍然有问题。因为Referer值会记录下用户的访问来源，有些用户认为这样会侵犯到他们自己的隐私权，特别是有些组织担心Referer值会把组织内网中的某些信息泄漏到外网中。因此，用户自己可以设置浏览器使其在发送请求时不再提供Referer。当他们正常访问银行网站时，网站会因为请求没有Referer值而认为是CSRF攻击，拒绝合法用户的访问。<br>​        另外，如果Referer的判断逻辑写的不严密的话，也容易被攻破，例如</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> referer=request.headers.referer;</span><br><span class="line"><span class="keyword">if</span>(referer.index0f(<span class="string">'www.bank.example'</span>)&gt;-<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="comment">//pass</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>​        如果黑客的网站是<a href="http://www.bank.example.hack.com，则referer检查无效。" target="_blank" rel="noopener">www.bank.example.hack.com，则referer检查无效。</a></p>
@@ -304,8 +306,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/2019/11/30/CSRF(二)-CSRF攻击及代码分析/" rel="next" title="CSRF(二)|CSRF攻击及代码分析">
-                  <i class="fa fa-chevron-left"></i> CSRF(二)|CSRF攻击及代码分析
+                <a href="/2019/11/30/CSRF(二)-CSRF利用及代码分析/" rel="next" title="CSRF(二)|CSRF利用及代码分析">
+                  <i class="fa fa-chevron-left"></i> CSRF(二)|CSRF利用及代码分析
                 </a>
               
             </div>
@@ -313,6 +315,10 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/12/15/SSRF(一)-SSRF基础/" rel="prev" title="SSRF(一)|SSRF基础">
+                  SSRF(一)|SSRF基础 <i class="fa fa-chevron-right"></i>
+                </a>
               
             </div>
           </div>
@@ -374,7 +380,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-count">33</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
