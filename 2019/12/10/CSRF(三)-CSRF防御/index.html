@@ -62,7 +62,7 @@
 <meta property="og:description" content="目前防御CSRF攻击主要有四种策略：1、验证HTTP Referer字段；2、在请求地址中添加token并验证；3、在HTTP头中自定义属性并验证；4、Chrome浏览器端启用SameSite cookie；">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/121001.gif">
-<meta property="og:updated_time" content="2019-12-14T22:58:21.944Z">
+<meta property="og:updated_time" content="2020-01-04T11:53:58.310Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CSRF(三)|CSRF防御">
 <meta name="twitter:description" content="目前防御CSRF攻击主要有四种策略：1、验证HTTP Referer字段；2、在请求地址中添加token并验证；3、在HTTP头中自定义属性并验证；4、Chrome浏览器端启用SameSite cookie；">
@@ -248,7 +248,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-12-15 06:58:21" itemprop="dateModified" datetime="2019-12-15T06:58:21+08:00">2019-12-15</time>
+                <time title="修改时间：2020-01-04 19:53:58" itemprop="dateModified" datetime="2020-01-04T19:53:58+08:00">2020-01-04</time>
               </span>
             
           
@@ -271,8 +271,8 @@
 
 <p>​        如果黑客的网站是<a href="http://www.bank.example.hack.com，则referer检查无效。" target="_blank" rel="noopener">www.bank.example.hack.com，则referer检查无效。</a></p>
 <p>0X02    在请求地址中添加token并验证</p>
-<p>​        CSRF攻击之所以能够成功，是因为黑客可以完全伪造用户的请求，该请求中所有的用户验证信息都是存在于cookie中，因此黑客可以在不知道这些验证信息的情况下直接利用用户的cookie来通过安全验证。要抵御CSRF，关键在于在请求中放入黑客所不能伪造的信息，并且该信息不存在于cookie中。可以在HTTP请求中以参数的形式加入一个随机产生的token，并在服务器端建立一个拦截器来验证这个token，如果请求中没有token或者token内容不正确，则认为可能是CSRF攻击而拒绝该请求。<br>​        这种方法要比检查Referer要安全一些，token可以在用户登录后产生并放于session之中，然后再每次请求时把token从session中拿出，与请求中的token进行对比，但这种方法的难点在于如何把token以参数的形式加入请求。对于GET请求，token将附在请求地址之后，这样URL就变成<br><a href="http://url?csrftoken=tokenvalue" target="_blank" rel="noopener">http://url?csrftoken=tokenvalue</a><br>而对于POST请求来说，要在form的最后加上<br><input type="hidden" name="csrftoken" value="tokenvalue"><br>该方法有一个缺点是难以保证token本身的安全。特别是再论坛之类支持用户自己发表内容的网站。由于系统也会再这个地址后面加上token，黑客可以再自己的网站上得到这个token，并马上就可以发动CSRF攻击。为了避免这一点，系统可以在添加token的时候增加一个判断，如果这个链接是    链接到自己本站的，就在后面添加token，如果是通向外网则不加，不过，即使这个csrftoken不以参数的形式附加在请求之中，黑客的网站也同样可以通过Referer来得到这个token值发动CSRF攻击。这也是一些用户喜欢手动关闭浏览器Referer功能的原因。    </p>
-<p>0X03    在HTTP投中自定义属性并验证</p>
+<p>​        CSRF攻击之所以能够成功，是因为黑客可以完全伪造用户的请求，该请求中所有的用户验证信息都是存在于cookie中，因此黑客可以在不知道这些验证信息的情况下直接利用用户的cookie来通过安全验证。要抵御CSRF，关键在于在请求中放入黑客所不能伪造的信息，并且该信息不存在于cookie中。可以在HTTP请求中以参数的形式加入一个随机产生的token，并在服务器端建立一个拦截器来验证这个token，如果请求中没有token或者token内容不正确，则认为可能是CSRF攻击而拒绝该请求。<br>​        这种方法要比检查Referer要安全一些，token可以在用户登录后产生并放于session之中，然后再每次请求时把token从session中拿出，与请求中的token进行对比，但这种方法的难点在于如何把token以参数的形式加入请求。对于GET请求，token将附在请求地址之后，这样URL就变成<br><a href="http://url?csrftoken=tokenvalue" target="_blank" rel="noopener">http://url?csrftoken=tokenvalue</a><br>而对于POST请求来说，要在form的最后加上<br><input type="hidden" name="csrftoken" value="tokenvalue"><br>该方法有一个缺点是难以保证token本身的安全。特别是再论坛之类支持用户自己发表内容的网站。由于系统也会再这个地址后面加上token，黑客可以再自己的网站上得到这个token，并马上就可以发动CSRF攻击。为了避免这一点，系统可以在添加token的时候增加一个判断，如果这个链接是链链接到自己本站的，就在后面添加token，如果是通向外网则不加，不过，即使这个csrftoken不以参数的形式附加在请求之中，黑客的网站也同样可以通过Referer来得到这个token值发动CSRF攻击。这也是一些用户喜欢手动关闭浏览器Referer功能的原因。    </p>
+<p>0X03    在HTTP头中自定义属性并验证</p>
 <p>​        这种方法也是使用token并进行验证，和上一种方法不同的是，这里并不是把token以参数的形式置于HTTP请求之中，而是把他放到HTTP头中自定义的属性里。通过XMLHttpRequset这个类，可以一次性给所有该类请求加上csrftoken这个HTTP头属性，并把token值放入其中。这样解决了上种方法在请求中加入token的不变，同时，通过XMLHttpRequest请求的地址不会被记录到浏览器的地址栏，也不用担心token会透过Referer泄露到其他网站中去。<br>​        然而这种方法的局限性非常大。XMLHttpRequest请求通常用于Ajax方法中对于页面局部的异常刷新，并非所有的请求都适合用这个类来发起，而且通过该类请求得到的页面不能被浏览器所记录下，从而进行前进，后退，刷新，收藏等操作，给用户带来不便。另外，对于没有进行CSRF防护的遗留系统来说，要采用这种方法来进行防护，要把所有的请求都改为XMLHttpRequest请求，这样几乎要重写整个网站，这代价无疑是不能接受的。</p>
 <p>0X04    Chrome浏览器启用Samesite cookie</p>
 <p>下面介绍如何启用Samesite cookie的设置<br>原本的cookie的header设置时这样：<br><code>Set-Cookie:session_id=esadfas325</code><br>需要在维护增加SameSite就好：<br><code>Set-Cookie:session_id=esadfas32e5;SameSite</code><br>SameSite有两种模式，Lax跟Strict模式，默认启用Strict模式，可以自己指定模式。<br><code>Set-Cookie:session_id=esadfas32e5;SameSite=Strict</code><br><code>Set-Cookie:foo=bar;SameSite=Lax</code><br>        Strict模式规定，cookie只允许相同的site使用，不应该在任何的cross site request被加上去。即a标签，from表单和XMLHttpRequest提交的内容，只要是提交到不同的site去，就不会带上cookie。但也存在不变，例如朋友发送过来我已经登录过的一个页面链接，我点开后，该页面仍然需要重新登录。<br>        有两种处理方法，第一种是与Amazon一样，准备两组不同的cookie，第一组用于维持登录状态不设定SameSite，第二组针对的是一些敏感操作会用到（例如购买、支付，设定账户等）严格设定SameSite。<br>        基于这个思路，就产生了SameSite的另一种模式：Lax模式。<br>        Lax模式打开了一些限制，例如：</p>
@@ -380,7 +380,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">37</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -405,7 +405,9 @@
         
           
         
-        <span class="site-state-item-count">5</span>
+          
+        
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
@@ -426,7 +428,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>

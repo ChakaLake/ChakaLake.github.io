@@ -61,7 +61,7 @@
 <meta property="og:site_name" content="他年少如歌">
 <meta property="og:description" content="0X01    介绍SSRF漏洞​        SSRF（Service-Side Request Forgery，服务器端请求伪造）是一种由攻击者构造请求，由服务端发起请求的安全漏洞。一般情况下，SSRF攻击的目标时外网无法访问的内部系统（正因为请求是由服务端发起的，所以服务端能请求到与自身相连而与外网隔离的内部系统）。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-12-22T23:02:22.962Z">
+<meta property="og:updated_time" content="2020-01-01T07:22:33.625Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SSRF(一)|SSRF基础">
 <meta name="twitter:description" content="0X01    介绍SSRF漏洞​        SSRF（Service-Side Request Forgery，服务器端请求伪造）是一种由攻击者构造请求，由服务端发起请求的安全漏洞。一般情况下，SSRF攻击的目标时外网无法访问的内部系统（正因为请求是由服务端发起的，所以服务端能请求到与自身相连而与外网隔离的内部系统）。">
@@ -246,7 +246,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-12-23 07:02:22" itemprop="dateModified" datetime="2019-12-23T07:02:22+08:00">2019-12-23</time>
+                <time title="修改时间：2020-01-01 15:22:33" itemprop="dateModified" datetime="2020-01-01T15:22:33+08:00">2020-01-01</time>
               </span>
             
           
@@ -272,6 +272,8 @@
 <p>①FILE    读取服务器上任意文件内容<br>②IMAP/IMAPS/POP3SMTP/SMTPS    爆破邮件用户名密码<br>③FTP/FTPS    FTP匿名访问、爆破<br>④DICT    操作内网Redis等服务<br>⑤GOPHER    能够将所有操作转成数据流，并将数据流一次发出去，可以用来探测内网所有服务的所有漏洞。<br>⑥TFTP    UDP协议扩展</p>
 <p>0X05    PHP中容易造成漏洞的函数</p>
 <p>①curl_exec()<br>用来执行给定的从URL会话，这个函数应该在初始化一个cURL会话并且全部的选项都被设置后被调用。<br>成功时返回true，失败时返回false。然而，如果curlopt_retruntransfer选项被设置，函数执行成功时会返回执行结果，失败时返回true。<br>②file_get_contents()<br>用于把文件的内容读入到一个字符串中的首选方法。<br>③fsockopen()<br>打开一个网络连接或者一个unix套接字连接。</p>
+<p>0X06    SSRF漏洞修复建议</p>
+<p>①限制请求的端口只能为web端口，只允许访问http和https的请求。<br>②限制不能访问内网的IP，以防止对内网进行攻击。<br>③屏蔽返回的详细信息。</p>
 
     </div>
 
@@ -371,7 +373,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">37</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -396,7 +398,9 @@
         
           
         
-        <span class="site-state-item-count">5</span>
+          
+        
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
@@ -417,7 +421,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
