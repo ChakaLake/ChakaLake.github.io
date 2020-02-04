@@ -54,18 +54,18 @@
   };
 </script>
 
-  <meta name="description" content="0X01    介绍CSRF漏洞​    CSRF（Cross-site request forgery，跨站请求伪造）也被成为One Click Attack或者Session Riding，通常缩写为CSTF或者XSRF，是一种对网站的恶意利用，尽管听起来像XSS，但是它与XSS非常不通，XSS利用站点内的信任用户，而CSRF则通过伪装成受信任用户请求受信任的网站。与XSS攻击相比，CSRF攻">
+  <meta name="description" content="0X01    介绍CSRF漏洞​    CSRF（Cross-site request forgery，跨站请求伪造）也被成为One Click Attack或者Session Riding，通常缩写为CSRF或者XSRF，是一种对网站的恶意利用，尽管听起来像XSS，但是它与XSS非常不同，XSS利用站点内的信任用户，而CSRF则通过伪装成受信任用户请求受信任的网站。与XSS攻击相比，CSRF攻">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CSRF(一)|CSRF基础">
 <meta property="og:url" content="https://ChakaLake.github.io/2019/11/29/CSRF(一)-CSRF基础/index.html">
 <meta property="og:site_name" content="他年少如歌">
-<meta property="og:description" content="0X01    介绍CSRF漏洞​    CSRF（Cross-site request forgery，跨站请求伪造）也被成为One Click Attack或者Session Riding，通常缩写为CSTF或者XSRF，是一种对网站的恶意利用，尽管听起来像XSS，但是它与XSS非常不通，XSS利用站点内的信任用户，而CSRF则通过伪装成受信任用户请求受信任的网站。与XSS攻击相比，CSRF攻">
+<meta property="og:description" content="0X01    介绍CSRF漏洞​    CSRF（Cross-site request forgery，跨站请求伪造）也被成为One Click Attack或者Session Riding，通常缩写为CSRF或者XSRF，是一种对网站的恶意利用，尽管听起来像XSS，但是它与XSS非常不同，XSS利用站点内的信任用户，而CSRF则通过伪装成受信任用户请求受信任的网站。与XSS攻击相比，CSRF攻">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/112901.jpg">
-<meta property="og:updated_time" content="2019-12-21T09:37:40.904Z">
+<meta property="og:updated_time" content="2020-02-04T03:31:54.399Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CSRF(一)|CSRF基础">
-<meta name="twitter:description" content="0X01    介绍CSRF漏洞​    CSRF（Cross-site request forgery，跨站请求伪造）也被成为One Click Attack或者Session Riding，通常缩写为CSTF或者XSRF，是一种对网站的恶意利用，尽管听起来像XSS，但是它与XSS非常不通，XSS利用站点内的信任用户，而CSRF则通过伪装成受信任用户请求受信任的网站。与XSS攻击相比，CSRF攻">
+<meta name="twitter:description" content="0X01    介绍CSRF漏洞​    CSRF（Cross-site request forgery，跨站请求伪造）也被成为One Click Attack或者Session Riding，通常缩写为CSRF或者XSRF，是一种对网站的恶意利用，尽管听起来像XSS，但是它与XSS非常不同，XSS利用站点内的信任用户，而CSRF则通过伪装成受信任用户请求受信任的网站。与XSS攻击相比，CSRF攻">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/112901.jpg">
   <link rel="canonical" href="https://ChakaLake.github.io/2019/11/29/CSRF(一)-CSRF基础/">
 
@@ -248,7 +248,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-12-21 17:37:40" itemprop="dateModified" datetime="2019-12-21T17:37:40+08:00">2019-12-21</time>
+                <time title="修改时间：2020-02-04 11:31:54" itemprop="dateModified" datetime="2020-02-04T11:31:54+08:00">2020-02-04</time>
               </span>
             
           
@@ -264,7 +264,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>0X01    介绍CSRF漏洞</p><p>​    CSRF（Cross-site request forgery，跨站请求伪造）也被成为One Click Attack或者Session Riding，通常缩写为CSTF或者XSRF，是一种对网站的恶意利用，尽管听起来像XSS，但是它与XSS非常不通，XSS利用站点内的信任用户，而CSRF则通过伪装成受信任用户请求受信任的网站。与XSS攻击相比，CSRF攻击往往不大流行（因此对其进行防范的资源也相当稀少）也难以防范，所以被认为比XSS更危险性。<br>​    对比XSS：XSS利用的是用户对指定网站的信任，CSRF利用的是网站对用户网页浏览器的信任。</p><a id="more"></a>
+        <p>0X01    介绍CSRF漏洞</p><p>​    CSRF（Cross-site request forgery，跨站请求伪造）也被成为One Click Attack或者Session Riding，通常缩写为CSRF或者XSRF，是一种对网站的恶意利用，尽管听起来像XSS，但是它与XSS非常不同，XSS利用站点内的信任用户，而CSRF则通过伪装成受信任用户请求受信任的网站。与XSS攻击相比，CSRF攻击往往不大流行（因此对其进行防范的资源也相当稀少）也难以防范，所以被认为比XSS更危险性。<br>​    对比XSS：XSS利用的是用户对指定网站的信任，CSRF利用的是网站对用户网页浏览器的信任。</p><a id="more"></a>
 
 <p>0X02    CSRF漏洞原理</p>
 <p><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/112901.jpg" alt><br>    从上图可以看出，要完成一次CSRF攻击，受害者必须一次完成两个步骤。<br>★登录受信任网站A，并在本地生成cookie<br>★在不登出A的情况下，访问危险网站B<br>    CSRF攻击时源于web的隐式身份验证机制，web身份验证机制虽然可以保证一个请求时来自于某个用户的浏览器，但却无法保证请求是用户批准发送的。<br>    其实可以这样理解CSRF，攻击者利用目标用户的身份，以目标用户的名义执行某些非法操作。CSRF能够做的事情包括：以目标用户的名义发送邮件、发消息，盗取目标用户的账户，甚至购买商品、虚拟货币转账，这回泄露个人信息并威胁到目标用户的财产安全。<br>    示例1：<br>银行网站A，它以GET请求来完成银行转账的操作，如：<a href="http://www/mybank.com/Transfer.php?toBankid=11&amp;money=1000。" target="_blank" rel="noopener">http://www/mybank.com/Transfer.php?toBankid=11&amp;money=1000。</a><br>危险网站B，它里面有段HTML的代码；<br><code>&lt;img src=http://www.mybank.com/Transfer.php?toBankid=11&amp;money=1000&gt;</code><br>首先，你等了银行网站A，然后访问危险网站B，这时银行账号会少100块。<br>原因是银行网站A违反了HTTP规范，使用了GET请求更新资源。在访问危险网站B之前，已经登录了危险网站A，而B中的<img>以GET方式请求第三方资源（这里的第三方就是指银行网站了，原本这是一个合法的请求，但这里被不法分子利用了），所以浏览器会带上银行网站A的cookie发出GET请求，结果银行服务器收到请求后，认为这是一个转账操作，所以就立刻进行转账操作。<br>    示例2：<br>为了杜绝上面的问题，银行决定改用POST请求完成转账操作。<br>银行网站A的WEB表单如下：</p>
