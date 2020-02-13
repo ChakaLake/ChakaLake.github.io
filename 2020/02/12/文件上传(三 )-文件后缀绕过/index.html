@@ -54,18 +54,21 @@
   };
 </script>
 
-  <meta name="description" content="0X01    入侵排查思路 1、账号安全 基本使用1、用户信息文件/etc/password``">
+  <meta name="description" content="0X01    文件后缀绕过攻击​        文件后缀绕过攻击时服务器端代码中限制了某些后缀的文件的不允许上传，但是有些Apache时允许解析其他文件后缀的，例如在httpd.conf中，如果配置有如下代码，则能够解析php和phtml文件。​        AddType application/x-httpd-php.php.phtml​        所以，可以上传一个后缀为phtml的">
 <meta property="og:type" content="article">
-<meta property="og:title" content="应急响应|linux入侵排查思路">
-<meta property="og:url" content="https://ChakaLake.github.io/2020/01/03/应急响应-linux入侵排查思路/index.html">
+<meta property="og:title" content="文件上传(三)|文件后缀绕过">
+<meta property="og:url" content="https://ChakaLake.github.io/2020/02/12/文件上传(三 )-文件后缀绕过/index.html">
 <meta property="og:site_name" content="他年少如歌">
-<meta property="og:description" content="0X01    入侵排查思路 1、账号安全 基本使用1、用户信息文件/etc/password``">
+<meta property="og:description" content="0X01    文件后缀绕过攻击​        文件后缀绕过攻击时服务器端代码中限制了某些后缀的文件的不允许上传，但是有些Apache时允许解析其他文件后缀的，例如在httpd.conf中，如果配置有如下代码，则能够解析php和phtml文件。​        AddType application/x-httpd-php.php.phtml​        所以，可以上传一个后缀为phtml的">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-02-04T21:54:23.288Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/021201.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/021202.png">
+<meta property="og:updated_time" content="2020-02-12T05:16:21.670Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="应急响应|linux入侵排查思路">
-<meta name="twitter:description" content="0X01    入侵排查思路 1、账号安全 基本使用1、用户信息文件/etc/password``">
-  <link rel="canonical" href="https://ChakaLake.github.io/2020/01/03/应急响应-linux入侵排查思路/">
+<meta name="twitter:title" content="文件上传(三)|文件后缀绕过">
+<meta name="twitter:description" content="0X01    文件后缀绕过攻击​        文件后缀绕过攻击时服务器端代码中限制了某些后缀的文件的不允许上传，但是有些Apache时允许解析其他文件后缀的，例如在httpd.conf中，如果配置有如下代码，则能够解析php和phtml文件。​        AddType application/x-httpd-php.php.phtml​        所以，可以上传一个后缀为phtml的">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/021201.png">
+  <link rel="canonical" href="https://ChakaLake.github.io/2020/02/12/文件上传(三 )-文件后缀绕过/">
 
 
 <script id="page-configurations">
@@ -79,7 +82,7 @@
   };
 </script>
 
-  <title>应急响应|linux入侵排查思路 | 他年少如歌</title>
+  <title>文件上传(三)|文件后缀绕过 | 他年少如歌</title>
   <meta name="generator" content="Hexo 3.9.0">
   
 
@@ -207,7 +210,7 @@
   
   
   <div class="post-block post">
-    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2020/01/03/应急响应-linux入侵排查思路/">
+    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2020/02/12/文件上传(三 )-文件后缀绕过/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yang">
@@ -219,7 +222,7 @@
       <meta itemprop="name" content="他年少如歌">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">应急响应|linux入侵排查思路
+        <h1 class="post-title" itemprop="name headline">文件上传(三)|文件后缀绕过
 
           
         </h1>
@@ -235,19 +238,11 @@
                 
               
 
-              <time title="创建时间：2020-01-03 15:57:34" itemprop="dateCreated datePublished" datetime="2020-01-03T15:57:34+08:00">2020-01-03</time>
+              <time title="创建时间：2020-02-12 09:07:59 / 修改时间：13:16:21" itemprop="dateCreated datePublished" datetime="2020-02-12T09:07:59+08:00">2020-02-12</time>
             </span>
           
             
 
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-02-05 05:54:23" itemprop="dateModified" datetime="2020-02-05T05:54:23+08:00">2020-02-05</time>
-              </span>
             
           
             <span class="post-meta-item">
@@ -256,7 +251,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/应急响应/" itemprop="url" rel="index"><span itemprop="name">应急响应</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/WEB安全/" itemprop="url" rel="index"><span itemprop="name">WEB安全</span></a></span>
 
                 
                 
@@ -275,9 +270,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>0X01    入侵排查思路</p>
-<p>1、账号安全</p>
-<p>基本使用<br>1、用户信息文件/etc/password<br>``</p>
+        <p>0X01    文件后缀绕过攻击</p><p>​        文件后缀绕过攻击时服务器端代码中限制了某些后缀的文件的不允许上传，但是有些Apache时允许解析其他文件后缀的，例如在httpd.conf中，如果配置有如下代码，则能够解析php和phtml文件。<br>​        AddType application/x-httpd-php.php.phtml<br>​        所以，可以上传一个后缀为phtml的wehshell。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/021201.png" alt><br>​        在Apache的解析顺序中，是从右到左开始解析文件后缀的，如果最右侧的扩展名不可识别，就继续往左判断，直到遇到可以解析的文件后缀名为止，所以如果上传的文件名类似1.php.xxxx，因为后缀xxxx不可判断，所以向左解析后缀php。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/021202.png" alt></p><a id="more"></a>
+
+<p>0X02    文件后缀绕过代码分析</p>
+<p>​        服务端处理上传文件的代码如下所示。通过函数pathinfo()获取文件后缀，将后缀转换为小谢后，判断是不是“php”，如果上传文件的后缀是php，则不允许上传，所以此处可以通过利用Apache解析顺序上传phtml等后缀的文件绕过该代码限制。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> ($_FILES[<span class="string">"file"</span>][<span class="string">"error"</span>] &gt; <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"Return Code: "</span> . $_FILES[<span class="string">"file"</span>][<span class="string">"error"</span>] . <span class="string">"&lt;br /&gt;"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">    $info=pathinfo($_FILES[<span class="string">"file"</span>][<span class="string">"name"</span>]);</span><br><span class="line">    $ext=$info[<span class="string">'extension'</span>];<span class="comment">//得到文件扩展名</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (strtolower($ext) == <span class="string">"php"</span>) &#123;</span><br><span class="line">            <span class="keyword">exit</span>(<span class="string">"不允许的后缀名"</span>);</span><br><span class="line">          &#125;      </span><br><span class="line"></span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"Upload: "</span> . $_FILES[<span class="string">"file"</span>][<span class="string">"name"</span>] . <span class="string">"&lt;br /&gt;"</span>;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"Type: "</span> . $_FILES[<span class="string">"file"</span>][<span class="string">"type"</span>] . <span class="string">"&lt;br /&gt;"</span>;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"Size: "</span> . ($_FILES[<span class="string">"file"</span>][<span class="string">"size"</span>] / <span class="number">1024</span>) . <span class="string">" Kb&lt;br /&gt;"</span>;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"Temp file: "</span> . $_FILES[<span class="string">"file"</span>][<span class="string">"tmp_name"</span>] . <span class="string">"&lt;br /&gt;"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (file_exists(<span class="string">"upload/"</span> . $_FILES[<span class="string">"file"</span>][<span class="string">"name"</span>]))</span><br><span class="line">      &#123;</span><br><span class="line">      <span class="keyword">echo</span> $_FILES[<span class="string">"file"</span>][<span class="string">"name"</span>] . <span class="string">" already exists. "</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      &#123;</span><br><span class="line">      move_uploaded_file($_FILES[<span class="string">"file"</span>][<span class="string">"tmp_name"</span>],</span><br><span class="line">      <span class="string">"upload/"</span> . $_FILES[<span class="string">"file"</span>][<span class="string">"name"</span>]);</span><br><span class="line">      <span class="keyword">echo</span> <span class="string">"Stored in: "</span> . <span class="string">"upload/"</span> . $_FILES[<span class="string">"file"</span>][<span class="string">"name"</span>];</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
 
     </div>
 
@@ -303,8 +301,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/2020/01/01/文件上传(一)-基础/" rel="next" title="文件上传(一)|基础">
-                  <i class="fa fa-chevron-left"></i> 文件上传(一)|基础
+                <a href="/2020/02/05/文件上传(二)-JS检测绕过/" rel="next" title="文件上传(二)|JS检测绕过">
+                  <i class="fa fa-chevron-left"></i> 文件上传(二)|JS检测绕过
                 </a>
               
             </div>
@@ -313,8 +311,8 @@
 
             <div class="post-nav-prev post-nav-item">
               
-                <a href="/2020/01/19/靶机练习-DVWA-SQL Injection/" rel="prev" title="靶机练习|DVWA-SQL Injection">
-                  靶机练习|DVWA-SQL Injection <i class="fa fa-chevron-right"></i>
+                <a href="/2020/02/12/文件上传(四)-文件类型绕过/" rel="prev" title="文件上传(三)|文件类型绕过">
+                  文件上传(三)|文件类型绕过 <i class="fa fa-chevron-right"></i>
                 </a>
               
             </div>

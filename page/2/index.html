@@ -202,6 +202,282 @@
   
   
   <div class="post-block home">
+    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/11/30/CSRF(二)-CSRF利用及代码分析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="他年少如歌">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+            
+            <a href="/2019/11/30/CSRF(二)-CSRF利用及代码分析/" class="post-title-link" itemprop="url">CSRF(二)|CSRF利用及代码分析</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-11-30 11:05:23" itemprop="dateCreated datePublished" datetime="2019-11-30T11:05:23+08:00">2019-11-30</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-15 18:48:55" itemprop="dateModified" datetime="2019-12-15T18:48:55+08:00">2019-12-15</time>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>0X01    CSRF攻击</p><p>74CMS后台添加管理员时存在CSRF漏洞，管理会员登录后，进入到【系统】-【网络管理员】-【添加管理员】中，进行添加管理<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/113001.png" alt><br>进行抓包：<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/113002.png" alt><br>利用burp生成csrf POC：<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/113003.png" alt><br>我们将页面内容拷贝到1.html文件中：<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/113004.png" alt><br>点击submit request；<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/113005.png" alt><br>我们发现test管理员已经添加成功。</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/11/30/CSRF(二)-CSRF利用及代码分析/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+<div>
+  
+</div>
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+        <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block home">
+    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/11/29/CSRF(一)-CSRF基础/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="他年少如歌">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+            
+            <a href="/2019/11/29/CSRF(一)-CSRF基础/" class="post-title-link" itemprop="url">CSRF(一)|CSRF基础</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-11-29 07:06:45" itemprop="dateCreated datePublished" datetime="2019-11-29T07:06:45+08:00">2019-11-29</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-02-04 11:31:54" itemprop="dateModified" datetime="2020-02-04T11:31:54+08:00">2020-02-04</time>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>0X01    介绍CSRF漏洞</p><p>​    CSRF（Cross-site request forgery，跨站请求伪造）也被成为One Click Attack或者Session Riding，通常缩写为CSRF或者XSRF，是一种对网站的恶意利用，尽管听起来像XSS，但是它与XSS非常不同，XSS利用站点内的信任用户，而CSRF则通过伪装成受信任用户请求受信任的网站。与XSS攻击相比，CSRF攻击往往不大流行（因此对其进行防范的资源也相当稀少）也难以防范，所以被认为比XSS更危险性。<br>​    对比XSS：XSS利用的是用户对指定网站的信任，CSRF利用的是网站对用户网页浏览器的信任。</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/11/29/CSRF(一)-CSRF基础/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+<div>
+  
+</div>
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+        <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block home">
+    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/11/27/靶机练习-XSS之旅/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="他年少如歌">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+            
+            <a href="/2019/11/27/靶机练习-XSS之旅/" class="post-title-link" itemprop="url">靶机练习|XSS之旅</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-11-27 05:52:53" itemprop="dateCreated datePublished" datetime="2019-11-27T05:52:53+08:00">2019-11-27</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-11-30 06:06:18" itemprop="dateModified" datetime="2019-11-30T06:06:18+08:00">2019-11-30</time>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Level1<br>没有任何过滤，直接在URL后面加XSS测试语句弹窗<br><code>name=&lt;script&gt;alert(1)&lt;/script&gt;</code></p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/11/27/靶机练习-XSS之旅/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+<div>
+  
+</div>
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+        <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block home">
     <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/11/20/XSS(五)-XSS绕过及修复建议/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -823,321 +1099,6 @@
   </article>
 
     
-        <article itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block home">
-    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/11/17/SQL注入(十一)-base64注入攻击/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="他年少如歌">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-            
-            <a href="/2019/11/17/SQL注入(十一)-base64注入攻击/" class="post-title-link" itemprop="url">SQL注入(十一)|base64注入攻击</a>
-          
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2019-11-17 11:34:00" itemprop="dateCreated datePublished" datetime="2019-11-17T11:34:00+08:00">2019-11-17</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-18 19:59:01" itemprop="dateModified" datetime="2019-11-18T19:59:01+08:00">2019-11-18</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/WEB安全/" itemprop="url" rel="index"><span itemprop="name">WEB安全</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>0X00    base64注入攻击</p><p>​    测试地址：<a href="http://127.0.0.1/base.php?id=MQ==" target="_blank" rel="noopener">http://127.0.0.1/base.php?id=MQ==</a><br>​    从url中可以看出，ID参数经过base64编码，解码后发现ID为1，尝试加上一个单引号并一起转成base64编码。当访问id=1’编码后的网址（<a href="http://127.0.0.1/base.php?id=MSc=），页面返回错误。" target="_blank" rel="noopener">http://127.0.0.1/base.php?id=MSc=），页面返回错误。</a><br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111704.png" alt><br>​    1 and 1=1和1 and 1=2的base64编码分别为MSBhbmQgMT0x和MSBhbmQgMT0y<br>再次访问id=MSBhbmQgMT0y和id=MSBhbmQgMT0y。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111705.png" alt></p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/11/17/SQL注入(十一)-base64注入攻击/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-<div>
-  
-</div>
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
-        <article itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block home">
-    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/11/17/SQL注入(十)-cookie注入攻击/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="他年少如歌">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-            
-            <a href="/2019/11/17/SQL注入(十)-cookie注入攻击/" class="post-title-link" itemprop="url">SQL注入(十)|cookie注入攻击</a>
-          
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2019-11-17 09:24:35" itemprop="dateCreated datePublished" datetime="2019-11-17T09:24:35+08:00">2019-11-17</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-18 19:58:47" itemprop="dateModified" datetime="2019-11-18T19:58:47+08:00">2019-11-18</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/WEB安全/" itemprop="url" rel="index"><span itemprop="name">WEB安全</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>0X00    cookie注入攻击</p><p>​    cookie注入攻击测试地址：<a href="http://127.0.0.1/cookie.php" target="_blank" rel="noopener">http://127.0.0.1/cookie.php</a><br>​    发现URL中没有GET参数，但是页面返回正常，使用Burp suit抓取数据包，发现cookie中存在id=1的参数。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111701.png" alt><br>​    修改cookie中的id=1为id=1’，然后再次访问该URL，发现页面返回错误。接下来，分别修改cookie中的id=1为id=1 and 1=1和id=1 and 1=2，再次访问，判断该页面是否存在sql注入漏洞，得到cookie中的参数ID存在sql注入的结论。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111702.png" alt><br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/1171703.png" alt><br>​    接着使用order by查询字段，使用union注入方法完成此次注入。</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/11/17/SQL注入(十)-cookie注入攻击/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-<div>
-  
-</div>
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
-        <article itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block home">
-    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2019/11/16/SQL注入(九)-宽字节注入/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="他年少如歌">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-            
-            <a href="/2019/11/16/SQL注入(九)-宽字节注入/" class="post-title-link" itemprop="url">SQL注入(九)|宽字节注入</a>
-          
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2019-11-16 10:51:30" itemprop="dateCreated datePublished" datetime="2019-11-16T10:51:30+08:00">2019-11-16</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-18 19:58:34" itemprop="dateModified" datetime="2019-11-18T19:58:34+08:00">2019-11-18</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/WEB安全/" itemprop="url" rel="index"><span itemprop="name">WEB安全</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>0X00    宽字节注入攻击</p><p>​    宽字节注入攻击的测试地址：<a href="http://127.0.0.1/kzj.php?id=1" target="_blank" rel="noopener">http://127.0.0.1/kzj.php?id=1</a><br>​    访问id=1’，程序并没有报错，反而多了一个转义符（反斜杠）。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111601.png" alt><br>​    从返回的结果可以看出，参数id=1在数据库中查询时被单引号包围的。当传入id=1’时，传入的单引号又被转义符（反斜线）转义，导致参数id无法逃逸单引号的包围，所以在一般情况下，此处是不窜在sql注入漏洞的。不过有一个特列，就是当数据库的编码为GBK时，可以使用宽字节注入，宽字节的格式时在地址后现价一个%df，再加单引号，因为反斜杠的编码为%5c，而在GBK编码中，%df%5c是繁体字“連”，所以这时，单引号成功逃逸，报错mysql数据库的错误。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111602.png" alt><br>​    由于输入的参数id=1’，导致sql语句多了一个单引号，所以需要使用注释符来注释程序自身的单引号。访问id=1%df’%23，可以看到sql语句已经符合语法规范。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111603.png" alt><br>​    使用and 1=1和and1=2进一步判断注入，访问id=1%df’and 1=1%23和id=1%df’and 1=2%23<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111604.png" alt><br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111605.png" alt><br>​    当and 1=1程序返回正常时，and 1=2程序返回错误，所以判断该参数ID存在sql注入漏洞，接着使用order by查询数据库表的字段数量，最后得知字段数为4。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111606.png" alt><br>​    因为页面直接显示了数据库中的内容，所以可以使用union查询。与union注入一样，此时的union语句时union select ,1,2,3,4，为了让页面返回union查询的结果，需要把ID的值改为负数。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111607.png" alt><br>​    然后尝试在页面2的位置查询当前数据库的库名（database()）.<br>id=-1%df’union select 1,user(),3,4%23<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111608.png" alt><br>​    查询数据库的库名。<br>select table_name from information_schema.tables where table_schema=’test’ limit 0,1<br>​    但是此时，由于单引号被转义，会自动多出反斜杠，导致sql语句出错，所以此需要利用另一种方法：嵌套查询。就是在一个查询语句中，再添加一个查询语句。<br>select table_name from information_schema.tables where table_schema=(select database())limit 0,1<br>​    可以看到，原本的table_schema=’test’变成了table_schema=(select database())，因为select database()的结果就是’test’，这就是嵌套查询。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111609.png" alt><br>​    从返回结果可以看到，数据库的第一个表明是person，如果想查询后面的表名，还需要修改limit后的数字。或使用group_concat()函数，查询所有表名。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111610.png" alt><br>​    使用以下语句查询users表中的字段。<br>select column_name from information_schema.columns where table_schema=(select database())and table_name=(select table_name from information_schema.tables where table_schema=(select database())limit 1,1)limit 0,1<br>​    这里使用了三层嵌套，，第一层是table_schema，代表库名的嵌套，第二层和第三层是table_name的嵌套。语句中有两个limit，前一个limit是控制表名的顺序，后一个则控制字段名的顺序。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/111611.png" alt></p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/11/16/SQL注入(九)-宽字节注入/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-<div>
-  
-</div>
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
   </div>
 
   
@@ -1187,7 +1148,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-count">40</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
