@@ -62,7 +62,7 @@
 <meta property="og:description" content="upload-labs是一个帮你总结所有类型的上传漏洞靶场。项目地址：https://github.com/c0ny1/upload-labs。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/20191017.png">
-<meta property="og:updated_time" content="2020-02-13T02:33:45.010Z">
+<meta property="og:updated_time" content="2020-02-22T11:35:21.037Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="靶机练习|upload-labs 1-20关">
 <meta name="twitter:description" content="upload-labs是一个帮你总结所有类型的上传漏洞靶场。项目地址：https://github.com/c0ny1/upload-labs。">
@@ -248,7 +248,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-02-13 10:33:45" itemprop="dateModified" datetime="2020-02-13T10:33:45+08:00">2020-02-13</time>
+                <time title="修改时间：2020-02-22 19:35:21" itemprop="dateModified" datetime="2020-02-22T19:35:21+08:00">2020-02-22</time>
               </span>
             
           
@@ -302,7 +302,7 @@
 <p>pass-11    00截断GET</p>
 <p>此关需要满足一下两个条件<br>1、PHP版本&lt;5.3.4<br>2、php.ini中magic_quotes_gpc=off<br>上传路径%00截断绕过，上传的文件名写成a.jpg，save_path改成../upload/a.php%00，最后保存下来的文件就是a.php。</p>
 <p>pass-12    00截断POST</p>
-<p>和上一题唯一不同就是save_path从GET变成了POST，此时不能直接使用%00截断，原因是%00截断在GET中呗URL解码之后是空字符。但是POST中%00不会被URL解码，所以只能通过Burpsuite修改hex值为00进行截断，也就是在POST情况下，需要先对%00进行一个URL编码（选中%00，然后按ctrl+shift+u截取）。</p>
+<p>和上一题唯一不同就是save_path从GET变成了POST，此时不能直接使用%00截断，原因是%00截断在GET中被URL解码之后是空字符。但是POST中%00不会被URL解码，所以只能通过Burpsuite修改hex值为00进行截断，也就是在POST情况下，需要先对%00进行一个URL编码（选中%00，然后按ctrl+shift+u截取）。</p>
 <p>pass-13    图片马绕过</p>
 <p>通过读文件的前2个字节判断文件类型，因此直接上传图片马即可。<br>添加GIF图片的文件头GIF89a，可以直接绕过GIF图片检查。<br>windows做图片马方法，直接用cmd命令：copy 1.jpg /b + 2.php /a webshell.jpg<br>然后结合文件包含漏洞进行利用：<br><a href="http://127.0.0.1/upload-labs/include.php?file=./upload/a.jpg" target="_blank" rel="noopener">http://127.0.0.1/upload-labs/include.php?file=./upload/a.jpg</a></p>
 <p>pass-14    getimagesize()突破</p>
@@ -418,7 +418,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -449,7 +449,9 @@
         
           
         
-        <span class="site-state-item-count">8</span>
+          
+        
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>

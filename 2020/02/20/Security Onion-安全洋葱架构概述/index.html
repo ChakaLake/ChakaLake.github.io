@@ -63,7 +63,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/022002.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/022001.png">
-<meta property="og:updated_time" content="2020-02-21T09:23:25.460Z">
+<meta property="og:updated_time" content="2020-02-21T22:01:37.326Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Security Onion|安全洋葱架构概述">
 <meta name="twitter:description" content="Security Onion是一款专为入侵检测和NSM（网络安全监控）设计的Linux发行版。其安装过程很简单，再短时间内就可以部署一套完整的NSM收集、检测和分析的套件。Security Onion可能是主动的，用于识别漏洞或过期的SSL证书。或者也可能是被动的，如果事件响应和网络取证。其镜像可以作为传感器分布在网络中，以监控多个VLAN和子网。">
@@ -249,7 +249,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-02-21 17:23:25" itemprop="dateModified" datetime="2020-02-21T17:23:25+08:00">2020-02-21</time>
+                <time title="修改时间：2020-02-22 06:01:37" itemprop="dateModified" datetime="2020-02-22T06:01:37+08:00">2020-02-22</time>
               </span>
             
           
@@ -294,7 +294,7 @@
 <p>0X06    安全洋葱文件路径</p>
 <p>1、/usr/sbin/so-*    该目录下存放的所有组件的启动，关闭服务等<br>2、/ect/nsm    so的配置和数据<br>①rules该文件包干了Snort/suricata等规则<br>3、/nsm    存放so收集输出的所有数据，子目录如下：<br>①bro    主要存放bro组件产生的日志<br>②elasticsearch<br>③improt<br>④logstash<br>⑤sensor_data    传感器收集到的日志<br>a、dailylogs    主要存放netsniff-ng抓到的完整流量包<br>b、snort.unified2.时间戳    Snort/Suricata输出的ids检测结果，unified2格式，查看或者获取可以通过sguil或者mysql中的数据表。<br>⑥server_data<br>5、/etc/logstash    logstash的配置目录<br>6、/etc/elastalert    ElastAlert的配置目录<br>7、/ect/Kibana    Kinaba的配置文件<br>8、/opt    安全洋葱so组件的源代码</p>
 <p>0X07    总结</p>
-<p>因此，我们拥有完整的数据包铺货，Snort或Suricata规则驱动的入侵检测，Bro事件驱动的入侵检测和OSSEC基于主机的入侵检测，一旦运行Security Onion安装程序，所有这些都会立即启动。这些具有各种依赖性和复杂性的不同系统可以无缝地运行在一起，否则需要数小时，数天或数周来自行组装和集成。曾经看似不可能完成的任务现在与Windows系统一样容易安装。<br>虽然Security Onion的安全配置比较简单，网上也有大量的资料。但是由于Security Onion集成了很多IDS组件，部分我们也用不到，都开启的话会非常消耗性能。建议企业还是应该根据自身的需求，选择更适合自身的某个方案，做深入的研究。例如Nids可以选择Snort、Suricata、Bro其中的一种，Hids可以选择Ossec。集成固然号，但不太好用。</p>
+<p>因此，我们拥有完整的数据包捕获，Snort或Suricata规则驱动的入侵检测，Bro事件驱动的入侵检测和OSSEC基于主机的入侵检测，一旦运行Security Onion安装程序，所有这些都会立即启动。这些具有各种依赖性和复杂性的不同系统可以无缝地运行在一起，否则需要数小时，数天或数周来自行组装和集成。曾经看似不可能完成的任务现在与Windows系统一样容易安装。<br>虽然Security Onion的安全配置比较简单，网上也有大量的资料。但是由于Security Onion集成了很多IDS组件，部分我们也用不到，都开启的话会非常消耗性能。建议企业还是应该根据自身的需求，选择更适合自身的某个方案，做深入的研究。例如Nids可以选择Snort、Suricata、Bro其中的一种，Hids可以选择Ossec。集成固然好，但不太好用。</p>
 
     </div>
 
@@ -329,6 +329,10 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2020/02/22/docker-centos7安装docker/" rel="prev" title="docker|centos7安装docker">
+                  docker|centos7安装docker <i class="fa fa-chevron-right"></i>
+                </a>
               
             </div>
           </div>
@@ -390,7 +394,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -421,7 +425,9 @@
         
           
         
-        <span class="site-state-item-count">8</span>
+          
+        
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
