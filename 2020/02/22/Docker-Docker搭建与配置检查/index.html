@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="0X01    前言1、什么是容器技术？容器技术是一种类似于传统虚拟机的虚拟化技术，但是更加轻量化。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker|Docker搭建与配置检查">
+<meta property="og:url" content="https://ChakaLake.github.io/2020/02/22/Docker-Docker搭建与配置检查/index.html">
+<meta property="og:site_name" content="他年少如歌">
+<meta property="og:description" content="0X01    前言1、什么是容器技术？容器技术是一种类似于传统虚拟机的虚拟化技术，但是更加轻量化。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/022201.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/022202.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/022203.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/022204.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/022205.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/022206.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/022207.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/022208.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/022209.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/022210.png">
+<meta property="og:updated_time" content="2020-02-29T00:13:05.141Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Docker|Docker搭建与配置检查">
+<meta name="twitter:description" content="0X01    前言1、什么是容器技术？容器技术是一种类似于传统虚拟机的虚拟化技术，但是更加轻量化。">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/022201.png">
+  <link rel="canonical" href="https://ChakaLake.github.io/2020/02/22/Docker-Docker搭建与配置检查/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Docker|Docker搭建与配置检查 | 他年少如歌</title>
+  <meta name="generator" content="Hexo 3.9.0">
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">他年少如歌</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">人生如棋，我愿为卒，行动虽慢，但谁曾见我后退一步！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="https://ChakaLake.github.io/2020/02/22/Docker-Docker搭建与配置检查/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="他年少如歌">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Docker|Docker搭建与配置检查
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-02-22 12:32:11" itemprop="dateCreated datePublished" datetime="2020-02-22T12:32:11+08:00">2020-02-22</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-02-29 08:13:05" itemprop="dateModified" datetime="2020-02-29T08:13:05+08:00">2020-02-29</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Docker/" itemprop="url" rel="index"><span itemprop="name">Docker</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>0X01    前言</p><p>1、什么是容器技术？<br>容器技术是一种类似于传统虚拟机的虚拟化技术，但是更加轻量化。</p><a id="more"></a>
+
+<p>2、什么是docker？<br>docker是容器技术中的一种，也用的很多，但是容器并不止这一种，比如还有rkt等。</p>
+<p>0X02    centos7搭建docker</p>
+<p>1、安装docker<br>①卸载老版本的docker及其相关依赖<br><code>sudo yum remove docker docker-common container-selinux docker-selinux docker-engine</code><br>②安装yum-utils，它提供了yum-config-manager，可用来管理yum源<br><code>sudo yum install -y yum-utils</code><br>③添加yum源<br><code>sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo</code><br>④更新索引<br><code>sudo yum makecache fast</code><br>⑤安装docker-ce<br><code>sudo yum install docker-ce</code><br>⑥启动docker<br><code>sudo systemctl start docker</code><br>⑦验证是否安装成功<br><code>sudo docker --version</code></p>
+<p>2、安装docker-compose<br><code>sudo curl -L “https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)” -o /usr/local/bin/docker-compose</code><br><code>sudo chmod +x /usr/local/bin/docker-compos</code><br><code>docker-compose --version</code></p>
+<p>0X03    centos6安装docker</p>
+<p>1、首先升级kernel<br>因为centos6.4自带的内核版本是2.6.32-358.23.2e16.x86_64，而docker要求内核版本大于3.0，推荐3.8以上的内核。<br><code>uname -a    #查看内核版本</code><br><code>rpm -ivh https://www.elrepo.org/elrepo-release-6-9.el6.elrepo.noarch.rpm</code><br><code>yum -y --enablerepo=elrepo-kernel install kernel-lt</code><br>升级完成后可以在文件/etc/grub.cof看到内核的配置信息，将default1修改为default0，使系统默认使用下表为0的内核。重启即可使用高版本的内核启动该操作系统。</p>
+<p>2、安装docker<br><code>wget https://get.docker.com/rpm/1.7.0/centos-6/RPMS/x86_64/docker-engine-1.7.0-1.el6.x86_64.rpm</code><br><code>yum install -y libcgroup.x86_64 glibc.i686 sqlite.i68</code><br><code>rpm -ivh docker-engine-1.7.0-1.el6.x86_64.rpm</code></p>
+<p>3、配置<br><code>vi /etc/sysconfig/docker/sysconfig/docker)</code><br><code>other_args=&quot;$other_args --registry-mirror=http://556b149e.m.daocloud.io&quot;</code><br><code>other_args=&quot;$other_args --log-driver=none&quot;</code></p>
+<p>4、启动<br><code>service docker start</code></p>
+<p>5、异常报错<br>如果出现以下问题<br><code>docker: relocation error: docker: symbol dm_task_get_info_with_deferred_remove, version Base not defined in file libdevmapper.so.1.02 with link time reference</code><br>解决办法<br><code>sudo cd /etc/yum.repos.d
+sudo wget public-yum.oracle.com/public-yum-ol6.repo
+sudo wget public-yum.oracle.com/RPM-GPG-KEY-oracle-ol6 -O /etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+sudo yum update -y device-mapper-libs
+sudo yum update -y libcgroup</code></p>
+<p>0X04    基础命令</p>
+<p>注：<br>docker命令前面往往要加以“docker”开头。<br>docker命令需要root权限</p>
+<p>1、<code>docker search 镜像名</code><br> 在docker hub上搜索指定镜像：<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/022201.png" alt><br>2、<code>docker pull 镜像名称</code><br>找到需要的镜像后，用该命令进行下载：<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/022202.png" alt><br>3、<code>docker images</code><br>查看本地当前存在的镜像<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/022203.png" alt><br>TAG是容器的标签，用来区分不同的容器，如果不填写的话默认是latest，如果本地不存在latest版本则会自行下载。<br>IMAGE ID是镜像的16位短ID。<br>4、<code>docker run -itd --name 容器名称 -p 主机端口:容器端口 -p......镜像名称:标签 /bin/bash</code><br>这条命令基本能满足环境的搭建了<br>-p 是用来映射端口的，不需要映射的情况下可以忽略。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/022204.png" alt><br>这样就成功创建了一个tomcat的容器，并将容器的8080、8009端口映射到主机的8080、8009端口上。<br>下面这一长串是容器的完整ID。<br>5、 <code>docker ps</code><br>列出当前正在运行的容器<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/022205.png" alt><br>6、<code>docker stop/start 容器名/ID</code><br>停止或启动容器，若是填写容器名则要全写上去，如果用的是ID，这里的ID并不需要完整的ID或者16位短ID，只需要能与其他容器区分开即可，就算你只写第一个字符都是可以的，只要能区分开。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/022206.png" alt><br>7、<code>docker ps -a</code><br>列出所有的容器，包括运行中的和停止的。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/022207.png" alt><br>8、<code>docker exec -it 容器名/ID /bin/bash</code><br>进入到容器中<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/022208.png" alt><br>进入后可以看到区域名称变成了容器的短ID。<br>9、<code>ctrl+d</code><br>退出并停止容器<br><code>ctrl+p(按完放开)+q</code><br>退出而不停止容器<br>进入容器后，往往容器中会缺少个别常用命令，例如ifconfig、wget等，只需要正常下载即可。若是没有安装ifconfig的话，可以在容器外使用docker inpect 容器名|grep IPAddress查看容器信息，里面有ip。<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/022209.png" alt><br>11、<code>docker cp 主机中的文件目录 容器名:容器中的目录</code><br>将文件从主机拷贝到容器中<br><img src="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/022210.png" alt></p>
+<p>0X05    配置检查</p>
+<p>该脚本用于对docker应用服务器的安全合规性检查和配置规范的检测。运行环境为python2，使用了os模块。<br>脚本检测结果有4种：<br>1、qualified<br>2、unqualified<br>3、not found<br>4、列表<br>qualified是某点规范的检测结果，定义为合格。<br>unqualified是某条规范的检测结果，定义为不合格。<br>not found说明脚本尝试打开配置文件没有找到，出现这种情况的原因可能有以下情况导致的。<br>①权限问题：有一些配置文件需要一定权限才能到阿凯；<br>②未能在指定位置找到对应的配置文件；<br>③确认相应服务是否安装，且安装位置是否有问题（这会导致脚本不能再文档指定的位置找到对应的配置文件）。<br>列表是某条规范的检测结果，需要个人自己去判断。</p>
+<p>需要提升权限的目录（结合实际环境进行相应的配置）：<br>必须是root用户<br>docker命令需要使用root权限，需要获得以下几条命令的执行权限：<br><code>docker info | grep -e &quot;^storage Driver:\saufs\s$&quot;</code><br>注意：<br>按照文档规范，一些检查项需要执行audit命令，需要提前安装<br>2、3、13、14、15、16、17无法确定位置，是因为直接使用命令判断，19、20检测不了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  -*-coding:utf8 -*-</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">check_docker = &#123;&#125;</span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">   <span class="keyword">if</span> os.path.isdir(<span class="string">'/varlib/docker/etc/fstab'</span>):</span><br><span class="line">       check_docker[<span class="string">'1.为容器创建独立的分区'</span>] = os.popen(<span class="string">'grep /varlib/docker/etc/fstab'</span>).read()</span><br><span class="line">   <span class="keyword">else</span>:</span><br><span class="line">       check_docker[<span class="string">'1.为容器创建独立的分区'</span>] = <span class="string">'未找到file'</span></span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">   check_docker[<span class="string">'1.为容器创建独立的分区'</span>] = <span class="string">'在'</span> + <span class="string">'/varlib/docker/etc/fstab'</span> + <span class="string">'未找到'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">   check_docker[<span class="string">'2.使用已更新过的Linux内核'</span>] = os.popen(<span class="string">'uname -r'</span>).read()</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">   check_docker[<span class="string">'2.使用已更新过的Linux内核'</span>] = <span class="string">'not found'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">   check_docker[<span class="string">'3.只允许受信任的用户控制Docker deamon'</span>] = os.popen(<span class="string">'getent group docker'</span>).read()</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">   check_docker[<span class="string">'3.只允许受信任的用户控制Docker deamon'</span>] = <span class="string">'not found'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">   check_docker[<span class="string">'4.审计Docker deamon'</span>] = os.popen(<span class="string">'auditctl -l | grep /usr/bin/docker'</span>).read()</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">   check_docker[<span class="string">'4.审计Docker deamon'</span>] = <span class="string">'在'</span> + <span class="string">'/usr/bin/docker'</span> + <span class="string">'未找到'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">   check_docker[<span class="string">'5.审计var/lib/docker'</span>] = os.popen(<span class="string">'auditctl -l | grep /usr/bin/docker'</span>).read()</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">   check_docker[<span class="string">'5.审计var/lib/docker'</span>] = <span class="string">'在'</span> + <span class="string">'/usr/bin/docker'</span> + <span class="string">'未找到'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">   check_docker[<span class="string">'6.审计/etc/docker'</span>] = os.popen(<span class="string">'auditctl -l | grep /etc/docker'</span>).read()</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">   check_docker[<span class="string">'6.审计/etc/docker'</span>] = <span class="string">'在'</span> + <span class="string">'/etc/docker'</span> + <span class="string">'未找到'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">   f_dir_list = os.popen(<span class="string">'systemctl show -p FragmentPath docker.service'</span>).read().split(<span class="string">'='</span>)[<span class="number">1</span>]</span><br><span class="line">   <span class="keyword">if</span> f_dir_list == <span class="string">'\n'</span>:</span><br><span class="line">       check_docker[<span class="string">'7.审计docker.service'</span>] = <span class="string">'unqualified'</span></span><br><span class="line">   <span class="keyword">else</span>:</span><br><span class="line">       infos = os.popen(<span class="string">'auditctl -l | grep docker.service'</span>)</span><br><span class="line">       check_docker[<span class="string">'7.审计docker.service'</span>] = infos</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">   f_dir_list = os.popen(<span class="string">'systemctl show -p FragmentPath docker.service'</span>).read().split(<span class="string">'\n'</span>)</span><br><span class="line">   check_docker[<span class="string">'7.审计docker.service'</span>] = <span class="string">'在'</span> + str(f_dir_list) + <span class="string">'未找到'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">   f_dir_list = os.popen(<span class="string">'systemctl show -p FragmentPath docker.socket'</span>).read().split(<span class="string">'='</span>)[<span class="number">1</span>]</span><br><span class="line">   <span class="keyword">if</span> f_dir_list == <span class="string">'\n'</span>:</span><br><span class="line">       check_docker[<span class="string">'8.审计docker.socket'</span>] = <span class="string">'unqualified'</span></span><br><span class="line">   <span class="keyword">else</span>:</span><br><span class="line">       infos = os.popen(<span class="string">'auditctl -l | grep docker.socket'</span>)</span><br><span class="line">       check_docker[<span class="string">'8.审计docker.socket'</span>] = infos</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">   f_dir_list = os.popen(<span class="string">'systemctl show -p FragmentPath docker.service'</span>).read().split(<span class="string">'\n'</span>)</span><br><span class="line">   check_docker[<span class="string">'8.审计docker.socket'</span>] = <span class="string">'在'</span> + str(f_dir_list) + <span class="string">'未找到'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">   check_docker[<span class="string">'9.审计/etc/default/docker'</span>] = os.popen(<span class="string">'auditctl -l | grep /etc/default/docker'</span>).read()</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">   check_docker[<span class="string">'9.审计/etc/default/docker'</span>] = <span class="string">'在'</span> + <span class="string">'/etc/default/docker'</span> + <span class="string">'未找到'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">   check_docker[<span class="string">'10.审计/etc/docker/daemon.json'</span>] = os.popen(<span class="string">'auditctl -l | grep /etc/docker/daemon.json'</span>).read()</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">   check_docker[<span class="string">'10.审计/etc/docker/daemon.json'</span>] = <span class="string">'在'</span> + <span class="string">'/etc/docker/daemon.json'</span> + <span class="string">'未找到'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">   check_docker[<span class="string">'11.审计/usr/bin/docker-containerd'</span>] = os.popen(<span class="string">'auditctl -l | grep /usr/bin/docker-containerd'</span>).read()</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">   check_docker[<span class="string">'11.审计/usr/bin/docker-containerd'</span>] = <span class="string">'在'</span> + <span class="string">'/usr/bin/docker-containerd'</span> + <span class="string">'未找到'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">   check_docker[<span class="string">'12.审计/usr/bin/docker-runc'</span>] = os.popen(<span class="string">'auditctl -l | grep /usr/bin/docker-runc'</span>).read()</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">   check_docker[<span class="string">'12.审计/usr/bin/docker-runc'</span>] = <span class="string">'/usr/bin/docker-runc'</span> + <span class="string">'未找到'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">   f = os.popen(<span class="string">'ps -ef | grep docker'</span>).read()</span><br><span class="line">   <span class="keyword">if</span> <span class="string">'icc=false'</span> <span class="keyword">in</span> f:</span><br><span class="line">       check_docker[<span class="string">'13.限制容器之间的网络流量'</span>] = <span class="string">'qualified'</span></span><br><span class="line">   <span class="keyword">else</span>:</span><br><span class="line">       check_docker[<span class="string">'13.限制容器之间的网络流量'</span>] = <span class="string">'unqualified'</span></span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">   check_docker[<span class="string">'13.限制容器之间的网络流量'</span>] = <span class="string">'未找到'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">   f = os.popen(<span class="string">'ps -ef | grep docker'</span>).read()</span><br><span class="line">   <span class="keyword">if</span> <span class="string">'iptables'</span> <span class="keyword">in</span> f <span class="keyword">or</span> <span class="string">'iptables=false'</span>:</span><br><span class="line">       check_docker[<span class="string">'14.允许Docker更改iptables'</span>] = <span class="string">'unqualified'</span></span><br><span class="line">   <span class="keyword">else</span>:</span><br><span class="line">       check_docker[<span class="string">'14.允许Docker更改iptables'</span>] = <span class="string">'qualified'</span></span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">   check_docker[<span class="string">'14.允许Docker更改iptables'</span>] = <span class="string">'未找到'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">   f = os.popen(<span class="string">'ps -ef | grep docker'</span>).read()</span><br><span class="line">   <span class="keyword">if</span> <span class="string">'insecure-registry'</span> <span class="keyword">in</span> f:</span><br><span class="line">       check_docker[<span class="string">'15.使用安全的镜像库'</span>] = <span class="string">'qualified'</span></span><br><span class="line">   <span class="keyword">else</span>:</span><br><span class="line">       check_docker[<span class="string">'15.使用安全的镜像库'</span>] = <span class="string">'unqualified'</span></span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">   check_docker[<span class="string">'15.使用安全的镜像库'</span>] = <span class="string">'未找到'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">   <span class="comment"># check_docker['12.审计/usr/bin/docker-runc'] = os.popen('auditctl -l | grep /usr/bin/docker-runc').read()</span></span><br><span class="line">   f_aufs = os.popen(<span class="string">'docker info | grep -e "^Storage Driver:\s*aufs\s*$"'</span>).read()</span><br><span class="line">   <span class="keyword">if</span> f_aufs == <span class="string">''</span>:</span><br><span class="line">       check_docker[<span class="string">'16.不使用aufs存储驱动'</span>] = <span class="string">'qualified'</span></span><br><span class="line">   <span class="keyword">else</span>:</span><br><span class="line">       check_docker[<span class="string">'16.不使用aufs存储驱动'</span>] = <span class="string">'unqualified'</span></span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">   check_docker[<span class="string">'16.不使用aufs存储驱动'</span>] = <span class="string">'未找到'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">   f_aufs = os.popen(<span class="string">'ps -ef | grep docker'</span>).read()</span><br><span class="line">   <span class="keyword">if</span> <span class="string">'--tlsverify'</span> <span class="keyword">in</span> f_aufs <span class="keyword">and</span> <span class="string">'--tlscacert'</span> <span class="keyword">in</span> f_aufs <span class="keyword">and</span> <span class="string">'--tlscert'</span> <span class="keyword">in</span> f_aufs <span class="keyword">and</span> <span class="string">'--tlskey'</span> <span class="keyword">in</span> f_aufs:</span><br><span class="line">       check_docker[<span class="string">'17.为Docker daemon配置TLS认证'</span>] = <span class="string">'qualified'</span></span><br><span class="line">   <span class="keyword">else</span>:</span><br><span class="line">       check_docker[<span class="string">'17.为Docker daemon配置TLS认证'</span>] = <span class="string">'unqualified'</span></span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">   check_docker[<span class="string">'17.为Docker daemon配置TLS认证'</span>] = <span class="string">'未找到'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># try:</span></span><br><span class="line">   <span class="comment"># check_docker['18.设置验证镜像库证书文件的权限'] = os.popen('stat -c %U:%G /etc/docker/certs.d/* | grep -v root:root').read()</span></span><br><span class="line"><span class="comment"># except:</span></span><br><span class="line"><span class="comment">#     check_docker['18.设置验证镜像库证书文件的权限'] = '在' + '/etc/docker/certs.d/*' + '未找到'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># try:</span></span><br><span class="line"><span class="comment">#     try:</span></span><br><span class="line"><span class="comment">#         check_docker['19.设置验证TLS CA证书文件的权限'] = os.popen('stat -c %U:%G &lt;path to TLS CA certificate file&gt; | grep -v root:root').read()</span></span><br><span class="line"><span class="comment">#     except:</span></span><br><span class="line"><span class="comment">#         check_docker['19.设置验证TLS CA证书文件的权限'] = os.popen('stat -c %a &lt;path to TLS CA certificate file&gt;').read()</span></span><br><span class="line"><span class="comment"># except:</span></span><br><span class="line"><span class="comment">#     check_docker['19.设置验证TLS CA证书文件的权限'] = 'not found'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># try:</span></span><br><span class="line"><span class="comment">#     try:</span></span><br><span class="line"><span class="comment">#         check_docker['20.设置验证Docker 服务器证书文件的权限'] = os.popen('stat -c %U:%G &lt;path to Docker server certificate key file&gt; | grep -v root:root').read()</span></span><br><span class="line"><span class="comment">#     except:</span></span><br><span class="line"><span class="comment">#         check_docker['20.设置验证Docker 服务器证书文件的权限'] = os.popen(</span></span><br><span class="line"><span class="comment">#             'stat -c %a &lt;path to Docker server certificate key file&gt;').read()</span></span><br><span class="line"><span class="comment"># except:</span></span><br><span class="line"><span class="comment">#     check_docker['20.设置验证Docker 服务器证书文件的权限'] = 'not found'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> open(<span class="string">'check_docker.txt'</span>, <span class="string">'w'</span>) <span class="keyword">as</span> file:</span><br><span class="line">   <span class="keyword">for</span> v, k <span class="keyword">in</span> check_docker.items():</span><br><span class="line">       file.write(<span class="string">'&#123;v&#125;:&#123;k&#125;'</span>.format(v=v, k=k))</span><br><span class="line">       file.write(<span class="string">'\n'</span>)</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+<div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-heart"></i>感谢阅读-------------</div>
+    
+</div>
+  
+</div>
+        
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2020/02/20/Security Onion-安全洋葱架构概述/" rel="next" title="Security Onion|安全洋葱架构概述">
+                  <i class="fa fa-chevron-left"></i> Security Onion|安全洋葱架构概述
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2020/02/22/工具-Wireshark使用入门/" rel="prev" title="工具|Wireshark使用入门">
+                  工具|Wireshark使用入门 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc" data-target="post-toc-wrap">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Yang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+  </nav>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yang</span>
+</div>
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.3.0</div>
+-->
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.3.0"></script><script src="/js/motion.js?v=7.3.0"></script>
+<script src="/js/schemes/muse.js?v=7.3.0"></script>
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+ <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
