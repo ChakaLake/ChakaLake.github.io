@@ -71,7 +71,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/022208.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/022209.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/ChakaLake/ywd/master/img/022210.png">
-<meta property="og:updated_time" content="2020-02-29T00:13:05.141Z">
+<meta property="og:updated_time" content="2020-03-01T22:23:35.761Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker|Docker搭建与配置检查">
 <meta name="twitter:description" content="0X01    前言1、什么是容器技术？容器技术是一种类似于传统虚拟机的虚拟化技术，但是更加轻量化。">
@@ -257,7 +257,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-02-29 08:13:05" itemprop="dateModified" datetime="2020-02-29T08:13:05+08:00">2020-02-29</time>
+                <time title="修改时间：2020-03-02 06:23:35" itemprop="dateModified" datetime="2020-03-02T06:23:35+08:00">2020-03-02</time>
               </span>
             
           
@@ -293,7 +293,7 @@
 <p>1、安装docker<br>①卸载老版本的docker及其相关依赖<br><code>sudo yum remove docker docker-common container-selinux docker-selinux docker-engine</code><br>②安装yum-utils，它提供了yum-config-manager，可用来管理yum源<br><code>sudo yum install -y yum-utils</code><br>③添加yum源<br><code>sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo</code><br>④更新索引<br><code>sudo yum makecache fast</code><br>⑤安装docker-ce<br><code>sudo yum install docker-ce</code><br>⑥启动docker<br><code>sudo systemctl start docker</code><br>⑦验证是否安装成功<br><code>sudo docker --version</code></p>
 <p>2、安装docker-compose<br><code>sudo curl -L “https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)” -o /usr/local/bin/docker-compose</code><br><code>sudo chmod +x /usr/local/bin/docker-compos</code><br><code>docker-compose --version</code></p>
 <p>0X03    centos6安装docker</p>
-<p>1、首先升级kernel<br>因为centos6.4自带的内核版本是2.6.32-358.23.2e16.x86_64，而docker要求内核版本大于3.0，推荐3.8以上的内核。<br><code>uname -a    #查看内核版本</code><br><code>rpm -ivh https://www.elrepo.org/elrepo-release-6-9.el6.elrepo.noarch.rpm</code><br><code>yum -y --enablerepo=elrepo-kernel install kernel-lt</code><br>升级完成后可以在文件/etc/grub.cof看到内核的配置信息，将default1修改为default0，使系统默认使用下表为0的内核。重启即可使用高版本的内核启动该操作系统。</p>
+<p>1、首先升级kernel<br>因为centos没有封装ssl，先装一个ssl。<br><code>yum -y install curl nss openssl</code><br>centos6.4自带的内核版本是2.6.32-358.23.2e16.x86_64，而docker要求内核版本大于3.0，推荐3.8以上的内核。<br><code>uname -a    #查看内核版本</code><br><code>rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org    #导入公钥数字证书</code><br><code>rpm -ivh https://www.elrepo.org/elrepo-release-6-9.el6.elrepo.noarch.rpm</code><br><code>yum -y --enablerepo=elrepo-kernel install kernel-lt</code><br>升级完成后可以在文件/etc/grub.cof看到内核的配置信息，将default1修改为default0，使系统默认使用下表为0的内核。重启即可使用高版本的内核启动该操作系统。</p>
 <p>2、安装docker<br><code>wget https://get.docker.com/rpm/1.7.0/centos-6/RPMS/x86_64/docker-engine-1.7.0-1.el6.x86_64.rpm</code><br><code>yum install -y libcgroup.x86_64 glibc.i686 sqlite.i68</code><br><code>rpm -ivh docker-engine-1.7.0-1.el6.x86_64.rpm</code></p>
 <p>3、配置<br><code>vi /etc/sysconfig/docker/sysconfig/docker)</code><br><code>other_args=&quot;$other_args --registry-mirror=http://556b149e.m.daocloud.io&quot;</code><br><code>other_args=&quot;$other_args --log-driver=none&quot;</code></p>
 <p>4、启动<br><code>service docker start</code></p>
@@ -335,8 +335,8 @@ sudo yum update -y libcgroup</code></p>
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/2020/02/20/Security Onion-安全洋葱架构概述/" rel="next" title="Security Onion|安全洋葱架构概述">
-                  <i class="fa fa-chevron-left"></i> Security Onion|安全洋葱架构概述
+                <a href="/2020/02/17/渗透工具-appscan/" rel="next" title="渗透工具|appscan">
+                  <i class="fa fa-chevron-left"></i> 渗透工具|appscan
                 </a>
               
             </div>
